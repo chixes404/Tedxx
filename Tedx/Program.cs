@@ -47,7 +47,7 @@ app.UseAuthorization();
 
 app.MapControllerRoute(
 	name: "default",
-	pattern: "{controller=Home}/{action=Index}/{id?}");
+	pattern: "{controller=Registration}/{action=Create}/{id?}");
 
 app.MapRazorPages(); // Add this for Identity pages
 

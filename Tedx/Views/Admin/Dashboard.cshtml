@@ -1,0 +1,138 @@
+﻿@model List<Tedx.Models.User>
+
+@{
+    Layout = "~/Views/Shared/_Layout.cshtml";
+    ViewData["Title"] = "Admin Dashboard";
+
+}
+
+<style>
+    /* Sidebar styles */
+    .sidebar {
+        height: 100vh; /* Full height */
+        position: fixed; /* Fixed position */
+        top: 56px; /* Below the navbar */
+        left: 0;
+        width: 250px; /* Sidebar width */
+        padding-top: 20px;
+        background-color: #1a1a1a; /* Dark gray background */
+        border-right: 1px solid #333; /* Subtle border */
+        transition: width 0.3s ease, margin-left 0.3s ease; /* Smooth transition */
+    }
+
+    .sidebar-sticky {
+        position: relative;
+        top: 0;
+        padding: 20px;
+    }
+
+    .sidebar .nav-item {
+        margin-bottom: 10px;
+    }
+
+    .sidebar .nav-link {
+        color: #fff; /* White text */
+        padding: 10px 15px;
+        border-radius: 4px;
+        transition: background-color 0.3s ease;
+    }
+
+        .sidebar .nav-link.active,
+        .sidebar .nav-link:hover {
+            background-color: #dc3545; /* Red background for active/hover */
+            color: #fff; /* White text */
+        }
+
+    /* Adjust main content margin to account for the sidebar */
+    #mainContent {
+        margin-left: 250px; /* Match sidebar width */
+        transition: margin-left 0.3s ease; /* Smooth transition */
+    }
+</style>
+
+<div class="container-fluid">
+    <div class="row">
+
+<!-- Sidebar -->
+<div class="col-md-3 bg-dark sidebar" id="sidebar">
+    <div class="sidebar-sticky">
+        <ul class="nav flex-column">
+            <li class="nav-item">
+                <a class="text-light ">
+                    المستخدمين
+                </a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link text-light active" asp-controller="Admin" asp-action="Dashboard">
+                    مستمع
+                </a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link text-light" asp-controller="Admin" asp-action="SpeakerUser">
+                    متحدث
+                </a>
+            </li>
+         
+        </ul>
+    </div>
+</div>
+<!-- Main Content -->
+<div class="col-md-9 ml-sm-auto col-lg-9 px-4" id="mainContent">
+    <h2 class="text-light mb-4">المستخدمين </h2>
+            <div class="table-responsive">
+    <table class="table table-dark table-striped">
+        <thead>
+            <tr>
+                <th>الاسم</th>
+                <th>الايميل</th>
+                <th>رقم الهاتف</th>
+                <th>صفه المستخدم</th>
+                <th>الوظيفه</th>
+                <th>تاريخ التسجيل</th>
+                <th>export</th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var user in Model)
+            {
+                <tr>
+                    <td>@user.FullName</td>
+                    <td>@user.Email</td>
+                    <td>@user.Phone</td>
+                    <td>@user.RoleAs</td>
+                    <td>@user.Job</td>
+                    <td>@user.CreatedAt</td>
+                    <td>
+                        <button class="btn btn-danger btn-sm">Delete</button>
+                    </td>
+                </tr>
+            }
+        </tbody>
+    </table>
+         </div>
+        </div>
+    </div>
+</div>
+
+
+
+
+        @section Scripts {
+            <script>
+                // Toggle sidebar collapse/expand
+                document.getElementById('sidebarToggle').addEventListener('click', function () {
+                    const sidebar = document.getElementById('sidebar');
+                    const mainContent = document.getElementById('mainContent');
+
+                    if (sidebar.style.width === '250px') {
+                        sidebar.style.width = '0';
+                        mainContent.style.marginLeft = '0';
+                    } else {
+                        sidebar.style.width = '250px';
+                        mainContent.style.marginLeft = '250px';
+                    }
+                });
+            </script>
+        }
+
+
