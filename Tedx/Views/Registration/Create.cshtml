@@ -1,177 +1,358 @@
-﻿@{
-    Layout = "~/Views/Shared/_Layout.cshtml";
-
-}
+﻿
 @model Tedx.Models.User
 
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+    <!-- Required meta tags -->
+    <meta charset="utf-8" />
+    <meta http-equiv="Content-type" content="text/html; charset=utf-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=9" />
+    <meta http-equiv="Expires" content="0" />
+    <meta name="viewport"
+          content="width=device-width, initial-scale=1, maximum-scale=2" />
 
-<main class="content content_register">
-    <!-- Start banner section -->
-    <section class="content_banner content_terms text-center w-100 position-relative" id="myHeader">
-        <img src="~/assets/imgs/head-bg.png" class="w-100" alt="banner" />
-        <div class="caption text-center px-sm-5 px-3">
-            <h3 class="fw-bold fs-2 text-light mb-0">
-                <img src="~/assets/imgs/شعار-ابن-رشد-1.png" />
-            </h3>
+    <meta name="keywords" content="Services, Home , Location, strategic," />
+    <meta name="author" content="TEDx Team" />
+    <meta name="title" content="TEDx Mobile Application Home" />
+    <meta name="description"
+          content="Join some of your favorite TED speakers and a global community of learners who want to stay curious, imagine and thrive." />
+
+    <meta name="copyright" content="Copyright TEDx - 2024" />
+    <meta name="email" content="Info@TEDx" />
+    <meta name="robots" content="INDEX,FOLLOW" />
+
+    <!--  Essential META Tags -->
+    <meta property="og:type" content="website" />
+    <meta property="og:url" content=" " />
+    <meta property="og:title" content="TED Courses" />
+    <meta property="og:description"
+          content="Join some of your favorite TED speakers and a global community of learners who want to stay curious, imagine and thrive." />
+    <meta property="og:image"
+          content="https://assets-global.website-files.com/62cb80a739ca03e7dfee8efe/62cc6505c391d30f31926928_TED-courses.png" />
+    <meta property="og:site_name" content="TEDx Application" />
+
+    <!--  social media tags -->
+    <meta name="twitter:card" content="summary_large_image" />
+    <meta name="twitter:url" content=" " />
+    <meta name="twitter:creator" content="@@twitter" />
+    <meta name="twitter:title" content="TED Courses" />
+    <meta name="twitter:description"
+          content="Join some of your favorite TED speakers and a global community of learners who want to stay curious, imagine and thrive." />
+    <meta name="twitter:image"
+          content=".https://assets-global.website-files.com/62cb80a739ca03e7dfee8efe/62cc6505c391d30f31926928_TED-courses.png" />
+    <meta name="twitter:image:alt" content="TEDx Courses" />
+    <link rel="alternate" href="./assets/imgs/logo.png" media="all" />
+
+    <!--  Non-Essential, But Required for Analytics -->
+    <meta property="fb:app_id" content="100085894330941" />
+    <meta name="twitter:site" content="@@twitter" />
+    <meta property="og:locale" content="en_EG" />
+    <meta property="og:locale:alternate" content="ar_EG" />
+
+    <meta name="msapplication-TileImage" content="~/assets/imgs/logo.png" />
+    <meta name="msapplication-TileColor" content="#95c123" />
+
+    <!--  site map -->
+    <meta name="google-site-verification" content="" />
+
+    <title>TEDx</title>
+    <link rel="stylesheet" href="~/css/all.min.css" />
+    <!-- <link rel="stylesheet" href="css/bootstrap.min.css" /> -->
+    <link rel="stylesheet" href="~/css/bootstrap.rtl.min.css" />
+    <link rel="stylesheet" href="~/css/tempusdominus-bootstrap.css" />
+    <!-- carousel slider  -->
+    <link rel="stylesheet" href="~/css/owl.carousel.min.css" />
+    <!-- animation -->
+    <link rel="stylesheet" href="~/css/animate.css" />
+    <!-- custom style  -->
+    <link rel="stylesheet" href="~/css/style.css" />
+    <!-- rtl style  -->
+    <link rel="stylesheet" href="~/css/style-ar.css" />
+
+    <!-- Favicons -->
+    <link href="~/assets/imgs/favicon.ico" rel="shortcut icon" />
+    <link href="~/assets/imgs/favicon.webp" rel="apple-touch-icon" />
+</head>
+<body>
+    <!-- Navigation Bar -->
+    <nav class="navbar sticky-top fixed-top navbar-dark bg-dark navbar-expand-lg shadow-sm py-2 px-3" id="header">
+        <div class="container-fluid">
+            <div class="navbar-brand py-2">
+                <img src="~/assets/imgs/logo.webp" width="110" alt="logo TEDx" />
+            </div>
+            <div class="collapse navbar-collapse d-flex justify-content-end" id="navbarText">
+                <span class="navbar-text">
+                    <button type="button" class="btn btn-primary text-light rounded-0">Ar</button>
+                </span>
+            </div>
         </div>
-    </section>
-    <!-- End banner section -->
-    <!-- Start content section -->
-    <section class="content_infoTxt py-5">
-        <div class="container">
+    </nav>
 
-            <form asp-action="Create" method="post" >
-                <div class="mb-3">
-                    <div class="d-flex">
-                        <label asp-for="FullName" class="ng-binding">الاسم كامل</label>
-                        <div class="requ text-danger">*</div>
-                    </div>
-                    <input asp-for="FullName" class="form-control" placeholder="أدخل هنا |" />
-                    <span asp-validation-for="FullName" class="text-danger"></span>
-                </div>
-                <div class="mb-3">
-                    <div class="d-flex">
-                        <label asp-for="Age" class="ng-binding">العمر</label>
-                        <div class="requ text-danger">*</div>
-                    </div>
-                    <input asp-for="Age" class="form-control" placeholder="أدخل هنا |" />
-                    <span asp-validation-for="Age" class="text-danger"></span>
-                </div>
-                <div class="mt-5 mb-3">
-                    <div class="form-check form-check-inline p-0 m-0">
-                        <label class="form-check-label">الانضمام كـ: </label>
-                    </div>
-                    <div class="form-check form-check-inline">
-                        <input class="form-check-input" type="radio" asp-for="RoleAs" value="متحدث" id="inlineRadio1" />
-                        <label class="form-check-label" for="inlineRadio1">متحدث</label>
-                    </div>
-                    <div class="form-check form-check-inline">
-                        <input class="form-check-input" type="radio" asp-for="RoleAs" value="مستمع" id="inlineRadio2" checked />
-                        <label class="form-check-label" for="inlineRadio2">مستمع</label>
-                    </div>
-                    <span asp-validation-for="RoleAs" class="text-danger"></span>
-                </div>
-                <div class="mb-3">
-                    <div class="d-flex">
-                        <label asp-for="Job" class="ng-binding">الوظيفة</label>
-                        <div class="requ text-danger">*</div>
-                    </div>
-                    <input asp-for="Job" class="form-control" placeholder="أدخل هنا |" />
-                    <span asp-validation-for="Job" class="text-danger"></span>
-                </div>
-                <div class="listener">
+    <main class="content content_register">
+        <!-- Start banner section -->
+        <section class="content_banner content_terms text-center w-100 position-relative" id="myHeader">
+            <img src="~/assets/imgs/head-bg.png" class="w-100" alt="banner" />
+            <div class="caption text-center px-sm-5 px-3">
+                <h3 class="fw-bold fs-2 text-light mb-0">
+                    <img src="~/assets/imgs/شعار-ابن-رشد-1.png" />
+                </h3>
+            </div>
+        </section>
+        <!-- End banner section -->
+        <!-- Start content section -->
+        <section class="content_infoTxt py-5">
+            <div class="container">
+
+                <form id="createForm" asp-action="Create" method="post">
                     <div class="mb-3">
                         <div class="d-flex">
-                            <label asp-for="Email" class="ng-binding">الايميل</label>
+                            <label asp-for="FullName" class="ng-binding">الاسم كامل</label>
                             <div class="requ text-danger">*</div>
                         </div>
-                        <input asp-for="Email" class="form-control" placeholder="أدخل هنا |" />
-                        <span asp-validation-for="Email" class="text-danger"></span>
+                        <input asp-for="FullName" class="form-control" placeholder="أدخل هنا |" />
+                        <span asp-validation-for="FullName" class="text-danger"></span>
                     </div>
                     <div class="mb-3">
                         <div class="d-flex">
-                            <label asp-for="Phone" class="ng-binding">الجوال</label>
+                            <label asp-for="Age" class="ng-binding">العمر</label>
                             <div class="requ text-danger">*</div>
                         </div>
-                        <input asp-for="Phone" class="form-control" placeholder="أدخل هنا |" />
-                        <span asp-validation-for="Phone" class="text-danger"></span>
+                        <input asp-for="Age" class="form-control" placeholder="أدخل هنا |" />
+                        <span asp-validation-for="Age" class="text-danger"></span>
                     </div>
-                </div>
-                <div class="mb-3 speaker">
-                    <div class="d-flex">
-                        <label asp-for="IdeaCategory" class="ng-binding">تصنيف الفكرة</label>
-                        <div class="requ text-danger">*</div>
+                    <div class="mt-5 mb-3">
+                        <div class="form-check form-check-inline p-0 m-0">
+                            <label class="form-check-label">الانضمام كـ: </label>
+                        </div>
+                        <div class="form-check form-check-inline">
+                            <input class="form-check-input" type="radio" asp-for="RoleAs" value="متحدث" id="inlineRadio1" />
+                            <label class="form-check-label" for="inlineRadio1">متحدث</label>
+                        </div>
+                        <div class="form-check form-check-inline">
+                            <input class="form-check-input" type="radio" asp-for="RoleAs" value="مستمع" id="inlineRadio2" checked />
+                            <label class="form-check-label" for="inlineRadio2">مستمع</label>
+                        </div>
+                        <span asp-validation-for="RoleAs" class="text-danger"></span>
                     </div>
-                    <select asp-for="IdeaCategory" class="form-select">
-                        <option value="اختيار 1">اختيار 1</option>
-                        <option value="اختيار 2">اختيار 2</option>
-                    </select>
-                    <span asp-validation-for="IdeaCategory" class="text-danger"></span>
-                </div>
-                <div class="mb-3 speaker">
-                    <div class="d-flex">
-                        <label asp-for="IdeaDescription" class="ng-binding">اشرح الفكرة في ١٠٠-٣٠٠ كلمة</label>
-                        <div class="requ text-danger">*</div>
+                    <div class="mb-3">
+                        <div class="d-flex">
+                            <label asp-for="Job" class="ng-binding">الوظيفة</label>
+                            <div class="requ text-danger">*</div>
+                        </div>
+                        <input asp-for="Job" class="form-control" placeholder="أدخل هنا |" />
+                        <span asp-validation-for="Job" class="text-danger"></span>
                     </div>
-                    <textarea asp-for="IdeaDescription" class="form-control" placeholder="أدخل هنا |" rows="3"></textarea>
-                    <span asp-validation-for="IdeaDescription" class="text-danger"></span>
-                </div>
-                <div class="mb-3 speaker">
-                    <div class="d-flex">
-                        <label asp-for="WhyIdea" class="ng-binding">لماذا فكرتك تستحق الظهور؟</label>
-                        <div class="requ text-danger">*</div>
+                    <div class="listener">
+                        <div class="mb-3">
+                            <div class="d-flex">
+                                <label asp-for="Email" class="ng-binding">الايميل</label>
+                                <div class="requ text-danger">*</div>
+                            </div>
+                            <input asp-for="Email" class="form-control" placeholder="أدخل هنا |" />
+                            <span asp-validation-for="Email" class="text-danger"></span>
+                        </div>
+                        <div class="mb-3">
+                            <div class="d-flex">
+                                <label asp-for="Phone" class="ng-binding">الجوال</label>
+                                <div class="requ text-danger">*</div>
+                            </div>
+                            <input asp-for="Phone" class="form-control" placeholder="أدخل هنا |" />
+                            <span asp-validation-for="Phone" class="text-danger"></span>
+                        </div>
                     </div>
-                    <textarea asp-for="WhyIdea" class="form-control" placeholder="أدخل هنا |" rows="3"></textarea>
-                    <span asp-validation-for="WhyIdea" class="text-danger"></span>
-                </div>
-                <div class="mb-3 speaker">
-                    <div class="d-flex">
-                        <label asp-for="HasPresentedBefore" class="ng-binding">هل قدمت على المسرح من قبل؟</label>
-                        <div class="requ text-danger">*</div>
-                    </div>
-                    <div class="form-check">
-                        <input class="form-check-input" type="radio" asp-for="HasPresentedBefore" value="true" id="flexRadioDefault1" />
-                        <label class="form-check-label" for="flexRadioDefault1">نعم</label>
-                    </div>
-                    <div class="form-check">
-                        <input class="form-check-input" type="radio" asp-for="HasPresentedBefore" value="false" id="flexRadioDefault2" checked />
-                        <label class="form-check-label" for="flexRadioDefault2">لا</label>
-                    </div>
-                    <span asp-validation-for="HasPresentedBefore" class="text-danger"></span>
-                </div>
-                <div class="form-btns d-flex align-items-center justify-content-center">
-                    <button type="submit" class="btn btn-primary text-light rounded-0 text-uppercase mt-4 px-2 mx-2" data-bs-toggle="modal" data-bs-target="#confirmModal">
-                        التالي
-                    </button>
-                    <button type="button" class="btn btn-outline-primary text-light rounded-0 text-uppercase mt-4 px-2 mx-2" onclick="location.href = '';">
-                        إلغاء
-                    </button>
-                </div>
-            </form>
-        </div>
-    </section>
-    <!-- End content section -->
-</main>
+                    <div class="mb-3 speaker">
+                        <div class="d-flex">
+                            <label asp-for="IdeaCategory" class="ng-binding">تصنيف الفكرة</label>
+                            <div class="requ text-danger">*</div>
+                        </div>
+                        <select name="IdeaCategory" class="form-select">
+                            <option value="اختيار 1">اختيار 1</option>
+                            <option value="اختيار 2">اختيار 2</option>
+                        </select>
 
-@section Scripts {
+                        <span asp-validation-for="IdeaCategory" class="text-danger"></span>
+                    </div>
+                    <div class="mb-3 speaker">
+                        <div class="d-flex">
+                            <label asp-for="IdeaDescription" class="ng-binding">اشرح الفكرة في ١٠٠-٣٠٠ كلمة</label>
+                            <div class="requ text-danger">*</div>
+                        </div>
+                        <textarea asp-for="IdeaDescription" class="form-control" placeholder="أدخل هنا |" rows="3"></textarea>
+                        <span asp-validation-for="IdeaDescription" class="text-danger"></span>
+                    </div>
+                    <div class="mb-3 speaker">
+                        <div class="d-flex">
+                            <label asp-for="WhyIdea" class="ng-binding">لماذا فكرتك تستحق الظهور؟</label>
+                            <div class="requ text-danger">*</div>
+                        </div>
+                        <textarea asp-for="WhyIdea" class="form-control" placeholder="أدخل هنا |" rows="3"></textarea>
+                        <span asp-validation-for="WhyIdea" class="text-danger"></span>
+                    </div>
+                    <div class="mb-3 speaker">
+                        <div class="d-flex">
+                            <label asp-for="HasPresentedBefore" class="ng-binding">هل قدمت على المسرح من قبل؟</label>
+                            <div class="requ text-danger">*</div>
+                        </div>
+                        <div class="form-check">
+                            <input class="form-check-input" type="radio" asp-for="HasPresentedBefore" value="true" id="flexRadioDefault1" />
+                            <label class="form-check-label" for="flexRadioDefault1">نعم</label>
+                        </div>
+                        <div class="form-check">
+                            <input class="form-check-input" type="radio" asp-for="HasPresentedBefore" value="false" id="flexRadioDefault2" checked />
+                            <label class="form-check-label" for="flexRadioDefault2">لا</label>
+                        </div>
+                        <span asp-validation-for="HasPresentedBefore" class="text-danger"></span>
+                    </div>
+                    <div class="form-btns d-flex align-items-center justify-content-center">
+                        <button type="submit" class="btn btn-primary text-light rounded-0 text-uppercase mt-4 px-2 mx-2">
+                            التالي
+                        </button>
+                        <button type="button" class="btn btn-outline-primary text-light rounded-0 text-uppercase mt-4 px-2 mx-2" onclick="location.href = '';">
+                            إلغاء
+                        </button>
+                    </div>
+
+                </form>
+            </div>
+        </section>
+        <!-- End content section -->
+    </main>
+
+    @if (ViewBag.HideFooter == null || !(bool)ViewBag.HideFooter)
+    {
+        <section class="footer py-5">
+            <div class="container">
+                <div class="row align-items-start g-4">
+                    <div class="col-lg-3 col-md-4 text-center">
+                        <i class="fa-regular fa-clock fs-1 mb-3"></i>
+                        <div style="direction: ltr">
+                            <p class="mb-0">4:00 PM</p>
+                            <p>9:00 PM</p>
+                        </div>
+                    </div>
+                    <div class="col-lg-5 col-md-4 text-center">
+                        <i class="fa-solid fa-location-dot fs-1 mb-3"></i>
+                        <p>مسرح شركة ابن رشد التعليمية القابضة</p>
+                        <img src="~/assets/imgs/QRCode.png" alt="QRCode" height="100" />
+                    </div>
+                    <div class="col-lg-3 col-md-4 text-center">
+                        <i class="fa-regular fa-calendar-days fs-1 mb-3"></i>
+                        <p>السبت - 25 يناير 2025</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+    }
+
+
+    <!-- Success Modal -->
+    <div class="modal fade"
+         id="successModal"
+         tabindex="-1"
+         aria-labelledby="successModalLabel"
+         aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered">
+            <div class="modal-content py-5">
+                <div class="modal-body text-center">
+                    <i class="fa-solid fa-check fs-1 text-success mb-4"></i>
+                    <h3 class="my-3">تم ارسال الطلب بنجاح</h3>
+                    <p>تم ارسال عبر منصة قوي و بانتظار الموافقه من الموظفين</p>
+                </div>
+            </div>
+        </div>
+    </div>
+    
+  <!-- Scripts -->
+    <script src="~/js/jquery.js"></script>
+    <script src="~/js/bootstrap.bundle.min.js"></script>
     <script src="~/lib/jquery-validation/dist/jquery.validate.min.js"></script>
     <script src="~/lib/jquery-validation-unobtrusive/jquery.validate.unobtrusive.min.js"></script>
     <script>
         $(document).ready(function () {
-            // Handle form submission
-            $('form').on('submit', function (e) {
-                e.preventDefault(); // Prevent default form submission
+            // Hide/show speaker fields based on radio button selection
+            $('.speaker').hide();
+            $("#inlineRadio1").on("click", function () {
+                $('.speaker').toggle(this.checked);
+            });
+            $("#inlineRadio2").on("click", function () {
+                $('.speaker').hide();
+            });
 
-                // Check if the form is valid
+            // Handle form submission
+            $('#createForm').on('submit', function (e) {
+                e.preventDefault(); // Prevent the default form submission
+
+                // Check if the form is valid using jQuery Validation
                 if ($(this).valid()) {
-                    // Submit the form via AJAX
+                    // Serialize the form data
+                    var formData = $(this).serialize();
+
+                    // Send the AJAX request
                     $.ajax({
-                        url: $(this).attr('action'),
-                        type: 'POST',
-                        data: $(this).serialize(),
+                        url: $(this).attr('action'), // Form action URL
+                        type: $(this).attr('method'), // Form method (POST)
+                        data: formData, // Serialized form data
                         success: function (response) {
                             if (response.success) {
-                                // Refresh the page and clear the form
-                                window.location.reload();
+                                // Show the success modal
+                                $('#successModal').modal('show');
+                                setTimeout(function () {
+                                    $('#successModal').modal('hide'); // Close the modal
+                                    $('#createForm')[0].reset(); // Clear the form
+                                }, 3000); // 3000 milliseconds = 3 seconds
                             } else {
                                 // Display validation errors
-                                alert('Error: ' + response.errors.join('\n'));
+                                if (response.errors) {
+                                    for (var key in response.errors) {
+                                        if (response.errors.hasOwnProperty(key)) {
+                                            $('[data-valmsg-for="' + key + '"]').text(response.errors[key]);
+                                        }
+                                    }
+                                } else {
+                                    alert('Form submission failed. Please check your inputs.');
+                                }
                             }
                         },
-                        error: function () {
+                        error: function (xhr, status, error) {
+                            // Handle AJAX errors
+                            console.error('AJAX Error:', error);
                             alert('An error occurred while submitting the form.');
                         }
                     });
                 }
             });
 
-            // Handle the "التالي" button click
-            $('button[type="submit"]').on('click', function (e) {
-                if (!$('form').valid()) {
-                    e.preventDefault(); // Prevent form submission if invalid
-                    alert('Please fill out all required fields.');
+            // Clear validation errors when the user starts typing
+            $('#createForm input, #createForm textarea').on('input', function () {
+                var fieldName = $(this).attr('name');
+                $('[data-valmsg-for="' + fieldName + '"]').text('');
+            });
+        });
+    </script>
+    <script>
+        $(document).ready(function () {
+            // Add custom validation method for Saudi phone numbers
+            $.validator.addMethod("saudiphone", function (value, element) {
+                return this.optional(element) || /^(?:\+966|966)?5\d{8}$/.test(value);
+            }, "رقم الجوال غير صحيح. يجب أن يبدأ بـ 05 ويحتوي على 9 أرقام.");
+
+            // Apply the custom validation to the Phone field
+            $('#createForm').validate({
+                rules: {
+                    Phone: {
+                        required: true,
+                        saudiphone: true
+                    }
+                },
+                messages: {
+                    Phone: {
+                        required: "الجوال مطلوب",
+                        saudiphone: "رقم الجوال غير صحيح. يجب أن يبدأ بـ 05 ويحتوي على 9 أرقام."
+                    }
                 }
             });
         });
     </script>
-}
+</body>
+</html>

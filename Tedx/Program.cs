@@ -10,10 +10,21 @@ var connectionString = builder.Configuration.GetConnectionString("DefaultConnect
 builder.Services.AddDbContext<ApplicationDbContext>(options =>
 	options.UseSqlServer(connectionString));
 
-// Add Identity with ApplicationUser
+// Add Identity with ApplicationUser		
 builder.Services.AddIdentity<ApplicationUser, IdentityRole<Guid>>()
 	.AddEntityFrameworkStores<ApplicationDbContext>()
 	.AddDefaultTokenProviders();
+
+
+builder.Services.ConfigureApplicationCookie(options =>
+{
+    options.Cookie.HttpOnly = true; // Makes the cookie accessible only via HTTP (not JavaScript)
+    options.ExpireTimeSpan = TimeSpan.FromMinutes(60); // Expiry time for the authentication cookie
+    options.LoginPath = "/identity/Account/Login"; // Redirect here if not authenticated
+    options.AccessDeniedPath = "/Account/AccessDenied"; // Redirect here if access is denied
+    options.SlidingExpiration = true; // Extends expiration on user activity
+});
+
 
 // Add Razor Pages (for Identity UI)
 builder.Services.AddRazorPages();
@@ -38,6 +49,15 @@ if (!app.Environment.IsDevelopment())
 }
 
 app.UseHttpsRedirection();
+
+app.UseStaticFiles(); // Enable serving static files
+
+app.UseDefaultFiles(new DefaultFilesOptions
+{
+    DefaultFileNames = new List<string> { "index.html" }
+});
+
+
 app.UseStaticFiles();
 
 app.UseRouting();

@@ -1,4 +1,5 @@
 ﻿using System.ComponentModel.DataAnnotations;
+using Tedx.Helper;
 
 namespace Tedx.Models
 {
@@ -23,6 +24,7 @@ namespace Tedx.Models
         public string Email { get; set; }
 
         [Required(ErrorMessage = "الجوال مطلوب")]
+        [SaudiPhoneNumber(ErrorMessage ="رقم الجوال غير صحيح")] 
         public string Phone { get; set; }
 
         public string ?IdeaCategory { get; set; }

@@ -90,8 +90,10 @@
     
 
     <!-- Start footer -->
-    <section class="footer py-5">
-      <div class="container">
+       @if (ViewBag.HideFooter == null || !(bool)ViewBag.HideFooter)
+    {
+        <section class="footer py-5">
+            <div class="container">
         <div class="row align-items-start g-4">
           <div class="col-lg-3 col-md-4 text-center">
             <i class="fa-regular fa-clock fs-1 mb-3"></i>
@@ -112,6 +114,7 @@
         </div>
       </div>
     </section>
+    }
     <!-- End footer -->
     <!-- scroll to top -->
     <div class="scroll-top shadow wow slideInDown">
@@ -119,6 +122,7 @@
     </div>
 
     <!-- confirm Modal -->
+    <!-- Modal -->
     <div class="modal fade"
          id="confirmModal"
          tabindex="-1"
@@ -134,6 +138,7 @@
             </div>
         </div>
     </div>
+
 
     <script src="~/js/jquery.js"></script>
     <script src="~/js/bootstrap.bundle.min.js"></script>

@@ -15,18 +15,21 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using Microsoft.Extensions.Logging;
 using Tedx.Models;
+using System.Security.Claims;
 
 namespace Tedx.Areas.Identity.Pages.Account
 {
     public class LoginModel : PageModel
     {
         private readonly SignInManager<ApplicationUser> _signInManager;
+        private readonly UserManager<ApplicationUser> _userManager;
         private readonly ILogger<LoginModel> _logger;
 
-        public LoginModel(SignInManager<ApplicationUser> signInManager, ILogger<LoginModel> logger)
+        public LoginModel(SignInManager<ApplicationUser> signInManager, UserManager<ApplicationUser>userManager ,ILogger<LoginModel> logger)
         {
             _signInManager = signInManager;
             _logger = logger;
+            _userManager = userManager;
         }
 
         /// <summary>
@@ -102,26 +105,53 @@ namespace Tedx.Areas.Identity.Pages.Account
         {
             if (ModelState.IsValid)
             {
+                var user = await _userManager.FindByEmailAsync(Input.Email);
+
+                if (user == null)
+                {
+                    ModelState.AddModelError(string.Empty, "خطأ في البريد الالكتروني او كلمه المرور");
+                    return Page();
+                }
+
                 var result = await _signInManager.PasswordSignInAsync(Input.Email, Input.Password, isPersistent: false, lockoutOnFailure: false);
+
                 if (result.Succeeded)
                 {
-                    // Check if the user is an admin
-                    var user = await _signInManager.UserManager.FindByEmailAsync(Input.Email);
-                    if (await _signInManager.UserManager.IsInRoleAsync(user, "Admin"))
+                    // Retrieve the signed-in user
+                    var signedUser = await _signInManager.UserManager.FindByEmailAsync(Input.Email);
+
+                    // Check if the user is in the "Admin" role
+                    if (await _signInManager.UserManager.IsInRoleAsync(signedUser, "Admin"))
                     {
-                        return RedirectToAction("SpeakerUsers", "Admin");
+                        // Retrieve roles for the user
+                        var roles = await _userManager.GetRolesAsync(signedUser);
+
+                        // Add claims for the roles
+                    var claims = new List<Claim>
+                    {
+                        new Claim(ClaimTypes.Name, user.UserName),
+                        new Claim(ClaimTypes.Role, "Admin") // Add roles or custom claims as needed
+                    };
+
+
+                        var identity = new ClaimsIdentity(claims, IdentityConstants.ApplicationScheme);
+                        var principal = new ClaimsPrincipal(identity);
+
+                        await HttpContext.SignInAsync(IdentityConstants.ApplicationScheme, principal);
+
+                        return RedirectToAction("Dashboard", "Admin");
                     }
                     else
                     {
                         // Log out non-admin users
                         await _signInManager.SignOutAsync();
-                        ModelState.AddModelError(string.Empty, "You do not have permission to access this page.");
+                        ModelState.AddModelError(string.Empty, "ليس لديك صلاحيه الدخول");
                         return Page();
                     }
                 }
                 else
                 {
-                    ModelState.AddModelError(string.Empty, "هذا المستخدم غير موجود او خطأ في كلمه المرور");
+                    ModelState.AddModelError(string.Empty, "خطأ في البريد الالكتروني او كلمه المرور ");
                     return Page();
                 }
             }
@@ -129,5 +159,7 @@ namespace Tedx.Areas.Identity.Pages.Account
             // If we got this far, something failed; redisplay the form
             return Page();
         }
+
+
     }
 }

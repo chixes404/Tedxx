@@ -1,0 +1,86 @@
+﻿@model Tedx.Models.User
+
+@{
+    Layout = "~/Views/Shared/_Layout.cshtml";
+
+    ViewData["Title"] = "User Details";
+}
+
+
+<style>
+    /* Scrollable text for Idea Description and Why Idea */
+    .scrollable-text {
+        max-height: 200px; /* Limit height to 200px */
+        overflow-y: auto; /* Add vertical scrollbar if needed */
+        padding: 10px;
+        border: 1px solid #444; /* Subtle border */
+        border-radius: 4px; /* Rounded corners */
+        background-color: #1a1a1a; /* Dark background */
+    }
+
+    /* Custom card styling */
+    .card {
+        border: 1px solid #444; /* Subtle border */
+        border-radius: 8px; /* Rounded corners */
+        margin-bottom: 20px; /* Spacing between cards */
+    }
+
+    .card-title {
+        color: #dc3545; /* Red color for titles */
+        margin-bottom: 15px; /* Spacing below titles */
+    }
+
+    .card-text {
+        color: #fff; /* White text */
+    }
+
+</style>
+<!-- Main Content -->
+<div class="col-md-9 ml-sm-auto col-lg-9 px-4" id="mainContent">
+    <h2 class="text-light my-4">بيانات المستخدم</h2>
+
+    <!-- Basic Info Card -->
+    <div class="card bg-dark text-light mb-4">
+        <div class="card-body">
+            <h5 class="card-title">البيانات الاساسيه</h5>
+            <p class="card-text"><strong>الاسم:</strong> @Model.FullName</p>
+            <p class="card-text"><strong>االايميل:</strong> @Model.Email</p>
+            <p class="card-text"><strong>الجوال:</strong> @Model.Phone</p>
+            <p class="card-text"><strong>دور المستخدم:</strong> @Model.RoleAs</p>
+            <p class="card-text"><strong>الوظيفه:</strong> @Model.Job</p>
+        </div>
+    </div>
+
+    <!-- Idea Category Card -->
+    <div class="card bg-dark text-light mb-4">
+        <div class="card-body">
+            <h5 class="card-title">تصنيف الفكره</h5>
+            <p class="card-text">@Model.IdeaCategory</p>
+        </div>
+    </div>
+
+    <!-- Idea Description Card -->
+    <div class="card bg-dark text-light mb-4">
+        <div class="card-body">
+            <h5 class="card-title">وصف الفكره</h5>
+            <div class="scrollable-text">
+                <p class="card-text">@Model.IdeaDescription</p>
+            </div>
+        </div>
+    </div>
+
+    <!-- Why Idea Card -->
+    <div class="card bg-dark text-light mb-4">
+        <div class="card-body">
+            <h5 class="card-title">سبب الفكره</h5>
+            <div class="scrollable-text">
+                <p class="card-text">@Model.WhyIdea</p>
+            </div>
+        </div>
+    </div>
+
+    <!-- Back Button -->
+    <div class="mt-3">
+        <a asp-action="Dashboard" class="btn btn-secondary">للرجوع</a>
+    </div>
+</div>

@@ -13,27 +13,29 @@ namespace Tedx.Controllers
             _context = context;
         }
 
-        // GET: Registration/Create
         public IActionResult Create()
         {
             return View();
         }
-
-        // POST: Registration/Create
         [HttpPost]
-        public IActionResult Create(User user)
+        public IActionResult Create([Bind("FullName,Age,RoleAs,Job,Email,Phone,IdeaCategory,IdeaDescription,WhyIdea,HasPresentedBefore")] User user)
         {
             if (ModelState.IsValid)
             {
-                // Save the user to the database
                 _context.Users.Add(user);
                 _context.SaveChanges();
 
+                // Return a JSON response indicating success
                 return Json(new { success = true });
             }
 
-            // If the model is invalid, return validation errors
-            return Json(new { success = false, errors = ModelState.Values.SelectMany(v => v.Errors).Select(e => e.ErrorMessage) });
+            // If ModelState is invalid, return validation errors
+            var errors = ModelState.ToDictionary(
+                kvp => kvp.Key,
+                kvp => kvp.Value.Errors.Select(e => e.ErrorMessage).FirstOrDefault()
+            );
+
+            return Json(new { success = false, errors });
         }
     }
 }
