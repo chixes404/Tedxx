@@ -200,8 +200,11 @@
                             <div class="requ text-danger">*</div>
                         </div>
                         <select name="IdeaCategory" class="form-select">
-                            <option value="اختيار 1">اختيار 1</option>
-                            <option value="اختيار 2">اختيار 2</option>
+                            <option value="التعليم"> التعليم</option>
+                            <option value="الصحة"> الصحة </option>
+                            <option value="الابتكار"> الابتكار </option>
+                            <option value="الأعمال "> الأعمال  </option>
+                            <option value="اخرى "> اخرى  </option>
                         </select>
 
                         <span asp-validation-for="IdeaCategory" class="text-danger"></span>
@@ -289,8 +292,8 @@
                 <!-- Modal Header with Close Button on the Left -->
                 <div class="modal-header justify-content-start">
                     <!-- Close Button on the Left -->
-                    <button type="button" class="btn-close me-2" data-bs-dismiss="modal" aria-label="Close"></button>
-                    <h5 class="modal-title" id="successModalLabel">تم ارسال الطلب بنجاح</h5>
+                    <button type="button" class="btn-close me-3" data-bs-dismiss="modal" aria-label="Close"></button>
+                    <h5 class="modal-title d-inline" id="successModalLabel">تم ارسال الطلب بنجاح</h5>
                 </div>
                 <div class="modal-body text-center">
                     <i class="fa-solid fa-check fs-1 text-success mb-4"></i>
@@ -301,9 +304,7 @@
                         <img id="qrCodeImage" src="" alt="QR Code" style="max-width: 200px; height: auto;" />
                     </div>
                 </div>
-                <div class="modal-footer justify-content-start">
-                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">إغلاق</button>
-                </div>
+           
             </div>
         </div>
     </div>    <!-- Scripts -->
