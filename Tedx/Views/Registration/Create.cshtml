@@ -73,6 +73,37 @@
     <!-- Favicons -->
     <link href="~/assets/imgs/favicon.ico" rel="shortcut icon" />
     <link href="~/assets/imgs/favicon.webp" rel="apple-touch-icon" />
+
+    <style>
+        #qrCodeContainer {
+            display: none; /* Hide by default */
+            margin-top: 20px;
+        }
+
+        #qrCodeImage {
+            border: 1px solid #ddd;
+            border-radius: 8px;
+            padding: 10px;
+            background-color: #fff;
+        }
+        /* Custom CSS for the modal header */
+        .modal-header {
+            border-bottom: none; /* Remove the default border */
+            padding-bottom: 0; /* Reduce padding */
+        }
+
+            /* Custom CSS for the close button */
+            .modal-header .btn-close {
+                margin-right: 10px; /* Add spacing between the close button and the title */
+            }
+
+        /* Custom CSS for the modal footer */
+        .modal-footer {
+            border-top: none; /* Remove the default border */
+            padding-top: 0; /* Reduce padding */
+        }
+    </style>
+
 </head>
 <body>
     <!-- Navigation Bar -->
@@ -83,9 +114,11 @@
             </div>
             <div class="collapse navbar-collapse d-flex justify-content-end" id="navbarText">
                 <span class="navbar-text">
-                    <button type="button" class="btn btn-primary text-light rounded-0">Ar</button>
+                    <button type="button" class="btn btn-primary text-light rounded-0" onclick="setCulture('ar-Sa')">Ar</button>
+                    <button type="button" class="btn btn-secondary text-light rounded-0" onclick="setCulture('en-US')">En</button>
                 </span>
             </div>
+
         </div>
     </nav>
 
@@ -245,7 +278,6 @@
         </section>
     }
 
-
     <!-- Success Modal -->
     <div class="modal fade"
          id="successModal"
@@ -254,20 +286,45 @@
          aria-hidden="true">
         <div class="modal-dialog modal-dialog-centered">
             <div class="modal-content py-5">
+                <!-- Modal Header with Close Button on the Left -->
+                <div class="modal-header justify-content-start">
+                    <!-- Close Button on the Left -->
+                    <button type="button" class="btn-close me-2" data-bs-dismiss="modal" aria-label="Close"></button>
+                    <h5 class="modal-title" id="successModalLabel">تم ارسال الطلب بنجاح</h5>
+                </div>
                 <div class="modal-body text-center">
                     <i class="fa-solid fa-check fs-1 text-success mb-4"></i>
-                    <h3 class="my-3">تم ارسال الطلب بنجاح</h3>
                     <p>تم ارسال عبر منصة قوي و بانتظار الموافقه من الموظفين</p>
+                    <p>برجاء مسح الرمز</p>
+                    <!-- QR Code Image Placeholder -->
+                    <div id="qrCodeContainer" class="mt-4">
+                        <img id="qrCodeImage" src="" alt="QR Code" style="max-width: 200px; height: auto;" />
+                    </div>
+                </div>
+                <div class="modal-footer justify-content-start">
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">إغلاق</button>
                 </div>
             </div>
         </div>
-    </div>
-    
-  <!-- Scripts -->
+    </div>    <!-- Scripts -->
     <script src="~/js/jquery.js"></script>
     <script src="~/js/bootstrap.bundle.min.js"></script>
     <script src="~/lib/jquery-validation/dist/jquery.validate.min.js"></script>
     <script src="~/lib/jquery-validation-unobtrusive/jquery.validate.unobtrusive.min.js"></script>
+
+
+
+    <script>
+        function setCulture(culture) {
+            fetch(`/Registration/SetCulture?culture=${culture}`, {
+                method: 'GET'
+            })
+                .then(() => location.reload()) // Reload the page to apply the culture
+                .catch(err => console.error(err));
+        }
+    </script>
+
+
     <script>
         $(document).ready(function () {
             // Hide/show speaker fields based on radio button selection
@@ -295,12 +352,14 @@
                         data: formData, // Serialized form data
                         success: function (response) {
                             if (response.success) {
+                                // Set the QR code image source
+                                if (response.qrCode) {
+                                    $('#qrCodeImage').attr('src', 'data:image/png;base64,' + response.qrCode);
+                                    $('#qrCodeContainer').show(); // Show the QR code container
+                                }
+
                                 // Show the success modal
                                 $('#successModal').modal('show');
-                                setTimeout(function () {
-                                    $('#successModal').modal('hide'); // Close the modal
-                                    $('#createForm')[0].reset(); // Clear the form
-                                }, 3000); // 3000 milliseconds = 3 seconds
                             } else {
                                 // Display validation errors
                                 if (response.errors) {
@@ -327,6 +386,12 @@
             $('#createForm input, #createForm textarea').on('input', function () {
                 var fieldName = $(this).attr('name');
                 $('[data-valmsg-for="' + fieldName + '"]').text('');
+            });
+
+            // Reset the form and hide the QR code container when the modal is closed
+            $('#successModal').on('hidden.bs.modal', function () {
+                $('#createForm')[0].reset(); // Clear the form
+                $('#qrCodeContainer').hide(); // Hide the QR code container
             });
         });
     </script>

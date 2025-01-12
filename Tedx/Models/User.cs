@@ -1,13 +1,19 @@
-﻿using System.ComponentModel.DataAnnotations;
+﻿
+using Humanizer.Localisation;
+using Microsoft.Extensions.Localization;
+using System.ComponentModel.DataAnnotations;
 using Tedx.Helper;
 
 namespace Tedx.Models
 {
-	public class User
+	public class User()
 	{
-		public int Id { get; set; }
+   
+        public int Id { get; set; }
 
-        [Required(ErrorMessage = "الاسم كامل مطلوب")]
+        //[Required(ErrorMessageResourceType = (typeof(Tedx.Resources.ar_SA)), ErrorMessageResourceName = "NameRequired")] 
+        [Required(ErrorMessage = "الاسم بالكامل مطلوب")]
+
         public string FullName { get; set; }
 
         [Required(ErrorMessage = "العمر مطلوب")]
