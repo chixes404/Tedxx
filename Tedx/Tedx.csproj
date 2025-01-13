@@ -547,26 +547,41 @@
   </ItemGroup>
 
   <ItemGroup>
-    <Compile Update="Resources\ar-SA.Designer.cs">
+    <Compile Update="Resources\User.ar-SA.Designer.cs">
       <DesignTime>True</DesignTime>
       <AutoGen>True</AutoGen>
-      <DependentUpon>ar-SA.resx</DependentUpon>
+      <DependentUpon>User.ar-SA.resx</DependentUpon>
     </Compile>
-    <Compile Update="Resources\en-US.Designer.cs">
+    <Compile Update="Resources\User.Designer.cs">
       <DesignTime>True</DesignTime>
       <AutoGen>True</AutoGen>
-      <DependentUpon>en-US.resx</DependentUpon>
+      <DependentUpon>User.resx</DependentUpon>
+    </Compile>
+    <Compile Update="Resources\User.en-US.Designer.cs">
+      <DesignTime>True</DesignTime>
+      <AutoGen>True</AutoGen>
+      <DependentUpon>User.en-US.resx</DependentUpon>
     </Compile>
   </ItemGroup>
 
   <ItemGroup>
-    <EmbeddedResource Update="Resources\ar-SA.resx">
+    <EmbeddedResource Update="Resources\User.ar-SA.resx">
       <Generator>PublicResXFileCodeGenerator</Generator>
-      <LastGenOutput>ar-SA.Designer.cs</LastGenOutput>
+      <LastGenOutput>User.ar-SA.Designer.cs</LastGenOutput>
     </EmbeddedResource>
-    <EmbeddedResource Update="Resources\en-US.resx">
+    <EmbeddedResource Update="Resources\User.en-US.resx">
       <Generator>PublicResXFileCodeGenerator</Generator>
-      <LastGenOutput>en-US.Designer.cs</LastGenOutput>
+      <LastGenOutput>User.en-US.Designer.cs</LastGenOutput>
+    </EmbeddedResource>
+    <EmbeddedResource Update="Resources\User.resx">
+      <Generator>PublicResXFileCodeGenerator</Generator>
+      <LastGenOutput>User.Designer.cs</LastGenOutput>
+    </EmbeddedResource>
+    <EmbeddedResource Update="Resources\Views\Registration\Create.ar-SA.resx">
+      <Generator>PublicResXFileCodeGenerator</Generator>
+    </EmbeddedResource>
+    <EmbeddedResource Update="Resources\Views\Registration\Create.en-US.resx">
+      <Generator>PublicResXFileCodeGenerator</Generator>
     </EmbeddedResource>
   </ItemGroup>
 

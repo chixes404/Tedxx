@@ -1,6 +1,7 @@
 ﻿using Microsoft.AspNetCore.Localization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Localization;
+using System.Text.RegularExpressions;
 using Tedx.Data;
 using Tedx.Helper;
 using Tedx.Models;
@@ -22,15 +23,36 @@ namespace Tedx.Controllers
         {
             return View();
         }
-
         [HttpPost]
         public IActionResult Create([Bind("FullName,Age,RoleAs,Job,Email,Phone,IdeaCategory,IdeaDescription,WhyIdea,HasPresentedBefore")] User user)
         {
             if (ModelState.IsValid)
             {
+                // Check if email already exists
+                var existingEmail = _context.Users.Any(u => u.Email == user.Email);
+                if (existingEmail)
+                {
+                    return Json(new { success = false, errors = new { Email = _localizer["EmailAlreadyExists"].Value } });
+                }
+
+                // Validate phone number format
+                if (!Regex.IsMatch(user.Phone, @"^(?:\+966|966)?5\d{8}$"))
+                {
+                    return Json(new { success = false, errors = new { Phone = _localizer["PhoneInvalid"].Value } });
+                }
+
+                // Check if phone number already exists
+                var existingPhone = _context.Users.Any(u => u.Phone == user.Phone);
+                if (existingPhone)
+                {
+                    return Json(new { success = false, errors = new { Phone = _localizer["PhoneAlreadyExists"].Value } });
+                }
+
+                // Add the user to the database
                 _context.Users.Add(user);
                 _context.SaveChanges();
 
+                // Generate user details for the QR code
                 string userDetails = $"الرقم التعريفي:{user.Id}\n, الاسم:{user.FullName}\n, الايميل:{user.Email}\n , ألجوال :{user.Phone}";
 
                 // Generate QR code with the user's ID
@@ -48,7 +70,6 @@ namespace Tedx.Controllers
 
             return Json(new { success = false, errors });
         }
-
         [HttpGet]
         public IActionResult SetCulture(string culture)
         {

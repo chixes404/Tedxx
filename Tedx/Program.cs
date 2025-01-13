@@ -44,12 +44,9 @@ var localizationOptions = new RequestLocalizationOptions()
 
 // Add Controllers and Views
 builder.Services.AddControllersWithViews()
-    .AddViewLocalization() // Enable view localization
-    .AddDataAnnotationsLocalization(options =>
-    {
-        options.DataAnnotationLocalizerProvider = (type, factory) =>
-            factory.Create(typeof(Resources)); // Use the User resource file for data annotations
-    });
+    .AddViewLocalization()
+    .AddDataAnnotationsLocalization();
+
 
 var app = builder.Build();
 

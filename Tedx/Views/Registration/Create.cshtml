@@ -1,8 +1,15 @@
-﻿
+﻿@using Microsoft.AspNetCore.Mvc.Localization
+@inject IViewLocalizer Localizer
 @model Tedx.Models.User
+@using System.Globalization
+@{
+    var isArabic = CultureInfo.CurrentCulture.Name == "ar-SA";
+    var lang = isArabic ? "ar" : "en";
+    var dir = isArabic ? "rtl" : "ltr";
+}
 
 <!DOCTYPE html>
-<html lang="ar" dir="rtl">
+<html lang="@lang" dir="@dir">
 <head>
     <!-- Required meta tags -->
     <meta charset="utf-8" />
@@ -102,6 +109,76 @@
             border-top: none; /* Remove the default border */
             padding-top: 0; /* Reduce padding */
         }
+
+        /* Apply text alignment based on the dir attribute */
+        html[dir="rtl"] body {
+            text-align: right;
+        }
+
+        html[dir="ltr"] body {
+            text-align: left;
+        }
+
+        /* Align placeholders based on the dir attribute */
+        html[dir="rtl"] input::placeholder,
+        html[dir="rtl"] textarea::placeholder {
+            text-align: right;
+        }
+
+        html[dir="ltr"] input::placeholder,
+        html[dir="ltr"] textarea::placeholder {
+            text-align: left;
+        }
+
+        html[dir="rtl"] .form-check-input {
+            margin-left: 0.5rem;
+            margin-right: 0;
+        }
+
+        html[dir="ltr"] .form-check-input {
+            margin-right: 1;
+            margin-left: 0;
+        }
+
+        /* Ensure labels are aligned correctly */
+        html[dir="rtl"] .form-check-label {
+            margin-right: 0.5rem;
+        }
+
+        html[dir="ltr"] .form-check-label {
+            margin-left: 0.5rem;
+        }
+
+        /* Fix spacing for inline checkboxes and radio buttons */
+        html[dir="rtl"] .form-check-inline {
+            margin-left: 0.5rem;
+            margin-right: 0;
+        }
+
+        html[dir="ltr"] .form-check-inline {
+            margin-right: 0;
+            margin-left: 0;
+        }
+
+        /* Align form buttons */
+        html[dir="rtl"] .form-btns {
+            justify-content: flex-start;
+        }
+
+        html[dir="ltr"] .form-btns {
+            justify-content: flex-end;
+        }
+        /* Align input text based on the dir attribute */
+        html[dir="rtl"] input,
+        html[dir="rtl"] textarea {
+            text-align: right;
+        }
+
+        html[dir="ltr"] input,
+        html[dir="ltr"] textarea {
+            text-align: left;
+        }
+
     </style>
 
 </head>
@@ -114,7 +191,7 @@
             </div>
             <div class="collapse navbar-collapse d-flex justify-content-end" id="navbarText">
                 <span class="navbar-text">
-                    <button type="button" class="btn btn-primary text-light rounded-0" onclick="setCulture('ar-Sa')">Ar</button>
+                    <button type="button" class="btn btn-primary text-light rounded-0" onclick="setCulture('ar-SA')">Ar</button>
                     <button type="button" class="btn btn-secondary text-light rounded-0" onclick="setCulture('en-US')">En</button>
                 </span>
             </div>
@@ -140,115 +217,114 @@
                 <form id="createForm" asp-action="Create" method="post">
                     <div class="mb-3">
                         <div class="d-flex">
-                            <label asp-for="FullName" class="ng-binding">الاسم كامل</label>
+                            <label asp-for="FullName" class="ng-binding">@Localizer["FullNameLabel"]</label>
                             <div class="requ text-danger">*</div>
                         </div>
-                        <input asp-for="FullName" class="form-control" placeholder="أدخل هنا |" />
+                        <input asp-for="FullName" class="form-control" placeholder="@Localizer["EnterHerePlaceholder"]" />
                         <span asp-validation-for="FullName" class="text-danger"></span>
                     </div>
                     <div class="mb-3">
                         <div class="d-flex">
-                            <label asp-for="Age" class="ng-binding">العمر</label>
+                            <label asp-for="Age" class="ng-binding">@Localizer["AgeLabel"]</label>
                             <div class="requ text-danger">*</div>
                         </div>
-                        <input asp-for="Age" class="form-control" placeholder="أدخل هنا |" />
+                        <input asp-for="Age" class="form-control" placeholder="@Localizer["EnterHerePlaceholder"]" />
                         <span asp-validation-for="Age" class="text-danger"></span>
                     </div>
                     <div class="mt-5 mb-3">
                         <div class="form-check form-check-inline p-0 m-0">
-                            <label class="form-check-label">الانضمام كـ: </label>
+                            <label class="form-check-label">@Localizer["JoinAsLabel"]: </label>
                         </div>
                         <div class="form-check form-check-inline">
                             <input class="form-check-input" type="radio" asp-for="RoleAs" value="متحدث" id="inlineRadio1" />
-                            <label class="form-check-label" for="inlineRadio1">متحدث</label>
+                            <label class="form-check-label" for="inlineRadio1">@Localizer["SpeakerLabel"]</label>
                         </div>
                         <div class="form-check form-check-inline">
                             <input class="form-check-input" type="radio" asp-for="RoleAs" value="مستمع" id="inlineRadio2" checked />
-                            <label class="form-check-label" for="inlineRadio2">مستمع</label>
+                            <label class="form-check-label" for="inlineRadio2">@Localizer["ListenerLabel"]</label>
                         </div>
                         <span asp-validation-for="RoleAs" class="text-danger"></span>
                     </div>
                     <div class="mb-3">
                         <div class="d-flex">
-                            <label asp-for="Job" class="ng-binding">الوظيفة</label>
+                            <label asp-for="Job" class="ng-binding">@Localizer["JobLabel"]</label>
                             <div class="requ text-danger">*</div>
                         </div>
-                        <input asp-for="Job" class="form-control" placeholder="أدخل هنا |" />
+                        <input asp-for="Job" class="form-control" placeholder="@Localizer["EnterHerePlaceholder"]" />
                         <span asp-validation-for="Job" class="text-danger"></span>
                     </div>
                     <div class="listener">
                         <div class="mb-3">
                             <div class="d-flex">
-                                <label asp-for="Email" class="ng-binding">الايميل</label>
+                                <label asp-for="Email" class="ng-binding">@Localizer["EmailLabel"]</label>
                                 <div class="requ text-danger">*</div>
                             </div>
-                            <input asp-for="Email" class="form-control" placeholder="أدخل هنا |" />
-                            <span asp-validation-for="Email" class="text-danger"></span>
+                            <input asp-for="Email" class="form-control" placeholder="@Localizer["EnterHerePlaceholder"]" />
+                            <span asp-validation-for="Email" id="Email-error" class="text-danger"></span>
                         </div>
                         <div class="mb-3">
                             <div class="d-flex">
-                                <label asp-for="Phone" class="ng-binding">الجوال</label>
+                                <label asp-for="Phone" class="ng-binding">@Localizer["PhoneLabel"]</label>
                                 <div class="requ text-danger">*</div>
                             </div>
-                            <input asp-for="Phone" class="form-control" placeholder="أدخل هنا |" />
+                            <input asp-for="Phone" class="form-control" placeholder="@Localizer["EnterHerePlaceholder"]" />
                             <span asp-validation-for="Phone" class="text-danger"></span>
+                            <span id="phone-error"> </span>
                         </div>
                     </div>
                     <div class="mb-3 speaker">
                         <div class="d-flex">
-                            <label asp-for="IdeaCategory" class="ng-binding">تصنيف الفكرة</label>
+                            <label asp-for="IdeaCategory" class="ng-binding">@Localizer["IdeaCategoryLabel"]</label>
                             <div class="requ text-danger">*</div>
                         </div>
                         <select name="IdeaCategory" class="form-select">
-                            <option value="التعليم"> التعليم</option>
-                            <option value="الصحة"> الصحة </option>
-                            <option value="الابتكار"> الابتكار </option>
-                            <option value="الأعمال "> الأعمال  </option>
-                            <option value="اخرى "> اخرى  </option>
+                            <option value="التعليم">@Localizer["EducationOption"]</option>
+                            <option value="الصحة">@Localizer["HealthOption"]</option>
+                            <option value="الابتكار">@Localizer["InnovationOption"]</option>
+                            <option value="الأعمال">@Localizer["BusinessOption"]</option>
+                            <option value="اخرى">@Localizer["OtherOption"]</option>
                         </select>
-
                         <span asp-validation-for="IdeaCategory" class="text-danger"></span>
                     </div>
                     <div class="mb-3 speaker">
                         <div class="d-flex">
-                            <label asp-for="IdeaDescription" class="ng-binding">اشرح الفكرة في ١٠٠-٣٠٠ كلمة</label>
+                            <label asp-for="IdeaDescription" class="ng-binding">@Localizer["IdeaDescriptionLabel"]</label>
                             <div class="requ text-danger">*</div>
                         </div>
-                        <textarea asp-for="IdeaDescription" class="form-control" placeholder="أدخل هنا |" rows="3"></textarea>
+                        <textarea asp-for="IdeaDescription" class="form-control" placeholder="@Localizer["EnterHerePlaceholder"]" rows="3"></textarea>
                         <span asp-validation-for="IdeaDescription" class="text-danger"></span>
                     </div>
                     <div class="mb-3 speaker">
                         <div class="d-flex">
-                            <label asp-for="WhyIdea" class="ng-binding">لماذا فكرتك تستحق الظهور؟</label>
+                            <label asp-for="WhyIdea" class="ng-binding">@Localizer["WhyIdeaLabel"]</label>
                             <div class="requ text-danger">*</div>
                         </div>
-                        <textarea asp-for="WhyIdea" class="form-control" placeholder="أدخل هنا |" rows="3"></textarea>
+                        <textarea asp-for="WhyIdea" class="form-control" placeholder="@Localizer["EnterHerePlaceholder"]" rows="3"></textarea>
                         <span asp-validation-for="WhyIdea" class="text-danger"></span>
                     </div>
                     <div class="mb-3 speaker">
                         <div class="d-flex">
-                            <label asp-for="HasPresentedBefore" class="ng-binding">هل قدمت على المسرح من قبل؟</label>
+                            <label asp-for="HasPresentedBefore" class="ng-binding">@Localizer["HasPresentedBeforeLabel"]</label>
                             <div class="requ text-danger">*</div>
                         </div>
-                        <div class="form-check">
+                        <div class="form-check form-check-inline">
                             <input class="form-check-input" type="radio" asp-for="HasPresentedBefore" value="true" id="flexRadioDefault1" />
-                            <label class="form-check-label" for="flexRadioDefault1">نعم</label>
+                            <label class="form-check-label" for="flexRadioDefault1">@Localizer["YesLabel"]</label>
                         </div>
-                        <div class="form-check">
+                        <div class="form-check form-check-inline">
                             <input class="form-check-input" type="radio" asp-for="HasPresentedBefore" value="false" id="flexRadioDefault2" checked />
-                            <label class="form-check-label" for="flexRadioDefault2">لا</label>
+                            <label class="form-check-label" for="flexRadioDefault2">@Localizer["NoLabel"]</label>
                         </div>
                         <span asp-validation-for="HasPresentedBefore" class="text-danger"></span>
                     </div>
                     <div class="form-btns d-flex align-items-center justify-content-center">
                         <button type="submit" class="btn btn-primary text-light rounded-0 text-uppercase mt-4 px-2 mx-2">
-                            التالي
+                            @Localizer["NextButton"]
                         </button>
                         <button type="button" class="btn btn-outline-primary text-light rounded-0 text-uppercase mt-4 px-2 mx-2" onclick="location.href = '';">
-                            إلغاء
+                            @Localizer["CancelButton"]
                         </button>
                     </div>
-
                 </form>
             </div>
         </section>
@@ -293,21 +369,20 @@
                 <div class="modal-header justify-content-start">
                     <!-- Close Button on the Left -->
                     <button type="button" class="btn-close me-3" data-bs-dismiss="modal" aria-label="Close"></button>
-                    <h5 class="modal-title d-inline" id="successModalLabel">تم ارسال الطلب بنجاح</h5>
+                    <h5 class="modal-title d-inline" id="successModalLabel">@Localizer["SuccessModalTitle"]</h5>
                 </div>
                 <div class="modal-body text-center">
                     <i class="fa-solid fa-check fs-1 text-success mb-4"></i>
-                    <p>تم ارسال عبر منصة قوي و بانتظار الموافقه من الموظفين</p>
-                    <p>برجاء مسح الرمز</p>
+                    <p>@Localizer["SuccessModalMessage1"]</p>
+                    <p>@Localizer["SuccessModalMessage2"]</p>
                     <!-- QR Code Image Placeholder -->
                     <div id="qrCodeContainer" class="mt-4">
                         <img id="qrCodeImage" src="" alt="QR Code" style="max-width: 200px; height: auto;" />
                     </div>
                 </div>
-           
             </div>
         </div>
-    </div>    <!-- Scripts -->
+    </div><!-- Scripts -->
     <script src="~/js/jquery.js"></script>
     <script src="~/js/bootstrap.bundle.min.js"></script>
     <script src="~/lib/jquery-validation/dist/jquery.validate.min.js"></script>
@@ -325,18 +400,16 @@
         }
     </script>
 
-
+ 
     <script>
-        $(document).ready(function () {
-            // Hide/show speaker fields based on radio button selection
+        $('.speaker').hide();
+        $("#inlineRadio1").on("click", function () {
+            $('.speaker').toggle(this.checked);
+        });
+        $("#inlineRadio2").on("click", function () {
             $('.speaker').hide();
-            $("#inlineRadio1").on("click", function () {
-                $('.speaker').toggle(this.checked);
-            });
-            $("#inlineRadio2").on("click", function () {
-                $('.speaker').hide();
-            });
-
+        });
+        $(document).ready(function () {
             // Handle form submission
             $('#createForm').on('submit', function (e) {
                 e.preventDefault(); // Prevent the default form submission
@@ -366,7 +439,7 @@
                                 if (response.errors) {
                                     for (var key in response.errors) {
                                         if (response.errors.hasOwnProperty(key)) {
-                                            $('[data-valmsg-for="' + key + '"]').text(response.errors[key]);
+                                            $('#' + key + '-error').text(response.errors[key]); // Display error message
                                         }
                                     }
                                 } else {
@@ -386,7 +459,7 @@
             // Clear validation errors when the user starts typing
             $('#createForm input, #createForm textarea').on('input', function () {
                 var fieldName = $(this).attr('name');
-                $('[data-valmsg-for="' + fieldName + '"]').text('');
+                $('#' + fieldName + '-error').text(''); // Clear the error message
             });
 
             // Reset the form and hide the QR code container when the modal is closed
@@ -394,31 +467,6 @@
                 $('#createForm')[0].reset(); // Clear the form
                 $('#qrCodeContainer').hide(); // Hide the QR code container
             });
-        });
-    </script>
-    <script>
-        $(document).ready(function () {
-            // Add custom validation method for Saudi phone numbers
-            $.validator.addMethod("saudiphone", function (value, element) {
-                return this.optional(element) || /^(?:\+966|966)?5\d{8}$/.test(value);
-            }, "رقم الجوال غير صحيح. يجب أن يبدأ بـ 05 ويحتوي على 9 أرقام.");
-
-            // Apply the custom validation to the Phone field
-            $('#createForm').validate({
-                rules: {
-                    Phone: {
-                        required: true,
-                        saudiphone: true
-                    }
-                },
-                messages: {
-                    Phone: {
-                        required: "الجوال مطلوب",
-                        saudiphone: "رقم الجوال غير صحيح. يجب أن يبدأ بـ 05 ويحتوي على 9 أرقام."
-                    }
-                }
-            });
-        });
-    </script>
+        });</script>
 </body>
 </html>

@@ -117,7 +117,37 @@
   <resheader name="writer">
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
+  <data name="AgeRequired" xml:space="preserve">
+    <value>العمر مطلوب</value>
+  </data>
+  <data name="EmailAlreadyExists" xml:space="preserve">
+    <value>البريد الإلكتروني موجود مسبقًا.</value>
+  </data>
+  <data name="EmailRequired" xml:space="preserve">
+    <value>البريد الالكتروني مطلوب</value>
+  </data>
+  <data name="EmailVaildation" xml:space="preserve">
+    <value>البريد الالكتروني غير صحيح</value>
+  </data>
   <data name="FullNameRequired" xml:space="preserve">
     <value>الاسم بالكامل مطلوب</value>
+  </data>
+  <data name="JobRequired" xml:space="preserve">
+    <value>الوظيفه مطلوبه</value>
+  </data>
+  <data name="MaxWordsValidation" xml:space="preserve">
+    <value>يجب أن يحتوي الحقل على 300 كلمة كحد أقصى.</value>
+  </data>
+  <data name="PhoneAlreadyExists" xml:space="preserve">
+    <value>رقم الجوال موجود مسبقًا.</value>
+  </data>
+  <data name="PhoneRequired" xml:space="preserve">
+    <value>الجوال مطلوب</value>
+  </data>
+  <data name="PhoneValidation" xml:space="preserve">
+    <value>الجوال غير صحيح</value>
+  </data>
+  <data name="RoleIsRequired" xml:space="preserve">
+    <value>الدور مطلوب </value>
   </data>
 </root>

@@ -117,7 +117,86 @@
   <resheader name="writer">
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
-  <data name="FullNameRequired" xml:space="preserve">
-    <value>Name is required</value>
+  <data name="AgeLabel" xml:space="preserve">
+    <value>العمر</value>
+  </data>
+  <data name="BusinessOption" xml:space="preserve">
+    <value>الأعمال</value>
+  </data>
+  <data name="CancelButton" xml:space="preserve">
+    <value>إلغاء</value>
+  </data>
+  <data name="EducationOption" xml:space="preserve">
+    <value>التعليم</value>
+  </data>
+  <data name="EmailLabel" xml:space="preserve">
+    <value>الايميل</value>
+  </data>
+  <data name="EnterHerePlaceholder" xml:space="preserve">
+    <value>ادخل هنا</value>
+  </data>
+  <data name="FullNameLabel" xml:space="preserve">
+    <value>الاسم كامل</value>
+  </data>
+  <data name="HasPresentedBeforeLabel" xml:space="preserve">
+    <value>هل قدمت على المسرح من قبل؟</value>
+  </data>
+  <data name="HealthOption" xml:space="preserve">
+    <value>الصحة</value>
+  </data>
+  <data name="IdeaCategoryLabel" xml:space="preserve">
+    <value>تصنيف الفكرة</value>
+  </data>
+  <data name="IdeaDescriptionLabel" xml:space="preserve">
+    <value>اشرح الفكرة في ١٠٠-٣٠٠ كلمة</value>
+  </data>
+  <data name="InnovationOption" xml:space="preserve">
+    <value>الابتكار</value>
+  </data>
+  <data name="JobLabel" xml:space="preserve">
+    <value>الوظيفة</value>
+  </data>
+  <data name="JoinAsLabel" xml:space="preserve">
+    <value>الانضمام كـ</value>
+  </data>
+  <data name="ListenerLabel" xml:space="preserve">
+    <value>مستمع</value>
+  </data>
+  <data name="NextButton" xml:space="preserve">
+    <value>التالي</value>
+  </data>
+  <data name="NoLabel" xml:space="preserve">
+    <value>لا</value>
+  </data>
+  <data name="OtherOption" xml:space="preserve">
+    <value>أخري</value>
+  </data>
+  <data name="PhoneInvalid" xml:space="preserve">
+    <value>رقم الجوال غير صحيح. يجب أن يبدأ بـ 05 ويحتوي على 9 أرقام.</value>
+  </data>
+  <data name="PhoneLabel" xml:space="preserve">
+    <value>الجوال</value>
+  </data>
+  <data name="PhoneRequired" xml:space="preserve">
+    <value>الجوال مطلوب.</value>
+  </data>
+  <data name="SpeakerLabel" xml:space="preserve">
+    <value>متحدث</value>
+  </data>
+  <data name="SuccessModalMessage1" xml:space="preserve">
+    <value>وسيتم إرسال تأكيد 
+الحضور عبر البريد الإلكتروني المسجل.</value>
+  </data>
+  <data name="SuccessModalMessage2" xml:space="preserve">
+    <value>Please scan the QR code.</value>
+  </data>
+  <data name="SuccessModalTitle" xml:space="preserve">
+    <value>تم ارسال الطلب بنجاح</value>
+  </data>
+  <data name="WhyIdeaLabel" xml:space="preserve">
+    <value>لماذا فكرتك تستحق الظهور؟</value>
+  </data>
+  <data name="YesLabel" xml:space="preserve">
+    <value>نعم</value>
   </data>
 </root>
