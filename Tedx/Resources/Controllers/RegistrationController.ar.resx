@@ -117,40 +117,27 @@
   <resheader name="writer">
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
-  <data name="AgeRequired" xml:space="preserve">
-    <value>Age is required</value>
-  </data>
-  <data name="AgeValidation" xml:space="preserve">
-    <value>Invalid age format or range.</value>
+  <data name="AgeInvalid" xml:space="preserve">
+    <value>العمر غير صحيح</value>
   </data>
   <data name="EmailAlreadyExists" xml:space="preserve">
-    <value>Email is already exists.</value>
+    <value>البريد الإلكتروني موجود مسبقًا.</value>
   </data>
-  <data name="EmailRequired" xml:space="preserve">
-    <value>Email is required</value>
+  <data name="EmailBody" xml:space="preserve">
+    <value>عزيزي/عزيزتي {0}،
+
+تم تقديم طلبك بنجاح. سيتم إرسال تأكيد الحضور إلى البريد الإلكتروني المسجل.
+
+مع أطيب التحيات،
+فريق Tedx</value>
   </data>
-  <data name="EmailVaildation" xml:space="preserve">
-    <value>Email is invalid</value>
-  </data>
-  <data name="FullNameRequired" xml:space="preserve">
-    <value>FullName is required</value>
-  </data>
-  <data name="JobRequired" xml:space="preserve">
-    <value>Job is required</value>
-  </data>
-  <data name="MaxWordsValidation" xml:space="preserve">
-    <value>The field must contain at most 300 words.</value>
+  <data name="EmailSubject" xml:space="preserve">
+    <value>تأكيد التسجيل</value>
   </data>
   <data name="PhoneAlreadyExists" xml:space="preserve">
-    <value>Phone is already exists.</value>
+    <value>رقم الجوال موجود مسبقًا.</value>
   </data>
   <data name="PhoneInvalid" xml:space="preserve">
-    <value>Phone is invalid</value>
-  </data>
-  <data name="PhoneRequired" xml:space="preserve">
-    <value>Phone is Required</value>
-  </data>
-  <data name="RoleIsRequired" xml:space="preserve">
-    <value>Role is required</value>
+    <value>رقم الجوال غير صحيح</value>
   </data>
 </root>

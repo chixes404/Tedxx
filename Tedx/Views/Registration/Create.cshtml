@@ -177,6 +177,28 @@
         html[dir="ltr"] input,
         html[dir="ltr"] textarea {
             text-align: left;
+            /* Center the checkmark and title */
+        }
+        
+        #successModal .modal-body
+
+        {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+
+        /* Add more space below the checkmark */
+        #successModal .fa-check {
+            margin-bottom: 1.5rem; /* Adjust as needed */
+        }
+
+        /* Style the title */
+        #successModal .modal-title {
+            font-size: 1.5rem; /* Adjust as needed */
+            font-weight: bold;
+            color: #28a745; /* Match the success color */
+        }
         }
 
     </style>
@@ -213,6 +235,8 @@
         <!-- Start content section -->
         <section class="content_infoTxt py-5">
             <div class="container">
+
+
 
                 <form id="createForm" asp-action="Create" method="post">
                     <div class="mb-3">
@@ -269,7 +293,6 @@
                             </div>
                             <input asp-for="Phone" class="form-control" placeholder="@Localizer["EnterHerePlaceholder"]" />
                             <span asp-validation-for="Phone" class="text-danger"></span>
-                            <span id="phone-error"> </span>
                         </div>
                     </div>
                     <div class="mb-3 speaker">
@@ -369,12 +392,18 @@
                 <div class="modal-header justify-content-start">
                     <!-- Close Button on the Left -->
                     <button type="button" class="btn-close me-3" data-bs-dismiss="modal" aria-label="Close"></button>
-                    <h5 class="modal-title d-inline" id="successModalLabel">@Localizer["SuccessModalTitle"]</h5>
                 </div>
                 <div class="modal-body text-center">
+                    <!-- Success Sign (Checkmark) -->
                     <i class="fa-solid fa-check fs-1 text-success mb-4"></i>
+
+                    <!-- Success Modal Title -->
+                    <h5 class="modal-title" id="successModalLabel">@Localizer["SuccessModalTitle"]</h5>
+
+                    <br />
+                    <!-- Success Modal Message -->
                     <p>@Localizer["SuccessModalMessage1"]</p>
-                    <p>@Localizer["SuccessModalMessage2"]</p>
+
                     <!-- QR Code Image Placeholder -->
                     <div id="qrCodeContainer" class="mt-4">
                         <img id="qrCodeImage" src="" alt="QR Code" style="max-width: 200px; height: auto;" />
@@ -382,13 +411,11 @@
                 </div>
             </div>
         </div>
-    </div><!-- Scripts -->
+    </div>>
     <script src="~/js/jquery.js"></script>
     <script src="~/js/bootstrap.bundle.min.js"></script>
     <script src="~/lib/jquery-validation/dist/jquery.validate.min.js"></script>
     <script src="~/lib/jquery-validation-unobtrusive/jquery.validate.unobtrusive.min.js"></script>
-
-
 
     <script>
         function setCulture(culture) {
@@ -400,17 +427,19 @@
         }
     </script>
 
- 
     <script>
-        $('.speaker').hide();
-        $("#inlineRadio1").on("click", function () {
-            $('.speaker').toggle(this.checked);
-        });
-        $("#inlineRadio2").on("click", function () {
-            $('.speaker').hide();
-        });
         $(document).ready(function () {
-            // Handle form submission
+            // Hide speaker-specific fields initially
+            $('.speaker').hide();
+
+            // Toggle speaker-specific fields based on role selection
+            $("#inlineRadio1").on("click", function () {
+                $('.speaker').toggle(this.checked);
+            });
+            $("#inlineRadio2").on("click", function () {
+                $('.speaker').hide();
+            });
+
             $('#createForm').on('submit', function (e) {
                 e.preventDefault(); // Prevent the default form submission
 
@@ -437,20 +466,26 @@
                             } else {
                                 // Display validation errors
                                 if (response.errors) {
+                                    var errorHtml = '<ul>';
                                     for (var key in response.errors) {
                                         if (response.errors.hasOwnProperty(key)) {
-                                            $('#' + key + '-error').text(response.errors[key]); // Display error message
+                                            var errorMessage = response.errors[key];
+                                            if (errorMessage) { // Only display if the error message is not null
+                                                errorHtml += '<li>' + errorMessage + '</li>';
+                                                $('[data-valmsg-for="' + key + '"]').text(errorMessage);
+                                            }
                                         }
                                     }
+                                   
                                 } else {
-                                    alert('Form submission failed. Please check your inputs.');
+                                    $('#formErrors').html('Form submission failed. Please check your inputs.').show();
                                 }
                             }
                         },
                         error: function (xhr, status, error) {
                             // Handle AJAX errors
                             console.error('AJAX Error:', error);
-                            alert('An error occurred while submitting the form.');
+                            $('#formErrors').html('An error occurred while submitting the form.').show();
                         }
                     });
                 }
@@ -460,13 +495,17 @@
             $('#createForm input, #createForm textarea').on('input', function () {
                 var fieldName = $(this).attr('name');
                 $('#' + fieldName + '-error').text(''); // Clear the error message
+                $('#formErrors').hide(); // Hide the form errors div
             });
 
             // Reset the form and hide the QR code container when the modal is closed
             $('#successModal').on('hidden.bs.modal', function () {
                 $('#createForm')[0].reset(); // Clear the form
                 $('#qrCodeContainer').hide(); // Hide the QR code container
+                $('#formErrors').hide(); // Hide the form errors div
             });
-        });</script>
+
+        });
+    </script>
 </body>
 </html>

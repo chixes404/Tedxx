@@ -7,6 +7,7 @@ using Tedx.Data;
 using Tedx.Models;
 using Tedx.Helper;
 using Humanizer.Localisation;
+using Tedx.Controllers;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -35,6 +36,7 @@ builder.Services.AddRazorPages();
 // Add Localization Services
 builder.Services.AddLocalization(options => options.ResourcesPath = "Resources");
 
+
 // Configure Supported Cultures
 var supportedCultures = new[] { "en-US", "ar-SA" }; // Add your supported cultures
 var localizationOptions = new RequestLocalizationOptions()
@@ -49,6 +51,10 @@ builder.Services.AddControllersWithViews()
 
 
 var app = builder.Build();
+var localizer = app.Services.GetRequiredService<IStringLocalizer<RegistrationController>>();
+EmailHelper.Initialize(app.Configuration, localizer);
+
+
 
 // Seed data
 using (var scope = app.Services.CreateScope())

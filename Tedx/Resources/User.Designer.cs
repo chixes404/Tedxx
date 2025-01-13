@@ -70,6 +70,15 @@ namespace Tedx.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Invalid age format or range..
+        /// </summary>
+        public static string AgeValidation {
+            get {
+                return ResourceManager.GetString("AgeValidation", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Email is already exists..
         /// </summary>
         public static string EmailAlreadyExists {
@@ -133,20 +142,20 @@ namespace Tedx.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Phone is invalid.
+        /// </summary>
+        public static string PhoneInvalid {
+            get {
+                return ResourceManager.GetString("PhoneInvalid", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Phone is Required.
         /// </summary>
         public static string PhoneRequired {
             get {
                 return ResourceManager.GetString("PhoneRequired", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to Phone is invalid.
-        /// </summary>
-        public static string PhoneValidation {
-            get {
-                return ResourceManager.GetString("PhoneValidation", resourceCulture);
             }
         }
         

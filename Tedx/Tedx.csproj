@@ -565,6 +565,12 @@
   </ItemGroup>
 
   <ItemGroup>
+    <EmbeddedResource Update="Resources\Controllers\RegistrationController.ar.resx">
+      <Generator>PublicResXFileCodeGenerator</Generator>
+    </EmbeddedResource>
+    <EmbeddedResource Update="Resources\Controllers\RegistrationController.en.resx">
+      <Generator>PublicResXFileCodeGenerator</Generator>
+    </EmbeddedResource>
     <EmbeddedResource Update="Resources\User.ar-SA.resx">
       <Generator>PublicResXFileCodeGenerator</Generator>
       <LastGenOutput>User.ar-SA.Designer.cs</LastGenOutput>

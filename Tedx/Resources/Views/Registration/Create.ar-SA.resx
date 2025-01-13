@@ -117,6 +117,9 @@
   <resheader name="writer">
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
+  <data name="AgeInvalid" xml:space="preserve">
+    <value>العمر غير صحيح</value>
+  </data>
   <data name="AgeLabel" xml:space="preserve">
     <value>العمر</value>
   </data>
@@ -171,8 +174,11 @@
   <data name="OtherOption" xml:space="preserve">
     <value>أخري</value>
   </data>
+  <data name="PhoneAlreadyExists" xml:space="preserve">
+    <value>رقم الجوال موجود مسبقًا.</value>
+  </data>
   <data name="PhoneInvalid" xml:space="preserve">
-    <value>رقم الجوال غير صحيح. يجب أن يبدأ بـ 05 ويحتوي على 9 أرقام.</value>
+    <value>رقم الجوال غير صحيح.</value>
   </data>
   <data name="PhoneLabel" xml:space="preserve">
     <value>الجوال</value>

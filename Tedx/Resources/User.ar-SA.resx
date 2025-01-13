@@ -120,6 +120,9 @@
   <data name="AgeRequired" xml:space="preserve">
     <value>العمر مطلوب</value>
   </data>
+  <data name="AgeValidation" xml:space="preserve">
+    <value>تنسيق العمر غير صحيح أو خارج النطاق</value>
+  </data>
   <data name="EmailAlreadyExists" xml:space="preserve">
     <value>البريد الإلكتروني موجود مسبقًا.</value>
   </data>
@@ -141,11 +144,11 @@
   <data name="PhoneAlreadyExists" xml:space="preserve">
     <value>رقم الجوال موجود مسبقًا.</value>
   </data>
+  <data name="PhoneInvalid" xml:space="preserve">
+    <value>رقم الجوال غير صحيح</value>
+  </data>
   <data name="PhoneRequired" xml:space="preserve">
     <value>الجوال مطلوب</value>
-  </data>
-  <data name="PhoneValidation" xml:space="preserve">
-    <value>الجوال غير صحيح</value>
   </data>
   <data name="RoleIsRequired" xml:space="preserve">
     <value>الدور مطلوب </value>
