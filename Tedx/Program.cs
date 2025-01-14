@@ -79,12 +79,16 @@ app.UseStaticFiles();
 app.UseRouting();
 app.UseAuthentication();
 app.UseAuthorization();
-
+// Default route for /register
 app.MapControllerRoute(
-    name: "default",
+    name: "register",
     pattern: "register",
     defaults: new { controller = "Registration", action = "Create" });
 
+// Fallback route for all other routes
+app.MapControllerRoute(
+    name: "default",
+    pattern: "{controller=Registration}/{action=Create}/{id?}");
 app.MapRazorPages();
 
 app.Run();
