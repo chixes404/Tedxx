@@ -157,41 +157,38 @@ namespace Tedx.Controllers
                 return NotFound();
             }
 
+            // Generate user details for the QR code
             string userDetails = $"الرقم التعريفي:{user.Id}\n, الاسم:{user.FullName}\n, الايميل:{user.Email}\n , ألجوال :{user.Phone}";
 
             // Generate QR code with the user's ID
             byte[] qrCodeImage = Helper.QrCodeGenerator.GenerateQrCode(userDetails);
 
-            // Save the QR code to a file
-            string qrCodeFilePath = Path.Combine("wwwroot", "qrcodes", $"{user.Id}.png");
-            System.IO.File.WriteAllBytes(qrCodeFilePath, qrCodeImage);
-
-            // Generate a URL for the image
-            string qrCodeImageUrl = $"~/qrcodes/{user.Id}.png";
-
-            // Create the email body with the QR code embedded
+            // Create the email body
             var subject = "تأكيد التسجيل";
             var message = $@"
-    <html>
-        <body>
-            <p>تم تقديم طلبك بنجاح. سيتم إرسال تأكيد الحضور إلى البريد الإلكتروني المسجل</p>
-            <p>تفاصيل المستخدم:</p>
-            <ul>
-                <li>الرقم التعريفي: {user.Id}</li>
-                <li>الاسم: {user.FullName}</li>
-                <li>الايميل: {user.Email}</li>
-                <li>الجوال: {user.Phone}</li>
-            </ul>
-            <p>QR Code:</p>
-            <img src='{qrCodeImageUrl}' alt='QR Code' style='width: 200px; height: 200px;' />
-        </body>
-    </html>
-";
+        <html>
+            <body>
+                <p>تم تقديم طلبك بنجاح. سيتم إرسال تأكيد الحضور إلى البريد الإلكتروني المسجل</p>
+                <p>تفاصيل المستخدم:</p>
+                <ul>
+                    <li>الرقم التعريفي: {user.Id}</li>
+                    <li>الاسم: {user.FullName}</li>
+                    <li>الايميل: {user.Email}</li>
+                    <li>الجوال: {user.Phone}</li>
+                </ul>
+                <p>يرجى الاطلاع على المرفق للحصول على رمز الاستجابة السريعة (QR Code).</p>
+            </body>
+        </html>
+    ";
 
-            // Send the email
-            EmailHelper.SendEmail(user.Email, subject, message, isBodyHtml: true);
+            // Send the email with the QR code as an attachment
+            bool emailSent = EmailHelper.SendEmail(user.Email, subject, message, qrCodeImage, "QRCode.png", isBodyHtml: true);
 
-
+            if (!emailSent)
+            {
+                // Handle email sending failure (e.g., log the error or show a message)
+                return StatusCode(500, "Failed to send email.");
+            }
 
             // Redirect back to the referring page
             var referer = Request.Headers["Referer"].ToString();
@@ -201,7 +198,6 @@ namespace Tedx.Controllers
             }
             return Redirect(referer);
         }
-
         public async Task<IActionResult> SpeakerExportToExcel(int page = 1, int pageSize = 10)
         {
             var users = await _context.Users

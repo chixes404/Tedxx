@@ -16,7 +16,7 @@ namespace Tedx.Helper
             _localizer = localizer;
         }
 
-        public static bool SendEmail(string toEmail, string subject, string body, bool isBodyHtml = true)
+        public static bool SendEmail(string toEmail, string subject, string body, byte[] attachmentBytes = null, string attachmentName = "QRCode.png", bool isBodyHtml = true)
         {
             try
             {
@@ -28,27 +28,46 @@ namespace Tedx.Helper
                 var fromEmail = _configuration["EmailSettings:FromEmail"];
 
                 // Configure SMTP client
-                var smtpClient = new SmtpClient(smtpServer)
+                using (var smtpClient = new SmtpClient(smtpServer)
                 {
                     Port = port,
                     Credentials = new NetworkCredential(username, password),
                     EnableSsl = true, // Enable SSL/TLS
-                };
-
-                // Create the email message
-                var mailMessage = new MailMessage
+                })
                 {
-                    From = new MailAddress(fromEmail),
-                    Subject = subject,
-                    Body = body,
-                    IsBodyHtml = true, // Set to true if the body contains HTML
-                };
+                    // Create the email message
+                    using (var mailMessage = new MailMessage
+                    {
+                        From = new MailAddress(fromEmail),
+                        Subject = subject,
+                        Body = body,
+                        IsBodyHtml = isBodyHtml, // Set to true if the body contains HTML
+                    })
+                    {
+                        // Add the recipient email address
+                        mailMessage.To.Add(toEmail);
 
-                // Add the recipient email address
-                mailMessage.To.Add(toEmail);
+                        // Add the attachment if provided
+                        if (attachmentBytes != null)
+                        {
+                            var memoryStream = new MemoryStream(attachmentBytes);
+                            var attachment = new Attachment(memoryStream, attachmentName);
+                            mailMessage.Attachments.Add(attachment);
 
-                // Send the email
-                smtpClient.Send(mailMessage);
+                            // Send the email
+                            smtpClient.Send(mailMessage);
+
+                            // Dispose the attachment and stream after sending the email
+                            attachment.Dispose();
+                            memoryStream.Dispose();
+                        }
+                        else
+                        {
+                            // Send the email without an attachment
+                            smtpClient.Send(mailMessage);
+                        }
+                    }
+                }
 
                 return true; // Email sent successfully
             }

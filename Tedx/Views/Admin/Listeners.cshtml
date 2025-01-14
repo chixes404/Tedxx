@@ -22,6 +22,8 @@
         transition: width 0.3s ease, margin-left 0.3s ease; /* Smooth transition */
     }
 
+
+
     .sidebar-sticky {
         position: relative;
         top: 0;
@@ -174,6 +176,11 @@
         border-radius: 4px;
     }
 
+    /* Custom class to remove the border */
+    .no-border-header {
+        border-bottom: none;
+    }
+
 </style>
 
 <div class="container-fluid">
@@ -271,7 +278,7 @@
     <div class="modal-dialog modal-dialog-centered">
         <div class="modal-content py-5">
             <!-- Modal Header with Close Button on the Left -->
-            <div class="modal-header justify-content-start">
+            <div class="modal-header justify-content-start no-border-header">
                 <!-- Close Button on the Left -->
                 <button type="button" class="btn-close me-3" data-bs-dismiss="modal" aria-label="Close"></button>
             </div>
