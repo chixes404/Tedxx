@@ -462,12 +462,15 @@
             // Hide speaker-specific fields initially
             $('.speaker').hide();
 
-            // Toggle speaker-specific fields based on role selection
+            // Toggle speaker-specific fields and hide/show HasChildIn and ListenAboutEvent fields based on role selection
             $("#inlineRadio1").on("click", function () {
                 $('.speaker').toggle(this.checked);
+                $('.listener').hide(); // Hide listener-specific fields
             });
+
             $("#inlineRadio2").on("click", function () {
                 $('.speaker').hide();
+                $('.listener').show(); // Show listener-specific fields
             });
 
             $('#createForm').on('submit', function (e) {
