@@ -591,4 +591,8 @@
     </EmbeddedResource>
   </ItemGroup>
 
+  <ItemGroup>
+    <Folder Include="wwwroot\qrcodes\" />
+  </ItemGroup>
+
 </Project>

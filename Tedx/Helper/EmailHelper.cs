@@ -16,7 +16,7 @@ namespace Tedx.Helper
             _localizer = localizer;
         }
 
-        public static bool SendEmail(string toEmail, string subject, string body)
+        public static bool SendEmail(string toEmail, string subject, string body, bool isBodyHtml = true)
         {
             try
             {

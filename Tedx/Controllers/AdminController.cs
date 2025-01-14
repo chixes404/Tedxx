@@ -157,10 +157,41 @@ namespace Tedx.Controllers
                 return NotFound();
             }
 
-            // Send an email to the user
+            string userDetails = $"الرقم التعريفي:{user.Id}\n, الاسم:{user.FullName}\n, الايميل:{user.Email}\n , ألجوال :{user.Phone}";
+
+            // Generate QR code with the user's ID
+            byte[] qrCodeImage = Helper.QrCodeGenerator.GenerateQrCode(userDetails);
+
+            // Save the QR code to a file
+            string qrCodeFilePath = Path.Combine("wwwroot", "qrcodes", $"{user.Id}.png");
+            System.IO.File.WriteAllBytes(qrCodeFilePath, qrCodeImage);
+
+            // Generate a URL for the image
+            string qrCodeImageUrl = $"~/qrcodes/{user.Id}.png";
+
+            // Create the email body with the QR code embedded
             var subject = "تأكيد التسجيل";
-            var message = "\r\nتم تقديم طلبك بنجاح. سيتم إرسال تأكيد الحضور إلى البريد الإلكتروني المسجل\r\n";
-             EmailHelper.SendEmail(user.Email, subject, message);
+            var message = $@"
+    <html>
+        <body>
+            <p>تم تقديم طلبك بنجاح. سيتم إرسال تأكيد الحضور إلى البريد الإلكتروني المسجل</p>
+            <p>تفاصيل المستخدم:</p>
+            <ul>
+                <li>الرقم التعريفي: {user.Id}</li>
+                <li>الاسم: {user.FullName}</li>
+                <li>الايميل: {user.Email}</li>
+                <li>الجوال: {user.Phone}</li>
+            </ul>
+            <p>QR Code:</p>
+            <img src='{qrCodeImageUrl}' alt='QR Code' style='width: 200px; height: 200px;' />
+        </body>
+    </html>
+";
+
+            // Send the email
+            EmailHelper.SendEmail(user.Email, subject, message, isBodyHtml: true);
+
+
 
             // Redirect back to the referring page
             var referer = Request.Headers["Referer"].ToString();
