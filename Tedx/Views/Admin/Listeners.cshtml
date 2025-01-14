@@ -226,7 +226,6 @@
                     <th>رقم الهاتف</th>
                             <th>الوظيفه</th>
                             <th>طفل لدي المدرسه</th>
-                    <th> اين سمعت عن الحدث</th>
                     <th>عرض البيانات</th>
                 </tr>
 
@@ -250,7 +249,6 @@
                         <td>@user.Phone</td>
                                 <td>@user.Job</td>
                                 <td>@user.HasChildIn</td>
-                        <td>@user.ListenAboutEvent</td>
                         <td>
                             <a asp-action="UserDetails" asp-route-id="@user.Id" class="btn btn-info btn-sm">View</a>
                                     <form id="sendEmailForm-@user.Id" asp-action="SendEmail" asp-route-id="@user.Id" method="post" class="d-inline">
