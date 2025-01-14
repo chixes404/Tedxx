@@ -124,12 +124,9 @@
     <value>البريد الإلكتروني موجود مسبقًا.</value>
   </data>
   <data name="EmailBody" xml:space="preserve">
-    <value>عزيزي/عزيزتي {0}،
-
-تم تقديم طلبك بنجاح. سيتم إرسال تأكيد الحضور إلى البريد الإلكتروني المسجل.
-
-مع أطيب التحيات،
-فريق Tedx</value>
+    <value>
+تم تقديم طلبك بنجاح. سيتم إرسال تأكيد الحضور إلى البريد الإلكتروني المسجل
+</value>
   </data>
   <data name="EmailSubject" xml:space="preserve">
     <value>تأكيد التسجيل</value>

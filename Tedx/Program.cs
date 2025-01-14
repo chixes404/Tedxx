@@ -63,10 +63,13 @@ using (var scope = app.Services.CreateScope())
     await Seeding.Initialize(services);
 }
 
-// Configure the HTTP request pipeline
-if (!app.Environment.IsDevelopment())
+if (app.Environment.IsDevelopment())
 {
-    app.UseExceptionHandler("/Home/Error");
+    app.UseDeveloperExceptionPage(); // Show detailed error pages in development
+}
+else
+{
+    app.UseExceptionHandler("/Home/Error"); // Redirect to the Error action in production
     app.UseHsts();
 }
 

@@ -141,11 +141,17 @@
   <data name="FullNameLabel" xml:space="preserve">
     <value>Full Name</value>
   </data>
+  <data name="HasChildInLabel" xml:space="preserve">
+    <value>Do you have children studying in Ibn Rushd schools?</value>
+  </data>
   <data name="HasPresentedBeforeLabel" xml:space="preserve">
     <value>Have You Presented Before?</value>
   </data>
   <data name="HealthOption" xml:space="preserve">
     <value>Health</value>
+  </data>
+  <data name="HearAboutEventLabel" xml:space="preserve">
+    <value>Where did you hear about the TEDxibnroshd event?</value>
   </data>
   <data name="IdeaCategoryLabel" xml:space="preserve">
     <value>Idea Category</value>
@@ -166,7 +172,7 @@
     <value>Listener</value>
   </data>
   <data name="NextButton" xml:space="preserve">
-    <value>Next</value>
+    <value>Submit</value>
   </data>
   <data name="NoLabel" xml:space="preserve">
     <value>No</value>

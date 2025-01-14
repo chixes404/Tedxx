@@ -124,12 +124,9 @@
     <value>Email is already exists.</value>
   </data>
   <data name="EmailBody" xml:space="preserve">
-    <value>Dear {0},
-
+    <value>
 Your request has been successfully submitted. A confirmation of attendance will be sent to the registered email.
-
-Best regards,
-Tedx Team</value>
+</value>
   </data>
   <data name="EmailSubject" xml:space="preserve">
     <value>Registration Confirmation</value>

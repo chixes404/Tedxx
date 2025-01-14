@@ -4,7 +4,7 @@
 
 @{
     Layout = "~/Views/Shared/_Layout.cshtml";
-    ViewData["Title"] = "SpeakerUser";
+    ViewData["Title"] = "Listeners";
 
 }
 
@@ -154,6 +154,7 @@
         background-color: #f8f9fa;
     }
 
+
     .table-responsive::-webkit-scrollbar {
         width: 8px; /* Adjust scrollbar width */
         height: 8px; /* Adjust scrollbar height */
@@ -173,12 +174,12 @@
         border-radius: 4px;
     }
 
-
 </style>
+
 <div class="container-fluid">
     <div class="row">
 
-        <!-- Sidebar -->
+<!-- Sidebar -->
         @if (User.IsInRole("Admin"))
         {
             <div class="col-md-3 bg-dark sidebar" id="sidebar">
@@ -190,78 +191,73 @@
                             </a>
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link text-light @(ViewContext.RouteData.Values["action"]?.ToString() == "Dashboard" ? "active" : "")"
-                               asp-controller="Admin" asp-action="Dashboard">
+                            <a class="nav-link text-light @(ViewContext.RouteData.Values["action"]?.ToString() == "Listeners" ? "active" : "")"
+                               asp-controller="Admin" asp-action="Listeners">
                                 مستمع
                             </a>
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link text-light @(ViewContext.RouteData.Values["action"]?.ToString() == "SpeakerUsers" ? "active" : "")"
-                               asp-controller="Admin" asp-action="SpeakerUsers">
+                            <a class="nav-link text-light @(ViewContext.RouteData.Values["action"]?.ToString() == "Speakers" ? "active" : "")"
+                               asp-controller="Admin" asp-action="Speakers">
                                 متحدث
                             </a>
                         </li>
                     </ul>
                 </div>
             </div>
-        }        <!-- Main Content -->
-
-        <div class="col-md-9 ml-sm-auto col-lg-9 px-4" id="mainContent">
+        }<!-- Main Content -->
+<div class="col-md-9 ml-sm-auto col-lg-9 px-4" id="mainContent">
             <br />
             <br />
-            <h2 class="text-light mb-4">المستخدمين </h2>
+    <h2 class="text-light mb-4">المستخدمين </h2>
             <div class="table-responsive">
-                <table class="table table-dark table-striped">
-                    <thead>
-                        <tr>
-                            <th>الاسم</th>
-                            <th>البريد الالكتروني </th>
-                            <th>رقم الهاتف</th>
-                            <th> العمر</th>
-                            <th> الحاله</th>
+        <table class="table table-dark table-striped">
+            <thead>
+                <tr>
+                    <th>الاسم</th>
+                    <th>البريد الالكتروني </th>
+                    <th>رقم الهاتف</th>
+                    <th>صفه المستخدم</th>
                             <th>الوظيفه</th>
-                            <th>حضر من قبل </th>
-                            <th> التصنيف</th>
-                            <th>تاريخ التسجيل</th>
-                            <th>عرض البيانات</th>
-                        </tr>
+                            <th>طفل لدي المدرسه</th>
+                    <th> اين سمعت عن الحدث</th>
+                    <th>عرض البيانات</th>
+                </tr>
 
-                        <form asp-action="SpeakerExportToExcel" method="get">
-                            <br />
+                            <form asp-action="ListenerExportToExcel" method="get">
+                                <br />
 
-                            <input type="hidden" name="page" value="@ViewBag.Page" />
-                            <input type="hidden" name="pageSize" value="10" />
-                            <button type="submit" class="btn btn-primary">تصدير الصفحة الحالية إلى Excel</button>
-                            <br />
+                                <input type="hidden" name="page" value="@ViewBag.Page" />
+                                <input type="hidden" name="pageSize" value="10" />
+                                <button type="submit" class="btn btn-primary">تصدير الصفحة الحالية إلى Excel</button>
+                                <br />
 
-                        </form>
-                    </thead>
+                            </form>
 
-                    <tbody>
-                        @foreach (var user in Model)
-                        {
-                            <tr>
-                                <td>@user.FullName</td>
-                                <td>@user.Email</td>
-                                <td>@user.Phone</td>
-                                <td>@user.Age</td>
-                                <td>@user.RoleAs</td>
+            </thead>
+            <tbody>
+                @foreach (var user in Model)
+                {
+                    <tr>
+                        <td>@user.FullName</td>
+                        <td>@user.Email</td>
+                        <td>@user.Phone</td>
+                        <td>@user.RoleAs</td>
                                 <td>@user.Job</td>
-                                <td>@user.HasPresentedBefore</td>
-                                <td>@user.IdeaCategory</td>
-                                <td>@user.CreatedAt</td>
-                                <td>
-                                    <a asp-action="UserDetails" asp-route-id="@user.Id" class="btn btn-info btn-sm">View</a>
-                                </td>
-                            </tr>
-                        }
-                    </tbody>
-                </table>
+                                <td>@user.HasChildIn</td>
+                        <td>@user.ListenAboutEvent</td>
+                        <td>
+                            <a asp-action="UserDetails" asp-route-id="@user.Id" class="btn btn-info btn-sm">View</a>
+                        </td>
+                    </tr>
+                }
+            </tbody>
+        </table>
                 <br />
                 <div class="pagination-container">
-                    @Html.PagedListPager((IPagedList)Model, page => Url.Action("SpeakerUsers", new { page }))
+                    @Html.PagedListPager((IPagedList)Model, page => Url.Action("Listeners", new { page }))
                 </div>
-            </div>
+         </div>
         </div>
     </div>
 </div>
@@ -269,22 +265,22 @@
 
 
 
-@section Scripts {
-    <script>
-        // Toggle sidebar collapse/expand
-        document.getElementById('sidebarToggle').addEventListener('click', function () {
-            const sidebar = document.getElementById('sidebar');
-            const mainContent = document.getElementById('mainContent');
+        @section Scripts {
+            <script>
+                // Toggle sidebar collapse/expand
+                document.getElementById('sidebarToggle').addEventListener('click', function () {
+                    const sidebar = document.getElementById('sidebar');
+                    const mainContent = document.getElementById('mainContent');
 
-            if (sidebar.style.width === '250px') {
-                sidebar.style.width = '0';
-                mainContent.style.marginLeft = '0';
-            } else {
-                sidebar.style.width = '250px';
-                mainContent.style.marginLeft = '250px';
-            }
-        });
-    </script>
-}
+                    if (sidebar.style.width === '250px') {
+                        sidebar.style.width = '0';
+                        mainContent.style.marginLeft = '0';
+                    } else {
+                        sidebar.style.width = '250px';
+                        mainContent.style.marginLeft = '250px';
+                    }
+                });
+            </script>
+        }
 
 

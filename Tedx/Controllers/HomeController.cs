@@ -23,10 +23,20 @@ namespace Tedx.Controllers
 			return View();
 		}
 
-		[ResponseCache(Duration = 0, Location = ResponseCacheLocation.None, NoStore = true)]
-		public IActionResult Error()
-		{
-			return View(new ErrorViewModel { RequestId = Activity.Current?.Id ?? HttpContext.TraceIdentifier });
-		}
-	}
+        [ResponseCache(Duration = 0, Location = ResponseCacheLocation.None, NoStore = true)]
+        public IActionResult Error()
+        {
+            // Create an instance of ErrorViewModel
+            var errorViewModel = new ErrorViewModel
+            {
+                RequestId = Activity.Current?.Id ?? HttpContext.TraceIdentifier // Set the Request ID
+            };
+
+            // Log the error (optional)
+            _logger.LogError("An error occurred. Request ID: {RequestId}", errorViewModel.RequestId);
+
+            // Pass the model to the view
+            return View(errorViewModel);
+        }
+    }
 }

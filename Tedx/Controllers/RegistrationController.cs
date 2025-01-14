@@ -7,6 +7,7 @@ using Tedx.Helper;
 using Tedx.Models;
 using System.Collections.Generic;
 using System.Linq;
+using Microsoft.EntityFrameworkCore;
 
 namespace Tedx.Controllers
 {
@@ -27,10 +28,12 @@ namespace Tedx.Controllers
         }
 
         [HttpPost]
-        public IActionResult Create([Bind("FullName,Age,RoleAs,Job,Email,Phone,IdeaCategory,IdeaDescription,WhyIdea,HasPresentedBefore")] User user)
+        public IActionResult Create([Bind("FullName,Age,RoleAs,Job,Email,Phone,ListenAboutEvent , HasChildIn, IdeaCategory,IdeaDescription,WhyIdea,HasPresentedBefore")] User user)
         {
             if (ModelState.IsValid)
             {
+
+
                 // Normalize Arabic numbers to English numbers (if any)
                 user.Age = NormalizeNumbers(user.Age.ToString());
 
@@ -57,21 +60,21 @@ namespace Tedx.Controllers
                 // Add the user to the database
                 _context.Users.Add(user);
                 _context.SaveChanges();
+             
+
+                //// Generate user details for the QR code
+                //string userDetails = $"الرقم التعريفي:{user.Id}\n, الاسم:{user.FullName}\n, الايميل:{user.Email}\n , ألجوال :{user.Phone}";
+
+                //// Generate QR code with the user's ID
+                //byte[] qrCodeImage = Helper.QrCodeGenerator.GenerateQrCode(userDetails);
+                //string qrCodeImageBase64 = Convert.ToBase64String(qrCodeImage);
+
                 //string subject = _localizer["EmailSubject"];
                 //string body = string.Format(_localizer["EmailBody"], user.FullName);
                 //EmailHelper.SendEmail(user.Email, subject, body);
 
 
-                // Generate user details for the QR code
-                string userDetails = $"الرقم التعريفي:{user.Id}\n, الاسم:{user.FullName}\n, الايميل:{user.Email}\n , ألجوال :{user.Phone}";
-
-                // Generate QR code with the user's ID
-                byte[] qrCodeImage = Helper.QrCodeGenerator.GenerateQrCode(userDetails);
-                string qrCodeImageBase64 = Convert.ToBase64String(qrCodeImage);
-
-
-
-                return Json(new { success = true, qrCode = qrCodeImageBase64 });
+                return Json(new { success = true});
             
             }
 

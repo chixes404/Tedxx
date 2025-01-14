@@ -141,11 +141,17 @@
   <data name="FullNameLabel" xml:space="preserve">
     <value>الاسم كامل</value>
   </data>
+  <data name="HasChildInLabel" xml:space="preserve">
+    <value>هل لديك أبناء يدرسون في مدارس ابن رشد؟</value>
+  </data>
   <data name="HasPresentedBeforeLabel" xml:space="preserve">
     <value>هل قدمت على المسرح من قبل؟</value>
   </data>
   <data name="HealthOption" xml:space="preserve">
     <value>الصحة</value>
+  </data>
+  <data name="HearAboutEventLabel" xml:space="preserve">
+    <value>من أين سمعت عن حدث TEDxibnroshd؟</value>
   </data>
   <data name="IdeaCategoryLabel" xml:space="preserve">
     <value>تصنيف الفكرة</value>
@@ -166,7 +172,7 @@
     <value>مستمع</value>
   </data>
   <data name="NextButton" xml:space="preserve">
-    <value>التالي</value>
+    <value>إرسال</value>
   </data>
   <data name="NoLabel" xml:space="preserve">
     <value>لا</value>

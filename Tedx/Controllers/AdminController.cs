@@ -10,6 +10,8 @@ using X.PagedList.Extensions;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using DocumentFormat.OpenXml.Wordprocessing;
 using System.Drawing.Printing;
+using Tedx.Helper;
+using Microsoft.Extensions.Localization;
 
 namespace Tedx.Controllers
 {
@@ -18,21 +20,43 @@ namespace Tedx.Controllers
     public class AdminController : Controller
     {
         private readonly ApplicationDbContext _context;
+        private readonly IStringLocalizer<RegistrationController> _localizer;
 
-        public AdminController(ApplicationDbContext context)
+
+        public AdminController(ApplicationDbContext context , IStringLocalizer<RegistrationController> localizer)
         {
             _context = context;
+            _localizer = localizer;
         }
 
-        // Admin Dashboard showing users with "مستمع" role
 
-public async Task<IActionResult> Dashboard(int page = 1, int pageSize = 10)
+
+
+
+        public async Task<IActionResult> Home()
+        {
+            // Get the count of listeners and speakers
+            var listenersCount = await _context.Users.CountAsync(u => u.RoleAs == "مستمع");
+            var speakersCount = await _context.Users.CountAsync(u => u.RoleAs == "متحدث");
+
+            // Pass the counts to the view
+            ViewBag.ListenersCount = listenersCount;
+            ViewBag.SpeakersCount = speakersCount;
+
+            return View();
+        }
+
+
+
+
+        // Admin Dashboard showing users with "مستمع" role
+        public async Task<IActionResult> Listeners(int page = 1, int pageSize = 10)
     {
             ViewBag.HideFooter = true;
             try
         {
             var users = await _context.Users
-                .Where(x => x.RoleAs == "مستمع")
+                .Where(x => x.RoleAs == "مستمع").OrderByDescending(x => x.CreatedAt)
                 .ToListAsync();
 
                 if (users == null || !users.Any())
@@ -54,13 +78,13 @@ public async Task<IActionResult> Dashboard(int page = 1, int pageSize = 10)
 
 
     // Admin Dashboard showing users with "متحدث" role
-    public async Task<IActionResult> SpeakerUsers(int page = 1, int pageSize = 10)
+    public async Task<IActionResult> Speakers(int page = 1, int pageSize = 10)
         {
             ViewBag.HideFooter = true;
             try
             {
                 var users = await _context.Users
-                    .Where(x => x.RoleAs == "متحدث")
+                    .Where(x => x.RoleAs == "متحدث").OrderByDescending(x=>x.CreatedAt)
                     .ToListAsync();
 
                 if (users == null || !users.Any())
@@ -96,7 +120,36 @@ public async Task<IActionResult> Dashboard(int page = 1, int pageSize = 10)
         }
 
 
+        // ConfirmEmail Action
+        public async Task<IActionResult> ConfirmEmail(int userId, string returnUrl = null)
+        {
+            // Fetch the user by userId
+            var user = await _context.Users.FindAsync(userId);
 
+            if (user == null)
+            {
+                return NotFound(); // Return 404 if the user is not found
+            }
+
+            // Prepare the email subject and body
+            string subject = _localizer["EmailConfirmationSubject"]; // Localized subject
+            string body = string.Format(_localizer["EmailConfirmationBody"], user.FullName); // Localized body
+
+            // Send the email
+            bool emailSent = EmailHelper.SendEmail(user.Email, subject, body);
+
+            if (emailSent)
+            {
+                TempData["EmailSentSuccess"] = true; // Store success status in TempData
+            }
+            else
+            {
+                TempData["EmailSentError"] = "Failed to send email."; // Store error message in TempData
+            }
+
+            // Redirect back to the same page
+            return Redirect(returnUrl ?? Url.Action("Speakers", "Admin"));
+        }
 
         public async Task<IActionResult> SpeakerExportToExcel(int page = 1, int pageSize = 10)
         {

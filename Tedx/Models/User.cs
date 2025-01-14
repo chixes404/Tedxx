@@ -31,6 +31,14 @@ namespace Tedx.Models
         [SaudiPhoneNumber(ErrorMessageResourceType = typeof(Resources.User), ErrorMessageResourceName = "PhoneInvalid")]
         public string Phone { get; set; }
 
+
+
+        [MaxLength(300, ErrorMessageResourceType = typeof(Resources.User), ErrorMessageResourceName = "MaxWordsValidation")]
+
+        public string ?ListenAboutEvent { get; set; }
+        public bool? HasChildIn { get; set; }
+
+
         public string ?IdeaCategory { get; set; }
 
 

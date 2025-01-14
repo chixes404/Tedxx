@@ -227,7 +227,9 @@
             <img src="~/assets/imgs/head-bg.png" class="w-100" alt="banner" />
             <div class="caption text-center px-sm-5 px-3">
                 <h3 class="fw-bold fs-2 text-light mb-0">
-                    <img src="~/assets/imgs/شعار-ابن-رشد-1.png" />
+                    <img src="~/assets/imgs/ibnroshed-preview.png" />
+
+
                 </h3>
             </div>
         </section>
@@ -294,6 +296,34 @@
                             <input asp-for="Phone" class="form-control" placeholder="@Localizer["EnterHerePlaceholder"]" />
                             <span asp-validation-for="Phone" class="text-danger"></span>
                         </div>
+
+                        <br />
+                        <div class="mb-3 ">
+                            <div class="d-flex">
+                                <label asp-for="HasChildIn" class="ng-binding">@Localizer["HasChildInLabel"]</label>
+                                <div class="requ text-danger">*</div>
+                            </div>
+                            <div class="form-check form-check-inline">
+                                <input class="form-check-input" type="radio" asp-for="HasChildIn" value="true" id="flexRadioDefault1" />
+                                <label class="form-check-label" for="flexRadioDefault1">@Localizer["YesLabel"]</label>
+                            </div>
+                            <div class="form-check form-check-inline">
+                                <input class="form-check-input" type="radio" asp-for="HasChildIn" value="false" id="flexRadioDefault2" checked />
+                                <label class="form-check-label" for="flexRadioDefault2">@Localizer["NoLabel"]</label>
+                            </div>
+                            <span asp-validation-for="HasChildIn" class="text-danger"></span>
+                        </div>
+                        <br />
+
+                        <div class="mb-3 ">
+                            <div class="d-flex">
+                                <label asp-for="ListenAboutEvent" class="ng-binding">@Localizer["HearAboutEventLabel"]</label>
+                                <div class="requ text-danger">*</div>
+                            </div>
+                            <textarea asp-for="ListenAboutEvent" class="form-control" placeholder="@Localizer["EnterHerePlaceholder"]" rows="3"></textarea>
+                            <span asp-validation-for="ListenAboutEvent" class="text-danger"></span>
+                        </div>
+
                     </div>
                     <div class="mb-3 speaker">
                         <div class="d-flex">
@@ -404,10 +434,10 @@
                     <!-- Success Modal Message -->
                     <p>@Localizer["SuccessModalMessage1"]</p>
 
-                    <!-- QR Code Image Placeholder -->
+                    @* <!-- QR Code Image Placeholder -->
                     <div id="qrCodeContainer" class="mt-4">
                         <img id="qrCodeImage" src="" alt="QR Code" style="max-width: 200px; height: auto;" />
-                    </div>
+                    </div> *@
                 </div>
             </div>
         </div>
@@ -455,11 +485,7 @@
                         data: formData, // Serialized form data
                         success: function (response) {
                             if (response.success) {
-                                // Set the QR code image source
-                                if (response.qrCode) {
-                                    $('#qrCodeImage').attr('src', 'data:image/png;base64,' + response.qrCode);
-                                    $('#qrCodeContainer').show(); // Show the QR code container
-                                }
+                                
 
                                 // Show the success modal
                                 $('#successModal').modal('show');
