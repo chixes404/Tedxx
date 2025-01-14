@@ -82,7 +82,8 @@ app.UseAuthorization();
 
 app.MapControllerRoute(
     name: "default",
-    pattern: "{controller=Registration}/{action=Create}/{id?}");
+    pattern: "register",
+    defaults: new { controller = "Registration", action = "Create" });
 
 app.MapRazorPages();
 
