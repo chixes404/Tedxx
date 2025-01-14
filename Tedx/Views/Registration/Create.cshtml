@@ -277,7 +277,6 @@
                         <input asp-for="Job" class="form-control" placeholder="@Localizer["EnterHerePlaceholder"]" />
                         <span asp-validation-for="Job" class="text-danger"></span>
                     </div>
-                    <div class="listener">
                         <div class="mb-3">
                             <div class="d-flex">
                                 <label asp-for="Email" class="ng-binding">@Localizer["EmailLabel"]</label>
@@ -296,6 +295,8 @@
                         </div>
 
                         <br />
+                    <div class="listener">
+
                         <div class="mb-3 ">
                             <div class="d-flex">
                                 <label asp-for="HasChildIn" class="ng-binding">@Localizer["HasChildInLabel"]</label>
@@ -407,6 +408,8 @@
             </div>
         </section>
     }
+
+
 
     <!-- Success Modal -->
     <div class="modal fade"

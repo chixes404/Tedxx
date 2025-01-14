@@ -248,6 +248,9 @@
                                 <td>@user.IdeaCategory</td>
                                 <td>
                                     <a asp-action="UserDetails" asp-route-id="@user.Id" class="btn btn-info btn-sm">View</a>
+                                    <form id="sendEmailForm-@user.Id" asp-action="SendEmail" asp-route-id="@user.Id" method="post" class="d-inline">
+                                        <button type="submit" class="btn btn-primary btn-sm">Send Email</button>
+                                    </form>
                                 </td>
                               
                             </tr>
@@ -262,7 +265,31 @@
         </div>
     </div>
 </div>
+<!-- Success Modal -->
+<div class="modal fade"
+     id="successModal"
+     tabindex="-1"
+     aria-labelledby="successModalLabel"
+     aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered">
+        <div class="modal-content py-5">
+            <!-- Modal Header with Close Button on the Left -->
+            <div class="modal-header justify-content-start">
+                <!-- Close Button on the Left -->
+                <button type="button" class="btn-close me-3" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body text-center">
+                <!-- Success Sign (Checkmark) -->
+                <i class="fa-solid fa-check fs-1 text-success mb-4"></i>
 
+                <!-- Success Modal Title -->
+                <h5 class="modal-title" id="successModalLabel">تم ارسال البريد الالكتروني بنجاح</h5>
+
+                <!-- Success Modal Message -->
+            </div>
+        </div>
+    </div>
+</div>
 
 
 <script src="~/js/jquery.js"></script>
@@ -286,39 +313,35 @@
         });
     </script>
 
-    <script>
-        // Handle Confirm Email button click
-        document.querySelectorAll('.confirm-email-btn').forEach(button => {
-            button.addEventListener('click', function (e) {
-                e.preventDefault(); // Prevent the default link behavior
+<script>
+    document.addEventListener("DOMContentLoaded", function () {
+        // Loop through all forms with IDs starting with "sendEmailForm-"
+        document.querySelectorAll("form[id^='sendEmailForm-']").forEach(function (form) {
+            form.addEventListener("submit", function (e) {
+                e.preventDefault(); // Prevent the default form submission
 
-                const userId = this.getAttribute('data-user-id'); // Get the user ID
-
-                // Send an AJAX request to the ConfirmEmail action
-                fetch(`/User/ConfirmEmail?userId=${userId}`, {
-                    method: 'POST',
+                // Submit the form via AJAX
+                fetch(form.action, {
+                    method: "POST",
                     headers: {
-                        'Content-Type': 'application/json',
-                        'RequestVerificationToken': document.querySelector('input[name="__RequestVerificationToken"]').value // Anti-forgery token
+                        "RequestVerificationToken": document.querySelector("input[name='__RequestVerificationToken']").value
                     }
                 })
-                    .then(response => response.json())
-                    .then(data => {
-                        if (data.success) {
+                    .then(response => {
+                        if (response.ok) {
                             // Show the success modal
                             const successModal = new bootstrap.Modal(document.getElementById('successModal'));
                             successModal.show();
                         } else {
-                            alert(data.message); // Show an error message
+                            alert("Failed to send email.");
                         }
                     })
                     .catch(error => {
-                        console.error('Error:', error);
-                        alert('An error occurred while sending the email.');
+                        console.error("Error:", error);
+                        alert("An error occurred while sending the email.");
                     });
             });
         });
-    </script>
-
-
+    });
+</script>
 

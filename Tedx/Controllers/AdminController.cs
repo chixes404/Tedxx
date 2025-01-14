@@ -12,6 +12,7 @@ using DocumentFormat.OpenXml.Wordprocessing;
 using System.Drawing.Printing;
 using Tedx.Helper;
 using Microsoft.Extensions.Localization;
+using DocumentFormat.OpenXml.Office2010.Excel;
 
 namespace Tedx.Controllers
 {
@@ -121,7 +122,7 @@ namespace Tedx.Controllers
 
 
         // ConfirmEmail Action
-        public async Task<IActionResult> ConfirmEmail(int userId, string returnUrl = null)
+        public async Task<IActionResult> ConfirmEmail(int userId, string returnUrl)
         {
             // Fetch the user by userId
             var user = await _context.Users.FindAsync(userId);
@@ -131,24 +132,43 @@ namespace Tedx.Controllers
                 return NotFound(); // Return 404 if the user is not found
             }
 
-            // Prepare the email subject and body
-            string subject = _localizer["EmailConfirmationSubject"]; // Localized subject
-            string body = string.Format(_localizer["EmailConfirmationBody"], user.FullName); // Localized body
+            var subject = "تأكيد التسجيل";
+            string body = string.Format("\r\nتم تقديم طلبك بنجاح. سيتم إرسال تأكيد الحضور إلى البريد الإلكتروني المسجل\r\n"); // Localized body
 
-            // Send the email
-            bool emailSent = EmailHelper.SendEmail(user.Email, subject, body);
 
-            if (emailSent)
-            {
-                TempData["EmailSentSuccess"] = true; // Store success status in TempData
-            }
-            else
-            {
-                TempData["EmailSentError"] = "Failed to send email."; // Store error message in TempData
-            }
+         
+
+             EmailHelper.SendEmail(user.Email, subject, body);
 
             // Redirect back to the same page
-            return Redirect(returnUrl ?? Url.Action("Speakers", "Admin"));
+            var referer = Request.Headers["Referer"].ToString();
+            return Redirect(referer);
+
+        }
+
+
+        [HttpPost]
+        public async Task<IActionResult> SendEmail(int id)
+        {
+            // Retrieve the user from the database
+            var user = await _context.Users.FindAsync(id);
+            if (user == null)
+            {
+                return NotFound();
+            }
+
+            // Send an email to the user
+            var subject = "Your Subject Here";
+            var message = "Your email message here.";
+             EmailHelper.SendEmail(user.Email, subject, message);
+
+            // Redirect back to the referring page
+            var referer = Request.Headers["Referer"].ToString();
+            if (string.IsNullOrEmpty(referer))
+            {
+                referer = Url.Action("Listeners", "Admin"); // Fallback to a default page
+            }
+            return Redirect(referer);
         }
 
         public async Task<IActionResult> SpeakerExportToExcel(int page = 1, int pageSize = 10)
