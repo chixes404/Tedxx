@@ -158,8 +158,8 @@ namespace Tedx.Controllers
             }
 
             // Send an email to the user
-            var subject = "Your Subject Here";
-            var message = "Your email message here.";
+            var subject = "تأكيد التسجيل";
+            var message = "\r\nتم تقديم طلبك بنجاح. سيتم إرسال تأكيد الحضور إلى البريد الإلكتروني المسجل\r\n";
              EmailHelper.SendEmail(user.Email, subject, message);
 
             // Redirect back to the referring page
