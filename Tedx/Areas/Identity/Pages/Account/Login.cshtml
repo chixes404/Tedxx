@@ -5,6 +5,7 @@
     ViewData["Title"] = "Log in";
 }
 
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" />
 <style>
     .form-floating .form-control::placeholder {
         color: black; /* Set the placeholder text color */
@@ -38,13 +39,13 @@
                         <span asp-validation-for="Input.Email" class="text-danger"></span>
                     </div>
 
-                    <!-- Password Field -->
+                    <!-- Password Field with Toggle Button -->
                     <div class="form-floating mb-3">
-                        <input asp-for="Input.Password" class="form-control" autocomplete="current-password" placeholder="الرجاي ادخال الرقم السري" />
+                            <input asp-for="Input.Password" class="form-control" autocomplete="current-password" placeholder="الرجاي ادخال الرقم السري" type="password" id="passwordInput" />
+                         
                         <label asp-for="Input.Password">Password</label> <!-- Label hidden via CSS -->
                         <span asp-validation-for="Input.Password" class="text-danger"></span>
                     </div>
-
                     <!-- Submit Button -->
                     <div>
                         <button id="login-submit" type="submit" class="w-100 btn btn-lg btn-primary">تسجيل لدخول</button>
@@ -57,4 +58,5 @@
 
 @section Scripts {
     <partial name="_ValidationScriptsPartial" />
+
 }

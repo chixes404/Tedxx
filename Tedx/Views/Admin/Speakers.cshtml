@@ -185,34 +185,41 @@
         @if (User.IsInRole("Admin"))
         {
             <div class="col-md-3 bg-dark sidebar" id="sidebar">
-                <div class="sidebar-sticky">
-                    <ul class="nav flex-column">
-                        <li class="nav-item">
-                            <a class="text-light">
-                                المستخدمين
-                            </a>
-                        </li>
-                        <li class="nav-item">
-                            <a class="nav-link text-light @(ViewContext.RouteData.Values["action"]?.ToString() == "Listeners" ? "active" : "")"
-                               asp-controller="Admin" asp-action="Listeners">
-                                مستمع
-                            </a>
-                        </li>
-                        <li class="nav-item">
-                            <a class="nav-link text-light @(ViewContext.RouteData.Values["action"]?.ToString() == "Speakers" ? "active" : "")"
-                               asp-controller="Admin" asp-action="Speakers">
-                                متحدث
-                            </a>
-                        </li>
-                    </ul>
-                </div>
+                <ul class="nav flex-column">
+                 
+                    <li class="nav-item">
+                        <a class="nav-link text-light @(ViewContext.RouteData.Values["action"]?.ToString() == "Home" ? "active" : "")"
+                           asp-controller="Admin" asp-action="Home">
+                            الرئيسية
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link text-light @(ViewContext.RouteData.Values["action"]?.ToString() == "Listeners" ? "active" : "")"
+                           asp-controller="Admin" asp-action="Listeners">
+                            مستمع
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link text-light @(ViewContext.RouteData.Values["action"]?.ToString() == "Speakers" ? "active" : "")"
+                           asp-controller="Admin" asp-action="Speakers">
+                            متحدث
+                        </a>
+                    </li>
+                </ul>
             </div>
-        }        <!-- Main Content -->
+        }
 
         <div class="col-md-9 ml-sm-auto col-lg-9 px-4" id="mainContent">
             <br />
             <br />
-            <h2 class="text-light mb-4">المستخدمين </h2>
+            <div class="d-flex justify-content-between align-items-center mb-3">
+                <h2 class="text-light mb-0">المستخدمين</h2>
+                <form asp-action="SpeakerExportToExcel" method="get" class="d-inline">
+                    <input type="hidden" name="page" value="@ViewBag.Page" />
+                    <input type="hidden" name="pageSize" value="10" />
+                    <button type="submit" class="btn btn-primary" >تصدير</button>
+                </form>
+            </div>
             <div class="table-responsive">
                 <table class="table table-dark table-striped">
                     <thead>
@@ -220,21 +227,11 @@
                             <th>الاسم</th>
                             <th>البريد الالكتروني </th>
                             <th>رقم الهاتف</th>
-                            <th> العمر</th>
-                            <th> الحاله</th>
                             <th>الوظيفه</th>
+                            <th>قدم علي المسرح من قبل</th>
+                            <th> تصنيف الفكره</th>
                             <th>عرض البيانات</th>
                         </tr>
-                            
-                        <form asp-action="SpeakerExportToExcel" method="get">
-                            <br />
-
-                            <input type="hidden" name="page" value="@ViewBag.Page" />
-                            <input type="hidden" name="pageSize" value="10" />
-                            <button type="submit" class="btn btn-primary">تصدير الصفحة الحالية إلى Excel</button>
-                            <br />
-
-                        </form>
                     </thead>
 
                     <tbody>
@@ -244,9 +241,11 @@
                                 <td>@user.FullName</td>
                                 <td>@user.Email</td>
                                 <td>@user.Phone</td>
-                                <td>@user.Age</td>
                                 <td>@user.Job</td>
+                                <td>@user.HasPresentedBefore</td>
+
                                 <td>@user.IdeaCategory</td>
+
                                 <td>
                                     <a asp-action="UserDetails" asp-route-id="@user.Id" class="btn btn-info btn-sm">View</a>
                                     <form id="sendEmailForm-@user.Id" asp-action="SendEmail" asp-route-id="@user.Id" method="post" class="d-inline">

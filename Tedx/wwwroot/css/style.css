@@ -12129,8 +12129,8 @@ b {
   object-fit: contain;
 }
 .content_countdown {
-  background-image: url(../assets/imgs/countdown.png);
-  background-attachment: fixed;
+/*  background-image: url(../assets/imgs/countdown.png);
+*/  background-attachment: fixed;
   background-position: center bottom;
   background-size: cover;
   background-repeat: no-repeat;

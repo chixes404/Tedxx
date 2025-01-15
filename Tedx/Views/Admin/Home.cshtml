@@ -198,6 +198,49 @@
         }
 
 
+        .h1{
+            color : white;
+        }
+
+    /* Adjust chart size */
+    #myChart {
+        max-width: 100%;
+        height: 300px; /* Adjust as needed */
+    }
+
+    .transparent-card {
+        background-color: transparent !important; /* Transparent background */
+        border: none !important; /* Remove the border */
+        box-shadow: none !important; /* Remove any shadow */
+    }
+
+        /* Ensure the card body is also transparent */
+        .transparent-card .card-body {
+            background-color: transparent !important;
+            padding: 0; /* Remove padding if needed */
+        }
+
+
+    /* Make the cards larger */
+    .large-card {
+        height: 150px; /* Adjust height as needed */
+        padding: 15px; /* Add padding inside the card */
+    }
+
+        /* Increase font sizes */
+        .large-card h3 {
+            font-size: 2rem; /* Adjust as needed */
+        }
+
+        .large-card span {
+            font-size: 1rem; /* Adjust as needed */
+        }
+
+        /* Increase icon size */
+        .large-card .fa-user {
+            font-size: 2.5rem; /* Adjust as needed */
+        }
+
 </style>
 
 
@@ -208,11 +251,7 @@
         {
             <div class="col-md-3 bg-dark sidebar" id="sidebar">
                 <ul class="nav flex-column">
-                    <li class="nav-item">
-                        <a class="text-light">
-                            المستخدمين
-                        </a>
-                    </li>
+                    
                     <li class="nav-item">
                         <a class="nav-link text-light @(ViewContext.RouteData.Values["action"]?.ToString() == "Home" ? "active" : "")"
                            asp-controller="Admin" asp-action="Home">
@@ -220,14 +259,14 @@
                         </a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link text-light @(ViewContext.RouteData.Values["action"]?.ToString() == "Dashboard" ? "active" : "")"
-                           asp-controller="Admin" asp-action="Dashboard">
+                        <a class="nav-link text-light @(ViewContext.RouteData.Values["action"]?.ToString() == "Listeners" ? "active" : "")"
+                           asp-controller="Admin" asp-action="Listeners">
                             مستمع
                         </a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link text-light @(ViewContext.RouteData.Values["action"]?.ToString() == "SpeakerUsers" ? "active" : "")"
-                           asp-controller="Admin" asp-action="SpeakerUsers">
+                        <a class="nav-link text-light @(ViewContext.RouteData.Values["action"]?.ToString() == "Speakers" ? "active" : "")"
+                           asp-controller="Admin" asp-action="Speakers">
                             متحدث
                         </a>
                     </li>
@@ -235,23 +274,26 @@
             </div>
         }
         <!-- Main Content -->
-        <div class="col-md-9 ml-sm-auto col-lg-9 px-4" id="mainContent">
-            <h1 class="mt-4">Admin Dashboard</h1>
 
+        <br />
+        <br />
+        <br />
+        <div class="col-md-9 ml-sm-auto col-lg-9 px-4" id="mainContent">
+            <br />
             <!-- Statistics Cards -->
-            <div class="row mt-4">
+            <div class="row mt-4 justify-content-between">
                 <!-- Listeners Card -->
-                <div class="col-xl-3 col-sm-6 col-12">
-                    <div class="card bg-danger text-white custom-card">
+                <div class="col-xl-4 col-sm-6 col-12">
+                    <div class="card bg-danger text-white custom-card large-card">
                         <div class="card-content">
                             <div class="card-body">
-                                <div class="media d-flex">
+                                <div class="media d-flex justify-content-between align-items-center">
                                     <div class="media-body text-left">
-                                        <h3 class="text-white">@ViewBag.ListenersCount</h3>
-                                        <span class="text-white">المستمعين</span>
+                                        <h3 class="text-white display-4">@ViewBag.ListenersCount</h3>
+                                        <span class="text-white h5">المستمعين</span>
                                     </div>
                                     <div class="align-self-center">
-                                        <i class="fas fa-user text-white font-large-2 float-right"></i>
+                                        <i class="fas fa-user text-white fa-3x"></i>
                                     </div>
                                 </div>
                             </div>
@@ -260,20 +302,52 @@
                 </div>
 
                 <!-- Speakers Card -->
-                <div class="col-xl-3 col-sm-6 col-12">
-                    <div class="card bg-danger text-white custom-card">
+                <div class="col-xl-4 col-sm-6 col-12">
+                    <div class="card bg-danger text-white custom-card large-card">
                         <div class="card-content">
                             <div class="card-body">
-                                <div class="media d-flex">
+                                <div class="media d-flex justify-content-between align-items-center">
                                     <div class="media-body text-left">
-                                        <h3 class="text-white">@ViewBag.SpeakersCount</h3>
-                                        <span class="text-white">المتحدثين</span>
+                                        <h3 class="text-white display-4">@ViewBag.SpeakersCount</h3>
+                                        <span class="text-white h5">المتحدثين</span>
                                     </div>
                                     <div class="align-self-center">
-                                        <i class="fas fa-user text-white font-large-2 float-right"></i>
+                                        <i class="fas fa-user text-white fa-3x"></i>
                                     </div>
                                 </div>
                             </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Third Card -->
+                <div class="col-xl-4 col-sm-6 col-12">
+                    <div class="card bg-danger text-white custom-card large-card">
+                        <div class="card-content">
+                            <div class="card-body">
+                                <div class="media d-flex justify-content-between align-items-center">
+                                    <div class="media-body text-left">
+                                        <h3 class="text-white display-4">@ViewBag.HasPresentedBeforeCount</h3>
+                                        <span class="text-white h5">قدم علي المسرح من قبل</span>
+                                    </div>
+                                    <div class="align-self-center">
+                                        <i class="fas fa-user text-white fa-3x"></i>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>          
+            <br />
+            <br />
+            <br />
+            <!-- Donut Chart -->
+            <div class="row mt-4">
+                <div class="col-12">
+                    <div class="card transparent-card">
+                        <div class="card-body">
+                            <canvas id="myChart" width="400" height="400"></canvas>
                         </div>
                     </div>
                 </div>
@@ -284,3 +358,65 @@
 
 
 <script src="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/js/all.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.1.4/Chart.min.js"></script>
+<script>
+    var ctx = document.getElementById('myChart').getContext('2d');
+
+    // Data from the server (replace with your actual data)
+    var data = {
+        labels: @Html.Raw(Json.Serialize(ViewBag.IdeaCategory.Keys)), // Labels from the dictionary keys
+        datasets: [{
+            label: 'تصنيف الافكار',
+            backgroundColor: [
+                '#36a2eb', // blue
+                '#c40000', // red
+                '#ff6384', // pink
+                '#ffcd56', // Yellow
+                '#4bc0c0'  // Teal
+            ],
+            data: @Html.Raw(Json.Serialize(ViewBag.IdeaCategory.Values)), // Values from the dictionary
+            borderColor: '#ffffff',
+            borderWidth: 1
+        }]
+    };
+
+    var options = {
+        title: {
+            display: true,
+            text: 'تصنيف الافكار',
+            position: 'bottom',
+            fontColor: '#ffffff',
+            fontSize: 24,
+            fontFamily: 'Arial, sans-serif', // Set font family
+            fontStyle: 'bold' 
+        },
+        legend: {
+            display: true,
+            position: 'bottom',
+            labels: {
+                boxWidth: 17,
+                fontStyle: 'Normal',
+                fontSize: 14,
+                padding: 10
+            }
+        },
+        responsive: true, // Make the chart responsive
+        maintainAspectRatio: false // Allow custom height and width
+        , animation: {
+            animateScale: true,
+            animateRotate: true
+        },
+        // Set the background color to transparent
+        plugins: {
+            background: {
+                color: 'black' // Make the chart background transparent
+            }
+        }
+    };
+
+    var myChart = new Chart(ctx, {
+        type: 'doughnut',
+        data: data,
+        options: options
+    });
+</script>

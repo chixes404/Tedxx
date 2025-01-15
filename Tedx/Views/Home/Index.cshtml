@@ -2,7 +2,252 @@
     ViewData["Title"] = "Home Page";
 }
 
-<div class="text-center">
-    <h1 class="display-4">Welcome</h1>
-    <p>Learn about <a href="https://learn.microsoft.com/aspnet/core">building Web apps with ASP.NET Core</a>.</p>
-</div>
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+    <!-- Required meta tags -->
+    <meta charset="utf-8" />
+    <meta http-equiv="Content-type" content="text/html; charset=utf-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=9" />
+    <meta http-equiv="Expires" content="0" />
+    <meta name="viewport"
+          content="width=device-width, initial-scale=1, maximum-scale=2" />
+
+    <meta name="keywords" content="Services, Home , Location, strategic," />
+    <meta name="author" content="TEDx Team" />
+    <meta name="title" content="TEDx Mobile Application Home" />
+    <meta name="description"
+          content="Join some of your favorite TED speakers and a global community of learners who want to stay curious, imagine and thrive." />
+
+    <meta name="copyright" content="Copyright TEDx - 2024" />
+    <meta name="email" content="Info@TEDx" />
+    <meta name="robots" content="INDEX,FOLLOW" />
+
+    <!--  Essential META Tags -->
+    <meta property="og:type" content="website" />
+    <meta property="og:url" content=" " />
+    <meta property="og:title" content="TED Courses" />
+    <meta property="og:description"
+          content="Join some of your favorite TED speakers and a global community of learners who want to stay curious, imagine and thrive." />
+    <meta property="og:image"
+          content="https://assets-global.website-files.com/62cb80a739ca03e7dfee8efe/62cc6505c391d30f31926928_TED-courses.png" />
+    <meta property="og:site_name" content="TEDx Application" />
+
+    <!--  social media tags -->
+    <meta name="twitter:card" content="summary_large_image" />
+    <meta name="twitter:url" content=" " />
+    <meta name="twitter:title" content="TEDx Event" />
+    <meta name="twitter:description"
+          content="Join some of your favorite TED speakers and a global community of learners who want to stay curious, imagine and thrive." />
+   
+    <meta name="twitter:image:alt" content="TEDx Event" />
+    <link rel="alternate" href="~/assets/imgs/logo.png" media="all" />
+
+    <!--  Non-Essential, But Required for Analytics -->
+    <meta property="fb:app_id" content="100085894330941" />
+    <meta property="og:locale" content="en_EG" />
+    <meta property="og:locale:alternate" content="ar_EG" />
+
+    <meta name="msapplication-TileImage" content="~/assets/imgs/logo.webp" />
+    <meta name="msapplication-TileColor" content="#95c123" />
+
+    <!--  site map -->
+    <meta name="google-site-verification" content="" />
+
+    <title>TEDx</title>
+    <link rel="stylesheet" href="~/css/all.min.css" />
+    <!-- <link rel="stylesheet" href="css/bootstrap.min.css" /> -->
+    <link rel="stylesheet" href="~/css/bootstrap.rtl.min.css" />
+    <link rel="stylesheet" href="~/css/tempusdominus-bootstrap.css" />
+    <!-- carousel slider  -->
+    <link rel="stylesheet" href="~/css/owl.carousel.min.css" />
+    <!-- animation -->
+    <link rel="stylesheet" href="~/css/animate.css" />
+    <!-- custom style  -->
+    <link rel="stylesheet" href="~/css/style.css" />
+    <!-- rtl style  -->
+    <link rel="stylesheet" href="~/css/style-ar.css" />
+
+    <!-- Favicons -->
+    <link href="~/assets/imgs/favicon.ico" rel="shortcut icon" />
+    <link href="~/assets/imgs/favicon.webp" rel="apple-touch-icon" />
+</head>
+<body>
+    <nav class="navbar sticky-top fixed-top navbar-dark bg-dark navbar-expand-lg shadow-sm py-2 px-3" id="header">
+        <div class="container-fluid">
+            <div class="navbar-brand py-2">
+                <img src="~/assets/imgs/logo.webp" width="110" alt="logo TEDx" />
+            </div>
+            <div class="collapse navbar-collapse d-flex justify-content-end" id="navbarText">
+                <span class="navbar-text">
+                    <button type="button" class="btn btn-primary text-light rounded-0" onclick="setCulture('ar-SA')">Ar</button>
+                </span>
+            </div>
+
+        </div>
+    </nav>
+
+    <!-- End Navbar -->
+    <!-- Start Main content -->
+    <main class="content content_register">
+        <!-- Start banner section -->
+        <section class="content_banner content_terms text-center w-100 position-relative" id="myHeader">
+            <img src="~/assets/imgs/head-bg.png" class="w-100" alt="banner" />
+            <div class="caption text-center px-sm-5 px-3">
+                <h3 class="fw-bold fs-2 text-light mb-0">
+                    <img src="~/assets/imgs/جديد.png" />
+                </h3>
+            </div>
+        </section>
+        <br />
+        <br />
+        <section class="text-center">
+            <div class="caption text-center px-sm-5 px-3 d-flex align-items-center justify-content-center">
+
+                <!-- IbnRoshd Text -->
+
+                <h1 class="text-light wow slideInDown mb-0" data-wow-duration="1.5s" style="font-family: 'Arial', sans-serif; font-size: 3rem; font-weight: bold;">
+                    IBNROSHD
+                </h1>
+                <!-- TEDx Logo -->
+                <img src="~/assets/imgs/logo.webp" alt="TEDx Logo" class="tedx-logo me-3" style="width: 150px;" />
+
+
+            </div>
+        </section>          <!-- End top banner  -->
+        <!-- Start countdown -->
+        <section class="content_countdown text-center py-5">
+            <div class="container">
+
+                <h2 class="text-primary fs-3 mb-4">January 25, 2025</h2>
+                <div class="countdown d-flex align-items-center justify-content-between mt-2">
+                    <div class="days-block mx-3">
+                        <div class="days fs-1 fw-bold">00</div>
+                        <div class="days-label fs-5 mt-2 text-capitalize">days</div>
+                    </div>
+
+                    <div class="hours-block mx-3">
+                        <div class="hours fs-1 fw-bold">00</div>
+                        <div class="hours-label fs-5 mt-2 text-capitalize">hours</div>
+                    </div>
+
+                    <div class="minutes-block mx-3">
+                        <div class="minutes fs-1 fw-bold">00</div>
+                        <div class="minutes-label fs-5 mt-2 text-capitalize">minutes</div>
+                    </div>
+
+                    <div class="seconds-block mx-3">
+                        <div class="seconds fs-1 fw-bold">00</div>
+                        <div class="seconds-label fs-5 mt-2 text-capitalize">seconds</div>
+                    </div>
+                </div>
+
+                <div class="d-flex justify-content-center">
+                    <button type="button"
+                            class="btn btn-primary text-light rounded-0 text-uppercase mt-4 px-4"
+                            onclick="location.href = '/register';">
+                        Attend
+                    </button>
+                </div>
+            </div>
+        </section>
+        <!-- End countdown -->
+        <br />
+        <!-- Start video section  -->
+        <section class="video">
+            <video class="myHTMLvideo"
+                   width="100%"
+                   poster="~/assets/imgs/video.png"
+                   controls>
+                <source src="~/video/mov_bbb.mp4" type="video/mp4" />
+            </video>
+        </section>
+        <!-- End video section  -->
+
+
+
+    </main>
+
+    <!-- Start footer -->
+    <section class="footer py-5">
+        <div class="container">
+            <div class="row align-items-start g-4">
+                <div class="col-lg-3 col-md-4 text-center">
+                    <i class="fa-regular fa-clock fs-1 mb-3"></i>
+                    <div style="direction: ltr">
+                        <p class="mb-0">4:00 PM</p>
+                        <p>9:00 PM</p>
+                    </div>
+                </div>
+                <div class="col-lg-5 col-md-4 text-center">
+                    <i class="fa-solid fa-location-dot fs-1 mb-3"></i>
+                    <p>مسرح شركة ابن رشد التعليمية القابضة</p>
+                    <img src="~/assets/imgs/QRCode.png" alt="QRCode" height="100" />
+                </div>
+                <div class="col-lg-3 col-md-4 text-center">
+                    <i class="fa-regular fa-calendar-days fs-1 mb-3"></i>
+                    <p>السبت - 25 يناير 2025</p>
+                </div>
+            </div>
+        </div>
+    </section>
+    <!-- End footer -->
+    <!-- scroll to top -->
+    <div class="scroll-top shadow wow slideInDown">
+        <i class="fas fa-chevron-up"></i>
+    </div>
+
+    <script src="js/jquery.js"></script>
+    <script src="js/bootstrap.bundle.min.js"></script>
+
+    <!--<script src="js/moment.js"></script>-->
+    <script src="js/tempusdominus-bootstrap.js"></script>
+    <!-- carousel slider  -->
+    <script src="js/owl.carousel.min.js"></script>
+
+    <!-- custom js  -->
+    <!--<script src="js/scripts.js"></script>-->
+    <!-- animation js -->
+    <script src="js/wow.js"></script>
+    <script>
+        new WOW().init();
+    </script>
+    <script>
+        // Set the date we're counting down to (January 25, 2025)
+        const countdownDate = new Date("January 25, 2025 00:00:00").getTime();
+
+        // Function to update the countdown
+        const updateCountdown = () => {
+            // Get the current date and time
+            const now = new Date().getTime();
+
+            // Calculate the time remaining
+            const timeRemaining = countdownDate - now;
+
+            // Calculate days, hours, minutes, and seconds
+            const days = Math.floor(timeRemaining / (1000 * 60 * 60 * 24));
+            const hours = Math.floor((timeRemaining % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
+            const minutes = Math.floor((timeRemaining % (1000 * 60 * 60)) / (1000 * 60));
+            const seconds = Math.floor((timeRemaining % (1000 * 60)) / 1000);
+
+            // Display the result in the countdown blocks
+            document.querySelector(".days").innerText = days < 10 ? `0${days}` : days;
+            document.querySelector(".hours").innerText = hours < 10 ? `0${hours}` : hours;
+            document.querySelector(".minutes").innerText = minutes < 10 ? `0${minutes}` : minutes;
+            document.querySelector(".seconds").innerText = seconds < 10 ? `0${seconds}` : seconds;
+
+            // If the countdown is over, display a message
+            if (timeRemaining < 0) {
+                clearInterval(countdownInterval);
+                document.querySelector(".countdown").innerHTML = "<h2 class='text-primary'>Event Started!</h2>";
+            }
+        };
+
+        // Update the countdown every second
+        const countdownInterval = setInterval(updateCountdown, 1000);
+
+        // Initial call to avoid delay
+        updateCountdown();
+    </script>
+</body>
+</html>

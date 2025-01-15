@@ -139,7 +139,7 @@ namespace Tedx.Areas.Identity.Pages.Account
 
                         await HttpContext.SignInAsync(IdentityConstants.ApplicationScheme, principal);
 
-                        return RedirectToAction("Listeners", "Admin");
+                        return RedirectToAction("Home", "Admin");
                     }
                     else
                     {

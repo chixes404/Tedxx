@@ -88,7 +88,7 @@ app.MapControllerRoute(
 // Fallback route for all other routes
 app.MapControllerRoute(
     name: "default",
-    pattern: "{controller=Registration}/{action=Create}/{id?}");
+    pattern: "{controller=Home}/{action=Index}/{id?}");
 app.MapRazorPages();
 
 app.Run();

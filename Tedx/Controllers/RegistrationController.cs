@@ -21,13 +21,13 @@ namespace Tedx.Controllers
             _context = context;
             _localizer = localizer;
         }
-
+        [HttpGet("register")]
         public IActionResult Create()
         {
             return View();
         }
 
-        [HttpPost]
+        [HttpPost("register")]
         public IActionResult Create([Bind("FullName,Age,RoleAs,Job,Email,Phone,ListenAboutEvent , HasChildIn, IdeaCategory,IdeaDescription,WhyIdea,HasPresentedBefore")] User user)
         {
             if (ModelState.IsValid)

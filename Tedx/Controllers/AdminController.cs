@@ -36,13 +36,40 @@ namespace Tedx.Controllers
 
         public async Task<IActionResult> Home()
         {
+            ViewBag.HideFooter = true;
+
+            // Fetch dynamic idea categories and their counts from the Users table
+            var ideaCategory = await _context.Users
+                .Where(u => u.IdeaCategory != null) // Filter out users with no IdeaCategory
+                .GroupBy(u => u.IdeaCategory) // Group by the IdeaCategory
+                .Select(g => new
+                {
+                    Category = g.Key, // The category name
+                    Count = g.Count() // The count of users in this category
+                })
+                .ToDictionaryAsync(g => g.Category, g => g.Count); // Convert to a dictionary
+
+            // Ensure all 4 categories are included, even if their count is 0
+            var allCategories = new List<string> { "التعليم", "الصحة", "الابتكار", "الاعمال" , "اخرى" };
+            foreach (var category in allCategories)
+            {
+                if (!ideaCategory.ContainsKey(category))
+                {
+                    ideaCategory[category] = 0; // Add the category with a count of 0 if it doesn't exist
+                }
+            }
+
+            // Pass the dynamic dictionary to the view
+            ViewBag.IdeaCategory = ideaCategory;
+
             // Get the count of listeners and speakers
             var listenersCount = await _context.Users.CountAsync(u => u.RoleAs == "مستمع");
             var speakersCount = await _context.Users.CountAsync(u => u.RoleAs == "متحدث");
-
+            var HasPresentedBeforeCount = await _context.Users.CountAsync(u => u.HasPresentedBefore==true);
             // Pass the counts to the view
             ViewBag.ListenersCount = listenersCount;
             ViewBag.SpeakersCount = speakersCount;
+            ViewBag.HasPresentedBeforeCount = HasPresentedBeforeCount;
 
             return View();
         }
@@ -78,8 +105,9 @@ namespace Tedx.Controllers
     }
 
 
-    // Admin Dashboard showing users with "متحدث" role
-    public async Task<IActionResult> Speakers(int page = 1, int pageSize = 10)
+        // Admin Dashboard showing users with "متحدث" role
+
+        public async Task<IActionResult> Speakers(int page = 1, int pageSize = 10)
         {
             ViewBag.HideFooter = true;
             try
@@ -110,7 +138,7 @@ namespace Tedx.Controllers
         public async Task<IActionResult> UserDetails(int id)
         {
             var user = await _context.Users
-                .FirstOrDefaultAsync(u => u.Id == id);
+                .FirstOrDefaultAsync(u => u.Id == id );
 
             if (user == null)
             {
@@ -122,29 +150,29 @@ namespace Tedx.Controllers
 
 
         // ConfirmEmail Action
-        public async Task<IActionResult> ConfirmEmail(int userId, string returnUrl)
-        {
-            // Fetch the user by userId
-            var user = await _context.Users.FindAsync(userId);
+        //public async Task<IActionResult> ConfirmEmail(int userId, string returnUrl)
+        //{
+        //    // Fetch the user by userId
+        //    var user = await _context.Users.FindAsync(userId);
 
-            if (user == null)
-            {
-                return NotFound(); // Return 404 if the user is not found
-            }
+        //    if (user == null)
+        //    {
+        //        return NotFound(); // Return 404 if the user is not found
+        //    }
 
-            var subject = "تأكيد التسجيل";
-            string body = string.Format("\r\nتم تقديم طلبك بنجاح. سيتم إرسال تأكيد الحضور إلى البريد الإلكتروني المسجل\r\n"); // Localized body
+        //    var subject = "تأكيد التسجيل";
+        //    string body = string.Format("\r\nتم تقديم طلبك بنجاح. سيتم إرسال تأكيد الحضور إلى البريد الإلكتروني المسجل\r\n"); // Localized body
 
 
          
 
-             EmailHelper.SendEmail(user.Email, subject, body);
+        //     EmailHelper.SendEmail(user.Email, subject, body);
 
-            // Redirect back to the same page
-            var referer = Request.Headers["Referer"].ToString();
-            return Redirect(referer);
+        //    // Redirect back to the same page
+        //    var referer = Request.Headers["Referer"].ToString();
+        //    return Redirect(referer);
 
-        }
+        //}
 
 
         [HttpPost]
@@ -213,8 +241,7 @@ namespace Tedx.Controllers
                 worksheet.Cell(currentRow, 6).Value = "الوظيفه";
                 worksheet.Cell(currentRow, 7).Value = "حضر من قبل";
                 worksheet.Cell(currentRow, 8).Value = "التصنيف";
-                worksheet.Cell(currentRow, 9).Value = "وصف الفكره";
-                worksheet.Cell(currentRow, 10).Value = "تاريخ التسجيل";
+                worksheet.Cell(currentRow, 9).Value = "تاريخ التسجيل";
 
                 // Add Data
                 foreach (var user in users)
@@ -228,8 +255,7 @@ namespace Tedx.Controllers
                     worksheet.Cell(currentRow, 6).Value = user.Job;
                     worksheet.Cell(currentRow, 7).Value = (bool)user.HasPresentedBefore ? "نعم" : "لا";
                     worksheet.Cell(currentRow, 8).Value = user.IdeaCategory;
-                    worksheet.Cell(currentRow, 9).Value = user.IdeaDescription;
-                    worksheet.Cell(currentRow, 10).Value = user.CreatedAt.ToString("yyyy-MM-dd");
+                    worksheet.Cell(currentRow, 9).Value = user.CreatedAt.ToString("yyyy-MM-dd");
                 }
 
                 // Prepare Excel file for download

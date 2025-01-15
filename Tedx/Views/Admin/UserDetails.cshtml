@@ -46,52 +46,58 @@
             <p class="card-text"><strong>الاسم:</strong> @Model.FullName</p>
             <p class="card-text"><strong>االايميل:</strong> @Model.Email</p>
             <p class="card-text"><strong>الجوال:</strong> @Model.Phone</p>
+            <p class="card-text"><strong>العمر:</strong> @Model.Age</p>
             <p class="card-text"><strong>دور المستخدم:</strong> @Model.RoleAs</p>
-            <p class="card-text"><strong>الوظيفه:</strong> @Model.Job</p>
-            <p class="card-text"><strong>هل حضلرت من قبل:</strong> @Model.HasPresentedBefore</p>
-            <p class="card-text"><strong>وقت التسجيل:</strong> @Model.CreatedAt.</p>
+            <p class="card-text"><strong>وقت التسجيل:</strong> @Model.CreatedAt</p>
         </div>
     </div>
 
-    <!-- Idea Category Card -->
-    <div class="card bg-dark text-light mb-4">
-        <div class="card-body">
-            <h5 class="card-title">تصنيف الفكره</h5>
-            <p class="card-text">@Model.IdeaCategory</p>
-        </div>
-    </div>
 
-    <!-- Idea Description Card -->
-    <div class="card bg-dark text-light mb-4">
-        <div class="card-body">
-            <h5 class="card-title">وصف الفكره</h5>
-            <div class="scrollable-text">
-                <p class="card-text">@Model.IdeaDescription</p>
+
+    @if (Model.RoleAs != "مستمع")
+    {
+        <div class="card bg-dark text-light mb-4">
+            <div class="card-body">
+                <h5 class="card-title">وصف الفكره</h5>
+                <div class="scrollable-text">
+                    <p class="card-text">@Model.IdeaDescription</p>
+                </div>
             </div>
         </div>
-    </div>
 
-    <!-- Why Idea Card -->
-    <div class="card bg-dark text-light mb-4">
-        <div class="card-body">
-            <h5 class="card-title">سبب الفكره</h5>
-            <div class="scrollable-text">
-                <p class="card-text">@Model.WhyIdea</p>
+        <div class="card bg-dark text-light mb-4">
+            <div class="card-body">
+                <h5 class="card-title">سبب الفكره</h5>
+                <div class="scrollable-text">
+                    <p class="card-text">@Model.WhyIdea</p>
+                </div>
             </div>
         </div>
-    </div>
+    }
 
-    <div class="card bg-dark text-light mb-4">
-        <div class="card-body">
+     @if (Model.RoleAs != "متحدث")
+    {
+        <div class="card bg-dark text-light mb-4">
+            <div class="card-body">
             <h5 class="card-title"> اين سمعت عن الحدث</h5>
             <div class="scrollable-text">
                 <p class="card-text">@Model.ListenAboutEvent</p>
             </div>
         </div>
     </div>
-
+    }
     <!-- Back Button -->
-    <div class="mt-3">
-        <a asp-action="Dashboard" class="btn btn-secondary">للرجوع</a>
+      @if (Model.RoleAs == "متحدث")
+    {
+        <div class="mt-3">
+            <a asp-action="Speakers" class="btn btn-secondary">للرجوع</a>
     </div>
+    }
+    @if (Model.RoleAs == "مستمع")
+    {
+        <div class="mt-3">
+            <a asp-action="Listeners" class="btn btn-secondary">للرجوع</a>
+        </div>
+    }
+
 </div>
