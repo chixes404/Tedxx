@@ -302,7 +302,7 @@
                         <div class="mb-3 ">
                             <div class="d-flex">
                                 <label asp-for="HasChildIn" class="ng-binding">@Localizer["HasChildInLabel"]</label>
-                                <div class="requ text-danger">*</div>
+                                
                             </div>
                             <div class="form-check form-check-inline">
                                 <input class="form-check-input" type="radio" asp-for="HasChildIn" value="true" id="flexRadioDefault1" />
@@ -312,14 +312,12 @@
                                 <input class="form-check-input" type="radio" asp-for="HasChildIn" value="false" id="flexRadioDefault2" checked />
                                 <label class="form-check-label" for="flexRadioDefault2">@Localizer["NoLabel"]</label>
                             </div>
-                            <span asp-validation-for="HasChildIn" class="text-danger"></span>
                         </div>
                         <br />
 
                         <div class="mb-3 ">
                             <div class="d-flex">
                                 <label asp-for="ListenAboutEvent" class="ng-binding">@Localizer["HearAboutEventLabel"]</label>
-                                <div class="requ text-danger">*</div>
                             </div>
                             <textarea asp-for="ListenAboutEvent" class="form-control" placeholder="@Localizer["EnterHerePlaceholder"]" rows="3"></textarea>
                             <span asp-validation-for="ListenAboutEvent" class="text-danger"></span>
@@ -329,7 +327,6 @@
                     <div class="mb-3 speaker">
                         <div class="d-flex">
                             <label asp-for="IdeaCategory" class="ng-binding">@Localizer["IdeaCategoryLabel"]</label>
-                            <div class="requ text-danger">*</div>
                         </div>
                         <select name="IdeaCategory" class="form-select">
                             <option value="التعليم">@Localizer["EducationOption"]</option>
@@ -343,7 +340,6 @@
                     <div class="mb-3 speaker">
                         <div class="d-flex">
                             <label asp-for="IdeaDescription" class="ng-binding">@Localizer["IdeaDescriptionLabel"]</label>
-                            <div class="requ text-danger">*</div>
                         </div>
                         <textarea asp-for="IdeaDescription" class="form-control" placeholder="@Localizer["EnterHerePlaceholder"]" rows="3"></textarea>
                         <span asp-validation-for="IdeaDescription" class="text-danger"></span>
@@ -351,7 +347,6 @@
                     <div class="mb-3 speaker">
                         <div class="d-flex">
                             <label asp-for="WhyIdea" class="ng-binding">@Localizer["WhyIdeaLabel"]</label>
-                            <div class="requ text-danger">*</div>
                         </div>
                         <textarea asp-for="WhyIdea" class="form-control" placeholder="@Localizer["EnterHerePlaceholder"]" rows="3"></textarea>
                         <span asp-validation-for="WhyIdea" class="text-danger"></span>
@@ -359,7 +354,6 @@
                     <div class="mb-3 speaker">
                         <div class="d-flex">
                             <label asp-for="HasPresentedBefore" class="ng-binding">@Localizer["HasPresentedBeforeLabel"]</label>
-                            <div class="requ text-danger">*</div>
                         </div>
                         <div class="form-check form-check-inline">
                             <input class="form-check-input" type="radio" asp-for="HasPresentedBefore" value="true" id="flexRadioDefault1" />

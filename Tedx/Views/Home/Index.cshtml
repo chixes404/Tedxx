@@ -1,6 +1,10 @@
-﻿@{
+﻿@using Microsoft.AspNetCore.Mvc.Localization
+@{
     ViewData["Title"] = "Home Page";
+    @inject IViewLocalizer Localizer
+
 }
+
 
 <!DOCTYPE html>
 <html lang="ar" dir="rtl">
@@ -81,9 +85,9 @@
             <div class="collapse navbar-collapse d-flex justify-content-end" id="navbarText">
                 <span class="navbar-text">
                     <button type="button" class="btn btn-primary text-light rounded-0" onclick="setCulture('ar-SA')">Ar</button>
+                    <button type="button" class="btn btn-primary text-light rounded-0" onclick="setCulture('en-US')">En</button>
                 </span>
             </div>
-
         </div>
     </nav>
 
@@ -119,26 +123,26 @@
         <section class="content_countdown text-center py-5">
             <div class="container">
 
-                <h2 class="text-primary fs-3 mb-4">January 25, 2025</h2>
+                <h2 class="text-primary fs-3 mb-4">@ViewBag.Date</h2>
                 <div class="countdown d-flex align-items-center justify-content-between mt-2">
                     <div class="days-block mx-3">
                         <div class="days fs-1 fw-bold">00</div>
-                        <div class="days-label fs-5 mt-2 text-capitalize">days</div>
+                        <div class="days-label fs-5 mt-2 text-capitalize">@ViewBag.DaysLabel</div>
                     </div>
 
                     <div class="hours-block mx-3">
                         <div class="hours fs-1 fw-bold">00</div>
-                        <div class="hours-label fs-5 mt-2 text-capitalize">hours</div>
+                        <div class="hours-label fs-5 mt-2 text-capitalize">@ViewBag.HoursLabel</div>
                     </div>
 
                     <div class="minutes-block mx-3">
                         <div class="minutes fs-1 fw-bold">00</div>
-                        <div class="minutes-label fs-5 mt-2 text-capitalize">minutes</div>
+                        <div class="minutes-label fs-5 mt-2 text-capitalize">@ViewBag.MinutesLabel</div>
                     </div>
 
                     <div class="seconds-block mx-3">
                         <div class="seconds fs-1 fw-bold">00</div>
-                        <div class="seconds-label fs-5 mt-2 text-capitalize">seconds</div>
+                        <div class="seconds-label fs-5 mt-2 text-capitalize">@ViewBag.SecondsLabel</div>
                     </div>
                 </div>
 
@@ -146,7 +150,7 @@
                     <button type="button"
                             class="btn btn-primary text-light rounded-0 text-uppercase mt-4 px-4"
                             onclick="location.href = '/register';">
-                        Attend
+                        @ViewBag.AttendButton
                     </button>
                 </div>
             </div>
@@ -248,6 +252,12 @@
 
         // Initial call to avoid delay
         updateCountdown();
-    </script>
+
+        function setCulture(culture) {
+            fetch(`/Home/SetCulture?culture=${culture}`, { method: 'POST' })
+                .then(() => window.location.reload());
+        }
+            </script>
+
 </body>
 </html>

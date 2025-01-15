@@ -8,6 +8,10 @@
 
   </PropertyGroup>
 
+  <ItemGroup>
+    <EmbeddedResource Remove="Resources\Views\Home\Index.en-US.resx" />
+  </ItemGroup>
+
 	
   <ItemGroup>
     <Content Include="wwwroot\node_modules\%40popperjs\core\package.json" />
@@ -60,6 +64,9 @@
   </ItemGroup>
 
   <ItemGroup>
+    <None Include="Resources\Views\Home\Index.en-US.resx">
+      <Generator>PublicResXFileCodeGenerator</Generator>
+    </None>
     <None Include="wwwroot\node_modules\%40popperjs\core\dist\cjs\enums.js" />
     <None Include="wwwroot\node_modules\%40popperjs\core\dist\cjs\enums.js.flow" />
     <None Include="wwwroot\node_modules\%40popperjs\core\dist\cjs\enums.js.map" />
@@ -582,6 +589,9 @@
     <EmbeddedResource Update="Resources\User.resx">
       <Generator>PublicResXFileCodeGenerator</Generator>
       <LastGenOutput>User.Designer.cs</LastGenOutput>
+    </EmbeddedResource>
+    <EmbeddedResource Update="Resources\Views\Home\Index.ar-SA.resx">
+      <Generator>PublicResXFileCodeGenerator</Generator>
     </EmbeddedResource>
     <EmbeddedResource Update="Resources\Views\Registration\Create.ar-SA.resx">
       <Generator>PublicResXFileCodeGenerator</Generator>
