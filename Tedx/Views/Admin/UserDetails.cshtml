@@ -45,9 +45,15 @@
             <h5 class="card-title">البيانات الاساسيه</h5>
             <p class="card-text"><strong>الاسم:</strong> @Model.FullName</p>
             <p class="card-text"><strong>االايميل:</strong> @Model.Email</p>
-            <p class="card-text"><strong>الجوال:</strong> @Model.Phone</p>
+            <p class="card-text"><strong>الجوال:</strong> @Model.Phone</p>                            
+
             <p class="card-text"><strong>العمر:</strong> @Model.Age</p>
-            <p class="card-text"><strong>دور المستخدم:</strong> @Model.RoleAs</p>
+               @if (Model.RoleAs == "متحدث")
+            {
+                <p class="card-text">
+                    <strong>قدم علي المسرح من قبل:</strong> @Model.HasPresentedBefore</p>
+                }
+                <p class="card-text"><strong>دور المستخدم:</strong> @Model.RoleAs</p>
             <p class="card-text"><strong>وقت التسجيل:</strong> @Model.CreatedAt</p>
         </div>
     </div>
