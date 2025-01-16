@@ -141,6 +141,12 @@
   <data name="EnterHerePlaceholder" xml:space="preserve">
     <value>ادخل هنا</value>
   </data>
+  <data name="FooterDate" xml:space="preserve">
+    <value>السبت - 25 يناير 2025</value>
+  </data>
+  <data name="FooterLocation" xml:space="preserve">
+    <value>مسرح شركة ابن رشد التعليمية القابضة</value>
+  </data>
   <data name="FullNameLabel" xml:space="preserve">
     <value>الاسم كامل</value>
   </data>
@@ -194,6 +200,9 @@
   </data>
   <data name="PhoneRequired" xml:space="preserve">
     <value>الجوال مطلوب.</value>
+  </data>
+  <data name="Pm" xml:space="preserve">
+    <value>مساءً</value>
   </data>
   <data name="SpeakerLabel" xml:space="preserve">
     <value>متحدث</value>
