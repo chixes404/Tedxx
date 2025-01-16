@@ -132,6 +132,9 @@
   <data name="EmailVaildation" xml:space="preserve">
     <value>Email is invalid</value>
   </data>
+  <data name="FullNameLettersOnly" xml:space="preserve">
+    <value>Full name must contain only letters and spaces</value>
+  </data>
   <data name="FullNameRequired" xml:space="preserve">
     <value>Name is required</value>
   </data>

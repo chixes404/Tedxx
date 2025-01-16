@@ -81,6 +81,8 @@ namespace Tedx.Controllers
         public async Task<IActionResult> Listeners(int page = 1, int pageSize = 10)
     {
             ViewBag.HideFooter = true;
+            ViewBag.Page = page; // Pass the current page number to the view
+            ViewBag.PageSize = pageSize; // Pass the current page size to the view
             try
         {
             var users = await _context.Users
@@ -110,10 +112,14 @@ namespace Tedx.Controllers
         public async Task<IActionResult> Speakers(int page = 1, int pageSize = 10)
         {
             ViewBag.HideFooter = true;
+            ViewBag.Page = page; // Pass the current page number to the view
+            ViewBag.PageSize = pageSize; // Pass the current page size to the view
+
             try
             {
                 var users = await _context.Users
-                    .Where(x => x.RoleAs == "متحدث").OrderByDescending(x=>x.CreatedAt)
+                    .Where(x => x.RoleAs == "متحدث")
+                    .OrderByDescending(x => x.CreatedAt)
                     .ToListAsync();
 
                 if (users == null || !users.Any())
@@ -144,6 +150,8 @@ namespace Tedx.Controllers
             {
                 return NotFound(); // Return a 404 error if the user is not found
             }
+            user.CreatedAt = user.CreatedAt.ToLocalTime();
+
 
             return View(user);
         }

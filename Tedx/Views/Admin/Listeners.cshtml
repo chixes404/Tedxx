@@ -180,6 +180,31 @@
     .no-border-header {
         border-bottom: none;
     }
+    /* Custom tooltip styling */
+    [title] {
+        position: relative;
+    }
+
+        [title]:hover::after {
+            content: attr(title);
+            position: absolute;
+            bottom: 100%;
+            left: 50%;
+            transform: translateX(-50%);
+            padding: 4px 8px;
+            background-color: #333;
+            color: #fff;
+            border-radius: 4px;
+            font-size: 12px;
+            white-space: nowrap;
+            z-index: 1;
+            opacity: 0;
+            transition: opacity 0.3s ease;
+        }
+
+        [title]:hover::after {
+            opacity: 1;
+        }
 
 </style>
 
@@ -248,11 +273,13 @@
                                 <td>@user.Job</td>
                                 <td>@user.HasChildIn</td>
                                 <td>
-                                    <a asp-action="UserDetails" asp-route-id="@user.Id" class="btn btn-info btn-sm">View</a>
-                                    <form id="sendEmailForm-@user.Id" asp-action="SendEmail" asp-route-id="@user.Id" method="post" class="d-inline">
-                                        <button type="submit" class="btn btn-primary btn-sm">Send Email</button>
+                                    <a asp-action="UserDetails" asp-route-id="@user.Id" class="btn btn-info btn-sm" title="عرض المزيد">
+                                        <i class="fa-solid fa-file-lines"></i>
+                                    </a>                                    <form id="sendEmailForm-@user.Id" asp-action="SendEmail" asp-route-id="@user.Id" method="post" class="d-inline">
+                                        <button type="submit" title="ارسال بريد الكتروني" class="btn btn-primary btn-sm"><i class="fa-solid fa-envelope"></i></button>
                                     </form>
                                 </td>
+
                             </tr>
                         }
                     </tbody>

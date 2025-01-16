@@ -24,7 +24,7 @@ builder.Services.AddIdentity<ApplicationUser, IdentityRole<Guid>>()
 builder.Services.ConfigureApplicationCookie(options =>
 {
     options.Cookie.HttpOnly = true; // Make cookie accessible only via HTTP (not JavaScript)
-    options.ExpireTimeSpan = TimeSpan.FromMinutes(60); // Cookie expiry time
+    options.ExpireTimeSpan = TimeSpan.FromDays(1); // Cookie expiry time
     options.LoginPath = "/identity/Account/Login"; // Redirect path for login
     options.AccessDeniedPath = "/Account/AccessDenied"; // Redirect path for access denied
     options.SlidingExpiration = true; // Extend expiration on user activity

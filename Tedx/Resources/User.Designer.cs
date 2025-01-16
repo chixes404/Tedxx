@@ -106,6 +106,15 @@ namespace Tedx.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Full name must contain only letters and spaces.
+        /// </summary>
+        public static string FullNameLettersOnly {
+            get {
+                return ResourceManager.GetString("FullNameLettersOnly", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Name is required.
         /// </summary>
         public static string FullNameRequired {
