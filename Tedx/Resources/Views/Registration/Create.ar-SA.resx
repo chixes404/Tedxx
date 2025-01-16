@@ -135,6 +135,9 @@
   <data name="EmailLabel" xml:space="preserve">
     <value>الايميل</value>
   </data>
+  <data name="EmptyOption" xml:space="preserve">
+    <value>يرجي الاختيار,</value>
+  </data>
   <data name="EnterHerePlaceholder" xml:space="preserve">
     <value>ادخل هنا</value>
   </data>
