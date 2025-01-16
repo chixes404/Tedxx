@@ -121,7 +121,7 @@ namespace Tedx.Areas.Identity.Pages.Account
                     var signedUser = await _signInManager.UserManager.FindByEmailAsync(Input.Email);
 
                     // Check if the user is in the "Admin" role
-                    if (await _signInManager.UserManager.IsInRoleAsync(signedUser, "Admin"))
+                    if (await _signInManager.UserManager.IsInRoleAsync(signedUser, "Admin")) 
                     {
                         // Retrieve roles for the user
                         var roles = await _userManager.GetRolesAsync(signedUser);

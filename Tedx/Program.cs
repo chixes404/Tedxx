@@ -8,6 +8,7 @@ using Tedx.Models;
 using Tedx.Helper;
 using Humanizer.Localisation;
 using Tedx.Controllers;
+using Microsoft.AspNetCore.Authentication.Cookies;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -20,16 +21,20 @@ builder.Services.AddDbContext<ApplicationDbContext>(options =>
 builder.Services.AddIdentity<ApplicationUser, IdentityRole<Guid>>()
     .AddEntityFrameworkStores<ApplicationDbContext>()
     .AddDefaultTokenProviders();
-
-builder.Services.ConfigureApplicationCookie(options =>
+// Register authentication services
+builder.Services.AddAuthentication(options =>
 {
-    options.Cookie.HttpOnly = true; // Make cookie accessible only via HTTP (not JavaScript)
-    options.ExpireTimeSpan = TimeSpan.FromDays(1); // Cookie expiry time
-    options.LoginPath = "/identity/Account/Login"; // Redirect path for login
+    options.DefaultScheme = CookieAuthenticationDefaults.AuthenticationScheme; // Default scheme
+    options.DefaultSignInScheme = CookieAuthenticationDefaults.AuthenticationScheme; // Sign-in scheme
+    options.DefaultSignOutScheme = CookieAuthenticationDefaults.AuthenticationScheme; // Sign-out scheme
+})
+.AddCookie(CookieAuthenticationDefaults.AuthenticationScheme, options =>
+{
+    options.LoginPath = "/Account/Login"; // Redirect path for login
     options.AccessDeniedPath = "/Account/AccessDenied"; // Redirect path for access denied
+    options.ExpireTimeSpan = TimeSpan.FromDays(1); // Cookie expiry time
     options.SlidingExpiration = true; // Extend expiration on user activity
 });
-
 // Configure Razor Pages (for Identity UI)
 builder.Services.AddRazorPages();
 

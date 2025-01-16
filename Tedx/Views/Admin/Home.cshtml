@@ -241,6 +241,22 @@
             font-size: 2.5rem; /* Adjust as needed */
         }
 
+
+    /* Custom CSS for the logout button */
+    .btn-logout {
+        background-color: #dc3545; /* Red color */
+        color: white;
+        border: none;
+        padding: 10px;
+        border-radius: 5px;
+        width: 100%;
+        text-align: center;
+    }
+
+        .btn-logout:hover {
+            background-color: #c82333; /* Darker red on hover */
+        }
+
 </style>
 
 
@@ -271,6 +287,14 @@
                         </a>
                     </li>
                 </ul>
+                <div class="mt-auto p-3">
+                    <form asp-controller="Admin" asp-action="Logout" method="post">
+                        <button type="submit" class="btn btn-logout">
+                            <i class="fas fa-sign-out-alt"></i> تسجيل الخروج
+                        </button>
+                    </form>
+                </div>
+
             </div>
         }
         <!-- Main Content -->

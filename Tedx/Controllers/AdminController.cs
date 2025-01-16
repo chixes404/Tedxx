@@ -13,6 +13,9 @@ using System.Drawing.Printing;
 using Tedx.Helper;
 using Microsoft.Extensions.Localization;
 using DocumentFormat.OpenXml.Office2010.Excel;
+using Microsoft.AspNetCore.Authentication.Cookies;
+using Microsoft.AspNetCore.Authentication;
+using Microsoft.Extensions.Options;
 
 namespace Tedx.Controllers
 {
@@ -321,6 +324,15 @@ namespace Tedx.Controllers
             }
         }
 
+        public async Task<IActionResult> Logout()
+        {
+            // Sign out the user
+            await HttpContext.SignOutAsync(CookieAuthenticationDefaults.AuthenticationScheme);
+
+            // Redirect to the login page
+
+            return RedirectToAction("Home", "Admin");
+        }
 
     }
 }
