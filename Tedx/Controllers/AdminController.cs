@@ -150,8 +150,8 @@ namespace Tedx.Controllers
             {
                 return NotFound(); // Return a 404 error if the user is not found
             }
-            user.CreatedAt = user.CreatedAt.ToLocalTime();
-
+            var ksaTimeZone = TimeZoneInfo.FindSystemTimeZoneById("Arab Standard Time");
+            user.CreatedAt = TimeZoneInfo.ConvertTimeFromUtc(user.CreatedAt, ksaTimeZone);
 
             return View(user);
         }

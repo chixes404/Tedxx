@@ -106,6 +106,15 @@ namespace Tedx.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Full name must be between {1} and {2} characters long.
+        /// </summary>
+        public static string FullNameLength {
+            get {
+                return ResourceManager.GetString("FullNameLength", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Full name must contain only letters and spaces.
         /// </summary>
         public static string FullNameLettersOnly {

@@ -132,6 +132,15 @@
   <data name="EmailVaildation" xml:space="preserve">
     <value>Email is invalid</value>
   </data>
+  <data name="FooterDate" xml:space="preserve">
+    <value>السبت - 25 يناير 2025</value>
+  </data>
+  <data name="FooterLocation" xml:space="preserve">
+    <value>مسرح شركة ابن رشد التعليمية القابضة</value>
+  </data>
+  <data name="FullNameLength" xml:space="preserve">
+    <value>Full name must be between {1} and {2} characters long</value>
+  </data>
   <data name="FullNameLettersOnly" xml:space="preserve">
     <value>Full name must contain only letters and spaces</value>
   </data>
@@ -152,6 +161,9 @@
   </data>
   <data name="PhoneRequired" xml:space="preserve">
     <value>Phone is Required</value>
+  </data>
+  <data name="Pm" xml:space="preserve">
+    <value>مساءً</value>
   </data>
   <data name="RoleIsRequired" xml:space="preserve">
     <value>Role is required</value>

@@ -13,7 +13,8 @@ namespace Tedx.Models
         public int Id { get; set; }
 
         [Required(ErrorMessageResourceType = typeof(Resources.User), ErrorMessageResourceName = "FullNameRequired")]
-        [RegularExpression(@"^[A-Za-z\s]*$", ErrorMessageResourceType = typeof(Resources.User), ErrorMessageResourceName = "FullNameLettersOnly")]
+        [Length(2, 30, ErrorMessageResourceType = typeof(Resources.User), ErrorMessageResourceName = "FullNameLength")]
+        [RegularExpression(@"^[^\d]*$", ErrorMessageResourceType = typeof(Resources.User), ErrorMessageResourceName = "FullNameLettersOnly")]
         public string FullName { get; set; }
 
         [Required(ErrorMessageResourceType = typeof(Resources.User), ErrorMessageResourceName = "AgeRequired")]
