@@ -605,4 +605,13 @@
     <Folder Include="wwwroot\qrcodes\" />
   </ItemGroup>
 
+  <ItemGroup>
+    <Content Update="wwwroot\assets\imgs\newQRCpng.png">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Update="wwwroot\video\IMG_1969.mp4">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+  </ItemGroup>
+
 </Project>
