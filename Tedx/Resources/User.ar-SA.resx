@@ -132,6 +132,9 @@
   <data name="EmailVaildation" xml:space="preserve">
     <value>البريد الالكتروني غير صحيح</value>
   </data>
+  <data name="FullNameLettersOnly" xml:space="preserve">
+    <value>يجب أن يحتوي الاسم الكامل على أحرف ومسافات فقط</value>
+  </data>
   <data name="FullNameRequired" xml:space="preserve">
     <value>الاسم بالكامل مطلوب</value>
   </data>

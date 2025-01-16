@@ -38,7 +38,7 @@ namespace Tedx.Controllers
                 user.Age = NormalizeNumbers(user.Age.ToString());
 
                 // Validate age range
-                if (!int.TryParse(user.Age, out int age) || age < 0 || age > 150)
+                if (!int.TryParse(user.Age, out int age) || age < 1 || age > 150)
                 {
                     return Json(new { success = false, errors = new Dictionary<string, string> { { "Age", _localizer["AgeInvalid"].Value } } });
                 }

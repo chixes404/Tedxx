@@ -34,14 +34,14 @@
 
                     <!-- Email Field -->
                     <div class="form-floating mb-3">
-                        <input asp-for="Input.Email" class="form-control" autocomplete="username" placeholder="الرجاء ادخال الايميل " />
+                        <input asp-for="Input.Email" class="form-control" autocomplete="username" placeholder="الرجاء ادخال البريد الالكتروني " />
                         <label asp-for="Input.Email">Email</label> <!-- Label hidden via CSS -->
                         <span asp-validation-for="Input.Email" class="text-danger"></span>
                     </div>
 
                     <!-- Password Field with Toggle Button -->
                     <div class="form-floating mb-3">
-                            <input asp-for="Input.Password" class="form-control" autocomplete="current-password" placeholder="الرجاء ادخال الرقم السري" type="password" id="passwordInput" />
+                            <input asp-for="Input.Password" class="form-control" autocomplete="current-password" placeholder="الرجاء ادخال كلمه المرور" type="password" id="passwordInput" />
                          
                         <label asp-for="Input.Password">Password</label> <!-- Label hidden via CSS -->
                         <span asp-validation-for="Input.Password" class="text-danger"></span>

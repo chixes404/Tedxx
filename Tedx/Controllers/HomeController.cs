@@ -26,6 +26,9 @@ namespace Tedx.Controllers
             ViewBag.HoursLabel = _localizer["HoursLabel"];
             ViewBag.MinutesLabel = _localizer["MinutesLabel"];
             ViewBag.SecondsLabel = _localizer["SecondsLabel"];
+            ViewBag.Pm = _localizer["Pm"];
+            ViewBag.FooterLocation = _localizer["FooterLocation"];
+            ViewBag.FooterDate = _localizer["FooterDate"];
             return View();
 		}
 

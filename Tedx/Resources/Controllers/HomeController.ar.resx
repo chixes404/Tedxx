@@ -118,19 +118,28 @@
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
   <data name="AttendButton" xml:space="preserve">
-    <value>سجل</value>
+    <value>انضم إلينا في TEDxibnroshd!</value>
   </data>
   <data name="Date" xml:space="preserve">
-    <value>يناير ٢٥ ,٢٠٢٥</value>
+    <value>يناير 25 ,2025</value>
   </data>
   <data name="DaysLabel" xml:space="preserve">
     <value>أيام</value>
+  </data>
+  <data name="FooterDate" xml:space="preserve">
+    <value>السبت - 25 يناير 2025</value>
+  </data>
+  <data name="FooterLocation" xml:space="preserve">
+    <value>مسرح شركة ابن رشد التعليمية القابضة</value>
   </data>
   <data name="HoursLabel" xml:space="preserve">
     <value>ساعات</value>
   </data>
   <data name="MinutesLabel" xml:space="preserve">
     <value>دقائق</value>
+  </data>
+  <data name="Pm" xml:space="preserve">
+    <value>مساءً</value>
   </data>
   <data name="SecondsLabel" xml:space="preserve">
     <value>ثواني</value>

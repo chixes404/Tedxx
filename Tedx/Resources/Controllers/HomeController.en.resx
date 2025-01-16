@@ -118,7 +118,7 @@
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
   <data name="AttendButton" xml:space="preserve">
-    <value>Attend</value>
+    <value>!Join us at TEDxIbnRoshd</value>
   </data>
   <data name="Date" xml:space="preserve">
     <value>January 25, 2025</value>
@@ -126,11 +126,20 @@
   <data name="DaysLabel" xml:space="preserve">
     <value>Days</value>
   </data>
+  <data name="FooterDate" xml:space="preserve">
+    <value>Saturday, January 25, 2025</value>
+  </data>
+  <data name="FooterLocation" xml:space="preserve">
+    <value>Ibn Rushd Educational Holding Company Theater</value>
+  </data>
   <data name="HoursLabel" xml:space="preserve">
     <value>Hours</value>
   </data>
   <data name="MinutesLabel" xml:space="preserve">
     <value>Minutes</value>
+  </data>
+  <data name="Pm" xml:space="preserve">
+    <value>PM</value>
   </data>
   <data name="SecondsLabel" xml:space="preserve">
     <value>Seconds</value>
