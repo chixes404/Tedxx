@@ -114,31 +114,16 @@ namespace Tedx.Areas.Identity.Pages.Account
                 }
 
                 var result = await _signInManager.PasswordSignInAsync(Input.Email, Input.Password, isPersistent: false, lockoutOnFailure: false);
-
                 if (result.Succeeded)
                 {
-                    // Retrieve the signed-in user
-                    var signedUser = await _signInManager.UserManager.FindByEmailAsync(Input.Email);
+                    // Store user data in session
+                    HttpContext.Session.SetString("UserId", user.Id.ToString());
+                    HttpContext.Session.SetString("UserEmail", user.Email);
 
                     // Check if the user is in the "Admin" role
-                    if (await _signInManager.UserManager.IsInRoleAsync(signedUser, "Admin")) 
+                    if (await _signInManager.UserManager.IsInRoleAsync(user, "Admin"))
                     {
-                        // Retrieve roles for the user
-                        var roles = await _userManager.GetRolesAsync(signedUser);
-
-                        // Add claims for the roles
-                    var claims = new List<Claim>
-                    {
-                        new Claim(ClaimTypes.Name, user.UserName),
-                        new Claim(ClaimTypes.Role, "Admin") // Add roles or custom claims as needed
-                    };
-
-
-                        var identity = new ClaimsIdentity(claims, IdentityConstants.ApplicationScheme);
-                        var principal = new ClaimsPrincipal(identity);
-
-                        await HttpContext.SignInAsync(IdentityConstants.ApplicationScheme, principal);
-
+                        HttpContext.Session.SetString("UserRole", "Admin");
                         return RedirectToAction("Home", "Admin");
                     }
                     else

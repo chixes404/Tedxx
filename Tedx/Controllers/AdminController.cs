@@ -16,9 +16,11 @@ using DocumentFormat.OpenXml.Office2010.Excel;
 using Microsoft.AspNetCore.Authentication.Cookies;
 using Microsoft.AspNetCore.Authentication;
 using Microsoft.Extensions.Options;
+using Microsoft.AspNetCore.Identity;
 
 namespace Tedx.Controllers
 {
+    [ResponseCache(Location = ResponseCacheLocation.None, NoStore = true)]
 
     [Authorize(Roles = "Admin")] // Ensures only users with the "Admin" role can access this controller
     public class AdminController : Controller
@@ -36,9 +38,18 @@ namespace Tedx.Controllers
 
 
 
-
+        [Authorize(Roles = "Admin")]
         public async Task<IActionResult> Home()
         {
+
+
+            var userId = HttpContext.Session.GetString("UserId");
+            var userRole = HttpContext.Session.GetString("UserRole");
+
+            if (string.IsNullOrEmpty(userId) || userRole != "Admin")
+            {
+                return RedirectToPage("/Account/Login", new { area = "Identity" });
+            }
             ViewBag.HideFooter = true;
 
             // Fetch dynamic idea categories and their counts from the Users table
@@ -326,12 +337,14 @@ namespace Tedx.Controllers
 
         public async Task<IActionResult> Logout()
         {
-            // Sign out the user
+            // Clear session data
+            HttpContext.Session.Clear();
+
+            // Sign out the user (optional, if you're still using authentication)
             await HttpContext.SignOutAsync(CookieAuthenticationDefaults.AuthenticationScheme);
 
-            // Redirect to the login page
-
-            return RedirectToAction("Home", "Admin");
+            // Redirect to the login page in the Identity area
+            return RedirectToPage("/Account/Login", new { area = "Identity" });
         }
 
     }

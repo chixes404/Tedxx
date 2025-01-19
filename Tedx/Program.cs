@@ -22,18 +22,20 @@ builder.Services.AddIdentity<ApplicationUser, IdentityRole<Guid>>()
     .AddEntityFrameworkStores<ApplicationDbContext>()
     .AddDefaultTokenProviders();
 // Register authentication services
+builder.Services.AddSession(options =>
+{
+    options.IdleTimeout = TimeSpan.FromDays(1); // Set session timeout
+    options.Cookie.HttpOnly = true; // Make the session cookie HTTP-only
+    options.Cookie.IsEssential = true; // Mark the session cookie as essential
+});
 builder.Services.AddAuthentication(options =>
 {
-    options.DefaultScheme = CookieAuthenticationDefaults.AuthenticationScheme; // Default scheme
-    options.DefaultSignInScheme = CookieAuthenticationDefaults.AuthenticationScheme; // Sign-in scheme
-    options.DefaultSignOutScheme = CookieAuthenticationDefaults.AuthenticationScheme; // Sign-out scheme
+    options.DefaultScheme = CookieAuthenticationDefaults.AuthenticationScheme;
 })
 .AddCookie(CookieAuthenticationDefaults.AuthenticationScheme, options =>
 {
-    options.LoginPath = "/Account/Login"; // Redirect path for login
-    options.AccessDeniedPath = "/Account/AccessDenied"; // Redirect path for access denied
-    options.ExpireTimeSpan = TimeSpan.FromDays(1); // Cookie expiry time
-    options.SlidingExpiration = true; // Extend expiration on user activity
+    options.LoginPath = "/Account/Login"; // Redirect to login page
+    options.AccessDeniedPath = "/Account/AccessDenied"; // Redirect to access denied page
 });
 // Configure Razor Pages (for Identity UI)
 builder.Services.AddRazorPages();
@@ -77,10 +79,18 @@ else
     app.UseExceptionHandler("/Home/Error"); // Redirect to the Error action in production
     app.UseHsts();
 }
+app.UseSession();
 
 app.UseHttpsRedirection();
 app.UseRequestLocalization(localizationOptions);
 app.UseStaticFiles();
+app.Use(async (context, next) =>
+{
+    context.Response.Headers["Cache-Control"] = "no-cache, no-store, must-revalidate";
+    context.Response.Headers["Pragma"] = "no-cache";
+    context.Response.Headers["Expires"] = "0";
+    await next();
+});
 app.UseRouting();
 app.UseAuthentication();
 app.UseAuthorization();

@@ -242,7 +242,29 @@
         }
 
 
-    /* Custom CSS for the logout button */
+    /* Sidebar styling */
+    .sidebar {
+        display: flex;
+        flex-direction: column;
+        height: 92vh; /* Full height of the viewport */
+        padding: 1rem;
+        box-sizing: border-box; /* Include padding in the height calculation */
+    }
+
+    /* Nav items styling */
+    .nav {
+        flex-grow: 1; /* Allow the nav to take up remaining space */
+        overflow-y: auto; /* Add scroll if content overflows */
+    }
+
+    /* Logout button container */
+    .logout-container {
+        margin-top: auto; /* Push the logout button to the bottom */
+        padding: 1rem 0; /* Add some padding */
+        flex-shrink: 0; /* Prevent the container from shrinking */
+    }
+
+    /* Logout button styling */
     .btn-logout {
         background-color: #dc3545; /* Red color */
         color: white;
@@ -251,12 +273,12 @@
         border-radius: 5px;
         width: 100%;
         text-align: center;
+        transition: background-color 0.3s ease; /* Smooth hover transition */
     }
 
         .btn-logout:hover {
             background-color: #c82333; /* Darker red on hover */
         }
-
 </style>
 
 
@@ -267,7 +289,6 @@
         {
             <div class="col-md-3 bg-dark sidebar" id="sidebar">
                 <ul class="nav flex-column">
-                    
                     <li class="nav-item">
                         <a class="nav-link text-light @(ViewContext.RouteData.Values["action"]?.ToString() == "Home" ? "active" : "")"
                            asp-controller="Admin" asp-action="Home">
@@ -287,17 +308,17 @@
                         </a>
                     </li>
                 </ul>
-              @*   <div class="mt-auto p-3">
+                <!-- Logout Button Container -->
+                <div class="logout-container">
                     <form asp-controller="Admin" asp-action="Logout" method="post">
                         <button type="submit" class="btn btn-logout">
                             <i class="fas fa-sign-out-alt"></i> تسجيل الخروج
                         </button>
                     </form>
-                </div> *@
-
+                </div>
             </div>
         }
-        <!-- Main Content -->
+        <!-- Main Content -->        
 
         <br />
         <br />
