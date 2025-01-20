@@ -17,6 +17,7 @@ using Microsoft.AspNetCore.Authentication.Cookies;
 using Microsoft.AspNetCore.Authentication;
 using Microsoft.Extensions.Options;
 using Microsoft.AspNetCore.Identity;
+using System.Globalization;
 
 namespace Tedx.Controllers
 {
@@ -167,6 +168,7 @@ namespace Tedx.Controllers
             var ksaTimeZone = TimeZoneInfo.FindSystemTimeZoneById("Arab Standard Time");
             user.CreatedAt = TimeZoneInfo.ConvertTimeFromUtc(user.CreatedAt, ksaTimeZone);
 
+            ViewBag.FormattedCreatedAt = user.CreatedAt.ToString("yyyy/MM/dd HH:mm:ss", CultureInfo.InvariantCulture);
             return View(user);
         }
 
@@ -291,6 +293,8 @@ namespace Tedx.Controllers
 
                 foreach (var user in users)
                 {
+                    var date = user.CreatedAt.ToString("yyyy/MM/dd HH:mm:ss", CultureInfo.InvariantCulture);
+
                     currentRow++;
 
                     worksheet.Cell(currentRow, 1).Value = user.FullName;
@@ -299,7 +303,7 @@ namespace Tedx.Controllers
                     worksheet.Cell(currentRow, 4).Value = user.Age;
                     worksheet.Cell(currentRow, 5).Value = user.RoleAs;
                     worksheet.Cell(currentRow, 6).Value = user.Job;
-                    worksheet.Cell(currentRow, 7).Value = user.CreatedAt.ToString("yyyy-MM-dd");
+                    worksheet.Cell(currentRow, 7).Value = date;
 
                     if (!string.IsNullOrEmpty(user.QRCodeUrl))
                     {
@@ -375,6 +379,8 @@ namespace Tedx.Controllers
 
                 foreach (var user in users)
                 {
+                    var date = user.CreatedAt.ToString("yyyy/MM/dd HH:mm:ss", CultureInfo.InvariantCulture);
+
                     currentRow++;
 
                     worksheet.Cell(currentRow, 1).Value = user.FullName;
@@ -383,7 +389,7 @@ namespace Tedx.Controllers
                     worksheet.Cell(currentRow, 4).Value = user.Age;
                     worksheet.Cell(currentRow, 5).Value = user.RoleAs;
                     worksheet.Cell(currentRow, 6).Value = user.Job;
-                    worksheet.Cell(currentRow, 7).Value = user.CreatedAt.ToString("yyyy-MM-dd");
+                    worksheet.Cell(currentRow, 7).Value = date;
 
                     if (!string.IsNullOrEmpty(user.QRCodeUrl))
                     {

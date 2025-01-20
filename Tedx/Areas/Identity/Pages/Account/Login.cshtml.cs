@@ -102,7 +102,7 @@ namespace Tedx.Areas.Identity.Pages.Account
         }
 
         public async Task<IActionResult> OnPostAsync()
-        {
+            {
             if (ModelState.IsValid)
             {
                 var user = await _userManager.FindByEmailAsync(Input.Email);
