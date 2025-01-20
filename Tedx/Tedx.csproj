@@ -602,10 +602,6 @@
   </ItemGroup>
 
   <ItemGroup>
-    <Folder Include="wwwroot\qrcodes\" />
-  </ItemGroup>
-
-  <ItemGroup>
     <Content Update="wwwroot\assets\imgs\newQRCpng.png">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>

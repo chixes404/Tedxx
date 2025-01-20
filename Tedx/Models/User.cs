@@ -2,6 +2,7 @@
 using Humanizer.Localisation;
 using Microsoft.Extensions.Localization;
 using System.ComponentModel.DataAnnotations;
+using System.ComponentModel.DataAnnotations.Schema;
 using System.Text.RegularExpressions;
 using Tedx.Helper;
 
@@ -32,6 +33,8 @@ namespace Tedx.Models
         [Required(ErrorMessageResourceType = typeof(Resources.User), ErrorMessageResourceName = "PhoneRequired")]
         [SaudiPhoneNumber(ErrorMessageResourceType = typeof(Resources.User), ErrorMessageResourceName = "PhoneInvalid")]
         public string Phone { get; set; }
+
+        public string? QRCodeUrl { get; set; }
 
 
 
