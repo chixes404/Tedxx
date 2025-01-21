@@ -98,19 +98,30 @@ namespace Tedx.Controllers
             ViewBag.HideFooter = true;
             ViewBag.Page = page; // Pass the current page number to the view
             ViewBag.PageSize = pageSize; // Pass the current page size to the view
+
             try
             {
+                // Fetch only the users for the current page
                 var users = await _context.Users
-                    .Where(x => x.RoleAs == "مستمع").OrderByDescending(x => x.CreatedAt)
+                    .Where(x => x.RoleAs == "مستمع")
+                    .OrderByDescending(x => x.CreatedAt)
+                    .Skip((page - 1) * pageSize) // Skip records for previous pages
+                    .Take(pageSize) // Take only the records for the current page
                     .ToListAsync();
+
+                // Get the total number of users (for pagination controls)
+                var totalUsers = await _context.Users
+                    .Where(x => x.RoleAs == "مستمع")
+                    .CountAsync();
 
                 if (users == null || !users.Any())
                 {
                     ViewBag.Message = "لا يوجد مستخدمين مستمعين";
-                    return View(new List<ApplicationUser>()); // Return an empty list if no users found
+                    return View(new List<User>()); // Return an empty list if no users found
                 }
-                // Paginate the data
-                var pagedUsers = users.ToPagedList(page, pageSize); // Don't call .ToList() here
+
+                // Create a paginated list
+                var pagedUsers = new StaticPagedList<User>(users, page, pageSize, totalUsers);
                 return View(pagedUsers);
             }
             catch (Exception ex)
@@ -119,10 +130,8 @@ namespace Tedx.Controllers
                 Console.WriteLine($"حدث خطأ اثناء استرجاع المستخدمين: {ex.Message}");
                 return View("Error");
             }
-        }
+            }
 
-
-        // Admin Dashboard showing users with "متحدث" role
 
         public async Task<IActionResult> Speakers(int page = 1, int pageSize = 10)
         {
@@ -135,7 +144,15 @@ namespace Tedx.Controllers
                 var users = await _context.Users
                     .Where(x => x.RoleAs == "متحدث")
                     .OrderByDescending(x => x.CreatedAt)
+                    .Skip((page - 1) * pageSize) // Skip records for previous pages
+                    .Take(pageSize) // Take only the records for the current page
                     .ToListAsync();
+
+                // Get the total number of users (for pagination controls)
+                var totalUsers = await _context.Users
+                    .Where(x => x.RoleAs == "متحدث")
+                    .CountAsync();
+
 
                 if (users == null || !users.Any())
                 {
@@ -143,7 +160,7 @@ namespace Tedx.Controllers
                     return View(new List<ApplicationUser>()); // Return an empty list if no users found
                 }
 
-                var pagedUsers = users.ToPagedList(page, pageSize); // Don't call .ToList() here
+                var pagedUsers = new StaticPagedList<User>(users, page, pageSize, totalUsers);
                 return View(pagedUsers);
             }
             catch (Exception ex)
@@ -234,7 +251,7 @@ namespace Tedx.Controllers
             await _context.SaveChangesAsync();
 
             // Send the email with the QR code as an attachment
-            var subject = "تأكيد التسجيل";
+            var subject = "(TEDxibnroshd) تأكيد التسجيل في ";
             var message = $@"
 <html>
     <body>
@@ -250,6 +267,9 @@ namespace Tedx.Controllers
                 return StatusCode(500, "Failed to send email.");
             }
 
+            user.IsConfirmed = true;
+            _context.Users.Update(user);
+            await _context.SaveChangesAsync();
             // Redirect back to the referring page
             var referer = Request.Headers["Referer"].ToString();
             if (string.IsNullOrEmpty(referer))
@@ -260,14 +280,33 @@ namespace Tedx.Controllers
         }
 
 
-        public async Task<IActionResult> SpeakerExportToExcel(int page = 1, int pageSize = 10)
+        public async Task<IActionResult> SpeakerExportToExcel(string selectedUserIds,int page = 1, int pageSize = 10)
         {
-            var users = await _context.Users
-                 .Where(x => x.RoleAs == "متحدث")
-                .OrderByDescending(x => x.CreatedAt) 
-                .Skip((page - 1) * pageSize)
-                .Take(pageSize)
-                .ToListAsync();
+            var userIds = selectedUserIds?
+               .Split(new[] { ',' }, StringSplitOptions.RemoveEmptyEntries)
+               .Select(int.Parse)
+               .ToList();
+
+            // Query the database to get the selected users
+            var usersQuery = _context.Users
+                .Where(x => x.RoleAs == "متحدث");
+
+            // If specific user IDs are provided, filter the query
+            if (userIds != null && userIds.Any())
+            {
+                usersQuery = usersQuery.Where(x => userIds.Contains(x.Id));
+            }
+            else
+            {
+                // If no specific users are selected, apply pagination
+                usersQuery = usersQuery
+                    .OrderByDescending(x => x.CreatedAt)
+                    .Skip((page - 1) * pageSize)
+                    .Take(pageSize);
+            }
+
+            var users = await usersQuery.ToListAsync();
+
             using (var workbook = new XLWorkbook())
             {
                 var worksheet = workbook.Worksheets.Add("Users");
@@ -282,6 +321,7 @@ namespace Tedx.Controllers
                 worksheet.Cell(currentRow, 6).Value = "الوظيفه";
                 worksheet.Cell(currentRow, 7).Value = "تاريخ التسجيل";
                 worksheet.Cell(currentRow, 8).Value = "رمز الاستجابة السريعة (QR Code)";
+                worksheet.Cell(currentRow, 9).Value = "تم ارسال البريد"; // Add a new column header
 
                 // Style headers
                 var headerRange = worksheet.Range(1, 1, 1, 8);
@@ -329,12 +369,14 @@ namespace Tedx.Controllers
                     {
                         worksheet.Cell(currentRow, 8).Value = "لا يوجد رمز استجابة سريعة";
                     }
+                    worksheet.Cell(currentRow, 9).Value = user.IsConfirmed.HasValue ? "نعم" : "لا";
+
                 }
 
                 worksheet.Column(1).Width = 20; 
                 worksheet.Column(2).Width = 25;
                 worksheet.Column(3).Width = 15; 
-                worksheet.Column(8).Width = 20; 
+                worksheet.Column(8).Width = 15; 
                 worksheet.Columns().AdjustToContents(); 
 
                 using (var stream = new MemoryStream())
@@ -346,20 +388,40 @@ namespace Tedx.Controllers
             }
         }
 
-        public async Task<IActionResult> ListenerExportToExcel(int page = 1, int pageSize = 10)
+        public async Task<IActionResult> ListenerExportToExcel(string selectedUserIds, int page = 1, int pageSize = 10)
         {
-            var users = await _context.Users
-                .Where(x => x.RoleAs == "مستمع")
-                .OrderByDescending(x => x.CreatedAt) 
-                .Skip((page - 1) * pageSize) 
-                .Take(pageSize)
-                .ToListAsync();
+            // Split the selectedUserIds string into an array of user IDs
+            var userIds = selectedUserIds?
+                .Split(new[] { ',' }, StringSplitOptions.RemoveEmptyEntries)
+                .Select(int.Parse)
+                .ToList();
+
+            // Query the database to get the selected users
+            var usersQuery = _context.Users
+                .Where(x => x.RoleAs == "مستمع");
+
+            // If specific user IDs are provided, filter the query
+            if (userIds != null && userIds.Any())
+            {
+                usersQuery = usersQuery.Where(x => userIds.Contains(x.Id));
+            }
+            else
+            {
+                // If no specific users are selected, apply pagination
+                usersQuery = usersQuery
+                    .OrderByDescending(x => x.CreatedAt)
+                    .Skip((page - 1) * pageSize)
+                    .Take(pageSize);
+            }
+
+            var users = await usersQuery.ToListAsync();
 
             using (var workbook = new XLWorkbook())
             {
                 var worksheet = workbook.Worksheets.Add("Users");
                 int currentRow = 1;
 
+                // Add headers
                 worksheet.Cell(currentRow, 1).Value = "الاسم";
                 worksheet.Cell(currentRow, 2).Value = "الايميل";
                 worksheet.Cell(currentRow, 3).Value = "رقم الهاتف";
@@ -368,6 +430,7 @@ namespace Tedx.Controllers
                 worksheet.Cell(currentRow, 6).Value = "الوظيفه";
                 worksheet.Cell(currentRow, 7).Value = "تاريخ التسجيل";
                 worksheet.Cell(currentRow, 8).Value = "رمز الاستجابة السريعة (QR Code)";
+                worksheet.Cell(currentRow, 9).Value = "تم ارسال البريد"; // Add a new column header
 
                 // Style headers
                 var headerRange = worksheet.Range(1, 1, 1, 8);
@@ -377,6 +440,7 @@ namespace Tedx.Controllers
 
                 worksheet.Row(currentRow).Height = 12;
 
+                // Add user data
                 foreach (var user in users)
                 {
                     var date = user.CreatedAt.ToString("yyyy/MM/dd HH:mm:ss", CultureInfo.InvariantCulture);
@@ -399,7 +463,7 @@ namespace Tedx.Controllers
                             using (var imageStream = new FileStream(qrCodeFilePath, FileMode.Open, FileAccess.Read))
                             {
                                 var image = worksheet.AddPicture(imageStream)
-                                    .MoveTo(worksheet.Cell(currentRow, 8)) 
+                                    .MoveTo(worksheet.Cell(currentRow, 8))
                                     .WithSize(80, 80); // Resize the image to a consistent size
 
                                 worksheet.Row(currentRow).Height = 60; // Match the image height
@@ -414,14 +478,18 @@ namespace Tedx.Controllers
                     {
                         worksheet.Cell(currentRow, 8).Value = "لا يوجد رمز استجابة سريعة";
                     }
+                    worksheet.Cell(currentRow, 9).Value = user.IsConfirmed.HasValue ? "نعم" : "لا";
+
                 }
 
+                // Adjust column widths
                 worksheet.Column(1).Width = 20; // Name
                 worksheet.Column(2).Width = 25; // Email
                 worksheet.Column(3).Width = 15; // Phone
-                worksheet.Column(8).Width = 20; // QR Code
+                worksheet.Column(8).Width = 15; // QR Code
                 worksheet.Columns().AdjustToContents();
 
+                // Save the workbook to a memory stream
                 using (var stream = new MemoryStream())
                 {
                     workbook.SaveAs(stream);

@@ -51,6 +51,7 @@ namespace Tedx.Models
         public string? IdeaDescription { get; set; }
         public string ?WhyIdea { get; set; }
         public bool? HasPresentedBefore { get; set; }
+        public bool? IsConfirmed { get; set; }
         public DateTime CreatedAt {  get; set; } = DateTime.Now;
 	
 	}

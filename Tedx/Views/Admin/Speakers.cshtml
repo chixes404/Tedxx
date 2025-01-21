@@ -1,6 +1,6 @@
 ﻿@using X.PagedList.Mvc.Core
 @using X.PagedList
-@model X.PagedList.PagedList<Tedx.Models.User>
+@model X.PagedList.StaticPagedList<Tedx.Models.User>
 
 @{
     Layout = "~/Views/Shared/_Layout.cshtml";
@@ -203,6 +203,11 @@
         [title]:hover::after {
             opacity: 1;
         }
+
+    .btn.disabled {
+        opacity: 0.5;
+        cursor: not-allowed;
+    }
 </style>
 <div class="container-fluid">
     <div class="row">
@@ -240,16 +245,19 @@
             <br />
             <div class="d-flex justify-content-between align-items-center mb-3">
                 <h2 class="text-light mb-0">المستخدمين</h2>
-                <form asp-action="SpeakerExportToExcel" method="get" class="d-inline">
+                <form asp-action="SpeakerExportToExcel" id="exportForm" method="get" class="d-inline">
                     <input type="hidden" name="page" value="@ViewBag.Page" />
                     <input type="hidden" name="pageSize" value="10" />
-                    <button type="submit" class="btn btn-primary" >تصدير</button>
+                    <input type="hidden" name="selectedUserIds" id="selectedUserIds" />
+                    <button type="submit" class="btn btn-primary">تصدير</button>
                 </form>
             </div>
             <div class="table-responsive">
                 <table class="table table-dark table-striped">
                     <thead>
                         <tr>
+                            <th>تحديد</th>
+
                             <th>الاسم</th>
                             <th>البريد الالكتروني </th>
                             <th>رقم الهاتف</th>
@@ -263,6 +271,9 @@
                         @foreach (var user in Model)
                         {
                             <tr>
+                                <td>
+                                    <input type="checkbox" class="user-checkbox" value="@user.Id" />
+                                </td>
                                 <td>@user.FullName</td>
                                 <td>@user.Email</td>
                                 <td>@user.Phone</td>
@@ -273,8 +284,11 @@
                                 <td>
                                     <a asp-action="UserDetails" asp-route-id="@user.Id" class="btn btn-info btn-sm" title="عرض المزيد">
                                         <i class="fa-solid fa-file-lines"></i>
-                                    </a>                                    <form id="sendEmailForm-@user.Id" asp-action="SendEmail" asp-route-id="@user.Id" method="post" class="d-inline">
-                                        <button type="submit" title="ارسال بريد الكتروني" class="btn btn-primary btn-sm"><i class="fa-solid fa-envelope"></i></button>
+                                    </a>                                 <form id="sendEmailForm-@user.Id" asp-action="SendEmail" asp-route-id="@user.Id" method="post" class="d-inline">
+                                        @Html.AntiForgeryToken()
+                                        <button type="submit" title="ارسال بريد الكتروني" class="btn btn-primary btn-sm @(user.IsConfirmed.HasValue && user.IsConfirmed.Value ? "disabled" : "")" @(user.IsConfirmed.HasValue && user.IsConfirmed.Value ? "disabled" : "")>
+                                            <i class="fa-solid fa-envelope"></i>
+                                        </button>
                                     </form>
                                 </td>
                               
@@ -285,6 +299,7 @@
                 <br />
                 <div class="pagination-container">
                     @Html.PagedListPager((IPagedList)Model, page => Url.Action("Speakers", new { page }))
+
                 </div>
             </div>
         </div>
@@ -338,12 +353,19 @@
         });
     </script>
 
+
 <script>
     document.addEventListener("DOMContentLoaded", function () {
         // Loop through all forms with IDs starting with "sendEmailForm-"
         document.querySelectorAll("form[id^='sendEmailForm-']").forEach(function (form) {
             form.addEventListener("submit", function (e) {
                 e.preventDefault(); // Prevent the default form submission
+
+                const submitButton = form.querySelector('button[type="submit"]');
+
+                // Disable the button to prevent multiple submissions
+                submitButton.disabled = true;
+                submitButton.classList.add('disabled');
 
                 // Submit the form via AJAX
                 fetch(form.action, {
@@ -357,16 +379,44 @@
                             // Show the success modal
                             const successModal = new bootstrap.Modal(document.getElementById('successModal'));
                             successModal.show();
+
+                            // Optionally, update the button text or style to indicate success
+                            submitButton.innerHTML = '<i class="fa-solid fa-check"></i> تم الإرسال';
+                            submitButton.classList.remove('btn-primary');
+                            submitButton.classList.add('btn-success');
                         } else {
                             alert("Failed to send email.");
+                            // Re-enable the button if the request fails
+                            submitButton.disabled = false;
+                            submitButton.classList.remove('disabled');
                         }
                     })
                     .catch(error => {
                         console.error("Error:", error);
                         alert("An error occurred while sending the email.");
+                        // Re-enable the button if an error occurs
+                        submitButton.disabled = false;
+                        submitButton.classList.remove('disabled');
                     });
             });
         });
     });
 </script>
 
+
+<!-- JavaScript to Handle Selection -->
+<script>
+    document.getElementById('exportForm').addEventListener('submit', function (e) {
+        const selectedCheckboxes = document.querySelectorAll('.user-checkbox:checked');
+        const selectedUserIds = Array.from(selectedCheckboxes).map(checkbox => checkbox.value).join(',');
+
+        // If no users are selected, export all users on the current page
+        if (selectedUserIds === '') {
+            const allCheckboxes = document.querySelectorAll('.user-checkbox');
+            const allUserIds = Array.from(allCheckboxes).map(checkbox => checkbox.value).join(',');
+            document.getElementById('selectedUserIds').value = allUserIds;
+        } else {
+            document.getElementById('selectedUserIds').value = selectedUserIds;
+        }
+    });
+</script>
