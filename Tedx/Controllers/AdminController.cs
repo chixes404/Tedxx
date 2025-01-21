@@ -247,8 +247,6 @@ namespace Tedx.Controllers
 
             // Save the QR code path in the database
             user.QRCodeUrl = $"/qrcode/{fileName}";
-            _context.Users.Update(user);
-            await _context.SaveChangesAsync();
 
             // Send the email with the QR code as an attachment
             var subject = "(TEDxibnroshd) تأكيد التسجيل في ";
