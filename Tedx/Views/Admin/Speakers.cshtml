@@ -208,6 +208,26 @@
         opacity: 0.5;
         cursor: not-allowed;
     }
+
+    .spinner {
+        width: 40px;
+        height: 40px;
+        border: 5px solid rgba(0, 0, 0, 0.1);
+        border-top-color: darkred;
+        border-radius: 50%;
+        animation: spin 1s linear infinite;
+        position: fixed; /* Fixed position to center it */
+        top: 50%;
+        left: 50%;
+        transform: translate(-50%, -50%);
+        z-index: 1000; /* Ensure it's above other elements */
+    }
+
+    @@keyframes spin {
+        to {
+            transform: translate(-50%, -50%) rotate(360deg);
+        }
+    }
 </style>
 <div class="container-fluid">
     <div class="row">
@@ -305,6 +325,8 @@
         </div>
     </div>
 </div>
+<div class="spinner" style="display: none;"></div>
+
 <!-- Success Modal -->
 <div class="modal fade"
      id="successModal"
@@ -355,6 +377,14 @@
 
 
 <script>
+    function showSpinner() {
+        document.querySelector('.spinner').style.display = 'block';
+    }
+
+    function hideSpinner() {
+        document.querySelector('.spinner').style.display = 'none';
+    }
+
     document.addEventListener("DOMContentLoaded", function () {
         // Loop through all forms with IDs starting with "sendEmailForm-"
         document.querySelectorAll("form[id^='sendEmailForm-']").forEach(function (form) {
@@ -367,6 +397,9 @@
                 submitButton.disabled = true;
                 submitButton.classList.add('disabled');
 
+                // Show the spinner
+                showSpinner();
+
                 // Submit the form via AJAX
                 fetch(form.action, {
                     method: "POST",
@@ -376,6 +409,9 @@
                 })
                     .then(response => {
                         if (response.ok) {
+                            // Hide the spinner before showing the success modal
+                            hideSpinner();
+
                             // Show the success modal
                             const successModal = new bootstrap.Modal(document.getElementById('successModal'));
                             successModal.show();
@@ -397,6 +433,10 @@
                         // Re-enable the button if an error occurs
                         submitButton.disabled = false;
                         submitButton.classList.remove('disabled');
+                    })
+                    .finally(() => {
+                        // Hide the spinner in case of any error or success
+                        hideSpinner();
                     });
             });
         });
