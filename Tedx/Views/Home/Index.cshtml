@@ -120,20 +120,21 @@ h2 {
     padding: 20px;
     animation: scrolling 20s linear infinite;
 }
-
 @@keyframes scrolling {
-    0% {
-        transform: translateX(calc(-100% + 33.33%)); /* Start from the left */
-    }
-    100% {
-        transform: translateX(0); /* Move to the right */
-    }
+            0% {
+                transform: translateX(0); /* Start from the beginning */
+            }
+
+            100% {
+                transform: translateX(-50%); /* Scroll to the halfway point (duplicate logos) */
+            }
 }
 
 
+
 .slider-items img {
-    width: 150px; /* Fixed width for smaller logos */
-    height: 150px; /* Fixed height for smaller logos */
+    width: 200px; /* Fixed width for smaller logos */
+    height: 200px; /* Fixed height for smaller logos */
     object-fit: contain; /* Ensures the image fits within the dimensions without distortion */
     margin: 0 10px;
     flex-shrink: 0; /* Prevent logos from shrinking */
