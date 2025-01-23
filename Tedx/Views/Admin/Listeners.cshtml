@@ -263,15 +263,17 @@
         <div class="col-md-9 ml-sm-auto col-lg-9 px-4" id="mainContent">
             <br />
             <br />
-            <div class="d-flex justify-content-between align-items-center mb-3">
-                <h2 class="text-light mb-0">المستخدمين</h2>
-                <form id="exportForm" asp-action="ListenerExportToExcel" method="get" class="d-inline">
-                    <input type="hidden" name="page" value="@ViewBag.Page" />
-                    <input type="hidden" name="pageSize" value="10" />
-                    <input type="hidden" name="selectedUserIds" id="selectedUserIds" />
-                    <button type="submit" class="btn btn-primary">تصدير</button>
-                </form>
-            </div>
+          <div class="d-flex justify-content-between align-items-center mb-3">
+    <h2 class="text-light mb-0">المستخدمين</h2>
+    <form id="exportForm" asp-action="AcceptedUserExportToExcel" method="get" class="d-inline">
+        <select name="exportOption" class="form-select d-inline-block w-auto me-2">
+            <option value="all">تصدير جميع المستخدمين</option>
+            <option value="confirmed">تصدير المستخدمين المؤكدين فقط</option>
+            <option value="inconfirmed">تصدير المستخدمين الغير مؤكدين فقط</option>
+        </select>
+        <button type="submit" class="btn btn-primary">تصدير</button>
+    </form>
+</div>
 
             <!-- Users Table -->
             <div class="table-responsive">

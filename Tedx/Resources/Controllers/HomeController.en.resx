@@ -144,4 +144,7 @@
   <data name="SecondsLabel" xml:space="preserve">
     <value>Seconds</value>
   </data>
+  <data name="SponsorLabel" xml:space="preserve">
+    <value>Sponsors</value>
+  </data>
 </root>

@@ -75,6 +75,74 @@
     <!-- Favicons -->
     <link href="~/assets/imgs/favicon.ico" rel="shortcut icon" />
     <link href="~/assets/imgs/favicon.webp" rel="apple-touch-icon" />
+    
+    
+    
+    
+    <style>
+
+* {
+    box-sizing: border-box;
+    padding: 0;
+    margin: 0;
+}
+
+body {
+    background-color: #black;
+}
+
+.partners-slider {
+    display: grid;
+    place-items: center;
+}
+
+h2 {
+    font-size: 2.5rem;
+    padding: 20px;
+    margin: 20px 0;
+}
+
+.slider {
+    width: 100%;
+    overflow: hidden;
+/*     background: rgb(0, 0, 0);
+ */    border-radius: 16px;
+    box-shadow: 0 4px 30px rgba(0, 0, 0, 0.1);
+    backdrop-filter: blur(7.4px);
+    -webkit-backdrop-filter: blur(7.4px);
+/*     border: 1px solid rgba(0, 0, 0, 0.4);
+ */}
+
+.slider-items {
+    display: flex;
+    align-items: center;
+    gap: 20px;
+    padding: 20px;
+    animation: scrolling 20s linear infinite;
+}
+
+@@keyframes scrolling {
+    0% {
+        transform: translateX(calc(-100% + 33.33%)); /* Start from the left */
+    }
+    100% {
+        transform: translateX(0); /* Move to the right */
+    }
+}
+
+
+.slider-items img {
+    width: 150px; /* Fixed width for smaller logos */
+    height: 150px; /* Fixed height for smaller logos */
+    object-fit: contain; /* Ensures the image fits within the dimensions without distortion */
+    margin: 0 10px;
+    flex-shrink: 0; /* Prevent logos from shrinking */
+}
+    </style>
+
+
+
+
 </head>
 <body>
     <nav class="navbar sticky-top fixed-top navbar-dark bg-dark navbar-expand-lg shadow-sm py-2 px-3" id="header">
@@ -167,6 +235,28 @@
             </video>
         </section>
         <!-- End video section  -->
+
+        <section class="partners-slider py-5">
+    <div class="container">
+        <h2 class="text-center mb-4" style="color:white">@ViewBag.Sponsors</h2>
+        <div class="slider">
+            <div class="slider-items">
+                <!-- Partner Logos -->
+                <img src="~/assets/imgs/AppsSq.png" alt="Partner 1" />
+                <img src="~/assets/imgs/Hunger.png" alt="Partner 2" />
+                <img src="~/assets/imgs/JEv.png" alt="Partner 3" />
+
+                <img src="~/assets/imgs/Berain.png" alt="Partner 4" />
+                <img src="~/assets/imgs/Erteqa.png" alt="Partner 5" />
+                <img src="~/assets/imgs/PP.png" alt="Partner 6" />
+  
+                <!-- Add more logos as needed -->
+            </div>
+        </div>
+    </div>
+</section>
+            
+       
 
 
 

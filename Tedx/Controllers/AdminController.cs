@@ -18,6 +18,8 @@ using Microsoft.AspNetCore.Authentication;
 using Microsoft.Extensions.Options;
 using Microsoft.AspNetCore.Identity;
 using System.Globalization;
+using iTextSharp.text;
+using System.Runtime.Serialization;
 
 namespace Tedx.Controllers
 {
@@ -485,6 +487,111 @@ namespace Tedx.Controllers
                 worksheet.Column(2).Width = 25; // Email
                 worksheet.Column(3).Width = 15; // Phone
                 worksheet.Column(8).Width = 15; // QR Code
+                worksheet.Columns().AdjustToContents();
+
+                // Save the workbook to a memory stream
+                using (var stream = new MemoryStream())
+                {
+                    workbook.SaveAs(stream);
+                    var content = stream.ToArray();
+                    return File(content, "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet", "Users.xlsx");
+                }
+            }
+        }
+
+        public async Task<IActionResult> AcceptedUserExportToExcel(string exportOption)
+        {
+            // Start with the base query
+            var usersQuery = _context.Users.OrderByDescending(x => x.CreatedAt);
+
+            // Apply the filter based on the selected option
+            if (exportOption == "confirmed")
+            {
+                usersQuery = (IOrderedQueryable<User>)usersQuery.Where(x => x.IsConfirmed == true);
+            }
+
+            if(exportOption== "inconfirmed")
+                    {
+
+                usersQuery = (IOrderedQueryable<User>)usersQuery.Where(x => x.IsConfirmed == false);
+
+            }
+            // Execute the query to get the filtered users
+            var users = await usersQuery.ToListAsync();
+
+            using (var workbook = new XLWorkbook())
+            {
+                var worksheet = workbook.Worksheets.Add("Users");
+                int currentRow = 1;
+
+                // Add headers
+                worksheet.Cell(currentRow, 1).Value = "الاسم";
+                worksheet.Cell(currentRow, 2).Value = "الايميل";
+                worksheet.Cell(currentRow, 3).Value = "رقم الهاتف";
+                worksheet.Cell(currentRow, 4).Value = "العمر";
+                worksheet.Cell(currentRow, 5).Value = "الحاله";
+                worksheet.Cell(currentRow, 6).Value = "الوظيفه";
+                worksheet.Cell(currentRow, 7).Value = "تاريخ التسجيل";
+                worksheet.Cell(currentRow, 8).Value = "رمز الاستجابة السريعة (QR Code)";
+                worksheet.Cell(currentRow, 9).Value = "تم ارسال البريد";
+
+                // Style headers
+                var headerRange = worksheet.Range(1, 1, 1, 9);
+                headerRange.Style.Font.Bold = true;
+                headerRange.Style.Fill.BackgroundColor = XLColor.LightGray;
+                headerRange.Style.Alignment.Horizontal = XLAlignmentHorizontalValues.Center;
+
+                worksheet.Row(currentRow).Height = 12;
+
+                // Add user data
+                foreach (var user in users)
+                {
+                    var date = user.CreatedAt.ToString("yyyy/MM/dd HH:mm:ss", CultureInfo.InvariantCulture);
+
+                    currentRow++;
+
+                    worksheet.Cell(currentRow, 1).Value = user.FullName;
+                    worksheet.Cell(currentRow, 2).Value = user.Email;
+                    worksheet.Cell(currentRow, 3).Value = user.Phone;
+                    worksheet.Cell(currentRow, 4).Value = user.Age;
+                    worksheet.Cell(currentRow, 5).Value = user.RoleAs;
+                    worksheet.Cell(currentRow, 6).Value = user.Job;
+                    worksheet.Cell(currentRow, 7).Value = date;
+
+                    if (!string.IsNullOrEmpty(user.QRCodeUrl))
+                    {
+                        string qrCodeFilePath = Path.Combine(Directory.GetCurrentDirectory(), "wwwroot", user.QRCodeUrl.TrimStart('/'));
+                        if (System.IO.File.Exists(qrCodeFilePath))
+                        {
+                            using (var imageStream = new FileStream(qrCodeFilePath, FileMode.Open, FileAccess.Read))
+                            {
+                                var image = worksheet.AddPicture(imageStream)
+                                    .MoveTo(worksheet.Cell(currentRow, 8))
+                                    .WithSize(80, 80); // Resize the image to a consistent size
+
+                                worksheet.Row(currentRow).Height = 60; // Match the image height
+                            }
+                        }
+                        else
+                        {
+                            worksheet.Cell(currentRow, 8).Value = "رمز الاستجابة السريعة غير موجود";
+                        }
+                    }
+                    else
+                    {
+                        worksheet.Cell(currentRow, 8).Value = "لا يوجد رمز استجابة سريعة";
+                    }
+
+                    // Add value for "تم ارسال البريد" column
+                    worksheet.Cell(currentRow, 9).Value = user.IsConfirmed.HasValue && user.IsConfirmed.Value ? "نعم" : "لا";
+                }
+
+                // Adjust column widths
+                worksheet.Column(1).Width = 20; // Name
+                worksheet.Column(2).Width = 25; // Email
+                worksheet.Column(3).Width = 15; // Phone
+                worksheet.Column(8).Width = 15; // QR Code
+                worksheet.Column(9).Width = 15; // تم ارسال البريد
                 worksheet.Columns().AdjustToContents();
 
                 // Save the workbook to a memory stream

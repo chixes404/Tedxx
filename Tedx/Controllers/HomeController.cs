@@ -29,6 +29,7 @@ namespace Tedx.Controllers
             ViewBag.Pm = _localizer["Pm"];
             ViewBag.FooterLocation = _localizer["FooterLocation"];
             ViewBag.FooterDate = _localizer["FooterDate"];
+            ViewBag.Sponsors = _localizer["SponsorLabel"];
             return View();
 		}
 
