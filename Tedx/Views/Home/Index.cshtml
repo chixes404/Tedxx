@@ -91,10 +91,14 @@ body {
     background-color: #black;
 }
 
-.partners-slider {
-    display: grid;
-    place-items: center;
-}
+        .partners-slider {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            flex-direction: column;
+            width: 100%;
+            padding: 20px;
+        }
 
 h2 {
     font-size: 2.5rem;
@@ -113,25 +117,32 @@ h2 {
 /*     border: 1px solid rgba(0, 0, 0, 0.4);
  */}
 
-.slider-items {
-    display: flex;
-    align-items: center;
-    gap: 20px;
-    padding: 20px;
-    animation: scrolling 20s linear infinite;
-}
+        .slider-items {
+            display: flex;
+            align-items: center;
+            gap: 20px;
+            padding: 20px;
+            animation: scrolling 20s linear infinite;
+            width: max-content; /* Ensure the container fits all logos */
+        }
 @@keyframes scrolling {
             0% {
-                transform: translateX(0); /* Start from the beginning */
+                transform: translateX(80%);
             }
 
             100% {
-                transform: translateX(-50%); /* Scroll to the halfway point (duplicate logos) */
+                transform: translateX(-20%);
             }
 }
 
 
 
+        .container {
+            width: 100%;
+            max-width: 1200px; /* Adjust max-width as needed */
+            margin: 0 auto;
+            text-align: center;
+        }
 .slider-items img {
     width: 200px; /* Fixed width for smaller logos */
     height: 200px; /* Fixed height for smaller logos */
@@ -139,6 +150,40 @@ h2 {
     margin: 0 10px;
     flex-shrink: 0; /* Prevent logos from shrinking */
 }
+
+
+
+/* Responsive Adjustments */
+@@media (max-width: 768px) {
+    .slider-items img {
+        width: 80px; /* Smaller logos for tablets */
+        height: 80px;
+    }
+
+    .slider-items {
+        gap: 15px; /* Reduce gap between logos */
+    }
+
+    h2 {
+        font-size: 2rem; /* Smaller heading for tablets */
+    }
+}
+
+@@media (max-width: 480px) {
+    .slider-items img {
+        width: 60px; /* Even smaller logos for mobile */
+        height: 60px;
+    }
+
+    .slider-items {
+        gap: 10px; /* Further reduce gap between logos */
+    }
+
+    h2 {
+        font-size: 1.5rem; /* Smaller heading for mobile */
+    }
+}
+
     </style>
 
 
@@ -243,14 +288,15 @@ h2 {
         <div class="slider">
             <div class="slider-items">
                 <!-- Partner Logos -->
-                <img src="~/assets/imgs/AppsSq.png" alt="Partner 1" />
-                <img src="~/assets/imgs/Hunger.png" alt="Partner 2" />
-                <img src="~/assets/imgs/JEv.png" alt="Partner 3" />
 
-                <img src="~/assets/imgs/Berain.png" alt="Partner 4" />
-                <img src="~/assets/imgs/Erteqa.png" alt="Partner 5" />
-                <img src="~/assets/imgs/PP.png" alt="Partner 6" />
-  
+                        <img src="~/assets/imgs/PP.png" alt="Partner 1" />
+
+                <img src="~/assets/imgs/Berain.png" alt="Partner 2" />
+                <img src="~/assets/imgs/Erteqa.png" alt="Partner 3" />
+                        <img src="~/assets/imgs/Hunger.png" alt="Partner 4" />
+                        <img src="~/assets/imgs/JEv.png" alt="Partner 5" />
+                        <img src="~/assets/imgs/AppsSq.png" alt="Partner 6" />
+
                 <!-- Add more logos as needed -->
             </div>
         </div>
